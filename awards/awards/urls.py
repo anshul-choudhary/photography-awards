@@ -1,4 +1,4 @@
-"""awards URL Configuration
+"""xcellinsproject URL Configuration
 
 The `urlpatterns` list routes URLs to views. For more information please see:
     https://docs.djangoproject.com/en/1.9/topics/http/urls/
@@ -13,9 +13,28 @@ Including another URLconf
     1. Import the include() function: from django.conf.urls import url, include
     2. Add a URL to urlpatterns:  url(r'^blog/', include('blog.urls'))
 """
-from django.conf.urls import url
+from django.conf import settings
+from django.conf.urls import url, include, patterns
 from django.contrib import admin
+from django.template.context_processors import static
+from filebrowser.sites import site
 
 urlpatterns = [
-    url(r'^admin/', admin.site.urls),
+    url(r'^admin/filebrowser/', include(site.urls)),
+    # url(r'^grappelli/', include('grappelli.urls')),
+    url(r'^admin/', include(admin.site.urls)),
+    url(r'^admin/doc/', include('django.contrib.admindocs.urls')),
+
+    # url(r'^accounts/', include('useraccount.urls')),
+    url(r'^', include('core.urls')),
+
+    # url(r'^device/', include('devices.urls')),
+    # url(r'^complaint/', include('complaints.urls')),
 ]
+
+urlpatterns += patterns('django.views.static',
+        (r'media/(?P<path>.*)', 'serve', {'document_root': settings.MEDIA_ROOT}),
+    )
+
+
+# urlpatterns += testpattern

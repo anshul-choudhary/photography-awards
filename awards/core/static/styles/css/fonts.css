@@ -1,0 +1,48 @@
+/* OMG */
+
+
+@font-face {
+    font-family: 'bebas_neue_cyrillicregular';
+    /*src: url('../fonts/BebasNeue-webfont.eot-webfont.eot');*/
+    /*src: url('../fonts/bebasneuecyrillic-webfont.eot?#iefix') format('embedded-opentype'),*/
+    /*url('../fonts/bebasneuecyrillic-webfont.woff') format('woff'),*/
+    /*url('../fonts/bebasneuecyrillic-webfont.ttf') format('truetype');*/
+    /*font-weight: normal;*/
+    /*font-style: normal;*/
+
+    src: url('../fonts/BebasNeue-webfont.eot');
+    src: url('../fonts/BebasNeue-webfont.eot?#iefix') format('embedded-opentype'),
+    url('../fonts/BebasNeue-webfont.woff') format('woff'),
+    url('../fonts/BebasNeue-webfont.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+
+
+}
+
+
+
+@font-face {
+    font-family: 'Source Sans Pro';
+    font-style: normal;
+    font-weight: 300;
+    src: url('../fonts/SourceSansPro-Light.otf') format('otf');
+}
+@font-face {
+    font-family: 'Source Sans Pro';
+    font-style: normal;
+    font-weight: 400;
+    src: url('../fonts/SourceSansPro-Regular.otf') format('otf');
+}
+@font-face {
+    font-family: 'Source Sans Pro';
+    font-style: normal;
+    font-weight: 700;
+    src: url('../fonts/SourceSansPro-Bold.otf') format('otf');
+}
+@font-face {
+    font-family: 'Source Sans Pro';
+    font-style: italic;
+    font-weight: 400;
+    src: url('../fonts/SourceSansPro-It.otf') format('otf');
+}

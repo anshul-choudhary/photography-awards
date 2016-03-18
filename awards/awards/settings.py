@@ -11,9 +11,41 @@ https://docs.djangoproject.com/en/1.9/ref/settings/
 """
 
 import os
+import sys
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
+from os.path import abspath, dirname, basename, normpath, join
+
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+
+PROJECT_PATH = dirname(dirname(abspath(__file__)))
+
+PROJECT_PATH_PARENT = dirname(dirname(dirname(abspath(__file__))))
+
+# Project name.
+PROJECT_NAME = basename(PROJECT_PATH)
+
+# Absolute filesystem path to the top-level project folder.
+PROJECT_ROOT = dirname(PROJECT_PATH)
+
+
+# Add all necessary filesystem paths to our system path so that we can use
+# python import statements.
+sys.path.append(PROJECT_ROOT)
+
+# STATIC_ROOT = normpath(join(PROJECT_PATH, 'static'))
+STATIC_ROOT = os.path.join(PROJECT_PATH, 'static')
+STATIC_URL = '/static/'
+
+# Absolute filesystem path to the directory that will hold user-uploaded files.
+# MEDIA_ROOT = normpath(join(PROJECT_PATH, 'media'))
+# URL that handles the media served from MEDIA_ROOT.
+# MEDIA_URL = '/media/'
+
+# Absolute filesystem path to the directory that will hold user-uploaded files.
+# MEDIA_ROOT = normpath(join(PROJECT_PATH, 'media'))
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(PROJECT_PATH, 'media')
 
 
 # Quick-start development settings - unsuitable for production
@@ -25,18 +57,26 @@ SECRET_KEY = 'g&m75fcwu@dk4ed2opcp6-j($yg0mrf=ma(*8q&e7%8r^21*rj'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
-
+ALLOWED_HOSTS = ['*']
 
 # Application definition
 
 INSTALLED_APPS = [
+    'grappelli',
+    # for file uploads
+    'filebrowser',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'core',
+    'useraccount',
+
+    # rest framework
+    'rest_framework',
+    'rest_framework.authtoken',
 ]
 
 MIDDLEWARE_CLASSES = [
@@ -55,15 +95,22 @@ ROOT_URLCONF = 'awards.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
-        'APP_DIRS': True,
+        'DIRS': ["core/templates"],
+        # 'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
                 'django.template.context_processors.debug',
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                "core.context_processors.contextprocessor_samplelists",
             ],
+        'loaders': [
+           'django.template.loaders.filesystem.Loader',
+            'django.template.loaders.app_directories.Loader',
+        ],
+        'debug': True
+
         },
     },
 ]

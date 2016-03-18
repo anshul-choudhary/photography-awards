@@ -1,3 +1,13 @@
-from django.shortcuts import render
+from rest_framework.response import Response
+from rest_framework.views import APIView
 
-# Create your views here.
+
+class HomeView(APIView):
+    ''' Home Page view '''
+
+    template_name = 'home.html'
+
+    def get(self, request, *args, **kwargs):
+        ''' Receives the request '''
+
+        return Response({}, template_name=self.template_name)
