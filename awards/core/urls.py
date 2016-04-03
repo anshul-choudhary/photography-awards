@@ -7,6 +7,11 @@ urlpatterns = patterns(
     '',
     url(r'^$', views.HomeView.as_view(), name='home'),
 
+    url(r'^faqs$', views.FaqsView.as_view(), name='faqs'),
+
+    url(r'^photographers$', views.PhotographersView.as_view(), name='photographers'),
+
+    url(r'^faqs$', views.FaqsView.as_view(), name='faqs'),
 
     # file upload handler
     # url(

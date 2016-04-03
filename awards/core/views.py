@@ -11,3 +11,34 @@ class HomeView(APIView):
         ''' Receives the request '''
 
         return Response({}, template_name=self.template_name)
+
+
+
+class FaqsView(APIView):
+    ''' Home Page view '''
+
+    template_name = 'joinus.html'
+
+    def get(self, request, *args, **kwargs):
+        ''' Receives the request '''
+
+        return Response({}, template_name=self.template_name)
+
+
+
+class PhotographersView(APIView):
+    ''' Home Page view '''
+
+    template_name = 'photographers.html'
+
+    def get(self, request, *args, **kwargs):
+        ''' Receives the request '''
+
+        return Response({}, template_name=self.template_name)
+
+
+
+
+
+
+

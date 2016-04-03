@@ -48,6 +48,19 @@ MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(PROJECT_PATH, 'media')
 
 
+# temp file upload dir
+TEMP_UPLOAD_DIR = 'temp/'
+
+# URL that handles the media served from MEDIA_ROOT.
+UPLOAD_DEVICE_DIR = normpath('uploads/devices/')
+# UPLOAD_VENDOR_DIR = normpath('uploads/vendor/')
+UPLOAD_FOOTER_DIR = normpath('uploads/footer/')
+UPLOAD_PHOTOGRAPHER_DIR = normpath('uploads/photographer/')
+
+
+AUTH_USER_MODEL = 'useraccount.UserProfile'
+
+
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.9/howto/deployment/checklist/
 
@@ -74,6 +87,7 @@ INSTALLED_APPS = [
     'core',
     'useraccount',
 
+    'compressor',
     # rest framework
     'rest_framework',
     'rest_framework.authtoken',
@@ -127,7 +141,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'awards',
         'USER': 'root',
-        'PASSWORD': '',
+        'PASSWORD': 'root',
         'HOST': '127.0.0.1',
         'PORT': '3306',
         'OPTIONS': {'autocommit': True, }
