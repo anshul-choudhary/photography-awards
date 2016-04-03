@@ -15,7 +15,7 @@ class UserCreationForm(forms.ModelForm):
     class Meta:
         model = get_user_model()
         # Note - include all *required* CustomUser fields here,
-        fields = ("email", "primary_contact_number", "groups", "country", "password")
+        fields = ("email", "primary_contact_number", "groups")
 
     def clean(self):
         cleaned_data = super(UserCreationForm, self).clean()
@@ -84,7 +84,7 @@ class UserChangeForm(forms.ModelForm):
 
     class Meta:
         model = get_user_model()
-        fields = ("email", "primary_contact_number", "password")
+        fields = ("email", "primary_contact_number")
 
 #
 # class UserLoginForm(ModelForm):

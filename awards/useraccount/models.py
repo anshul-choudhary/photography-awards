@@ -8,23 +8,12 @@ from django.contrib.contenttypes.fields import GenericRelation
 from django.contrib.contenttypes.models import ContentType
 from django.core.cache import cache
 from django.db import models
+from django.utils.http import urlquote
 from awards import settings
 
 from awards.choices import USER
 from awards.utils import generate_user_id
 
-
-class WinnerMonth(models.Model):
-    """
-        An abstract base class implementing a fully featured User model with
-        admin-compliant permissions.
-        The idea is to remove the username field and also change the length of email field
-    """
-
-    month_name = models.SmallIntegerField(
-        blank=True, null=True, choices=USER['WINNER_MONTH'],
-        help_text=('Month in which photographer is announced as a winner')
-    )
 
 
 #Create Super User using the following command
@@ -170,8 +159,8 @@ class UserProfile(AbstractBaseUser, PermissionsMixin):
         verbose_name_plural = 'users'
         db_table = 'userprofile'
 
-    # def get_absolute_url(self):
-    #     return "/users/%s/" % urlquote(self.username)
+    def get_absolute_url(self):
+        return "/users/%s/" % urlquote(self.username)
 
     def __unicode__(self):
         return "%s" % unicode(self.username)
@@ -186,6 +175,19 @@ class UserProfile(AbstractBaseUser, PermissionsMixin):
         super(UserProfile, self).save(*args, **kwargs)
         if self.user_id in [None,'']:
             self.user_id = generate_user_id()
+
+
+class WinnerMonth(models.Model):
+    """
+        An abstract base class implementing a fully featured User model with
+        admin-compliant permissions.
+        The idea is to remove the username field and also change the length of email field
+    """
+
+    month_name = models.SmallIntegerField(
+        blank=True, null=True, choices=USER['WINNER_MONTH'],
+        help_text=('Month in which photographer is announced as a winner')
+    )
 
 
 class Photographer(models.Model):
@@ -232,7 +234,6 @@ class Photographer(models.Model):
         verbose_name = 'Photographer'
         verbose_name_plural = 'Photographers'
         db_table = 'photographer'
-
 
 
 

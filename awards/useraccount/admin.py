@@ -38,6 +38,41 @@ class UserProfileAdmin(UserAdmin):
                                        'groups', 'user_permissions')}),
     ]
 
+    restricted_fieldsets = (
+        (
+            'User Information',
+            {
+                'fields': (
+                    'user_id', 'username', 'firstname', 'lastname', 'email', 'country', 'address',
+                    'state', 'city', 'primary_contact_number',
+                )
+            }
+        ),
+    )
+
+    add_fieldsets = (
+        (
+            'User Information',
+            {
+                'fields': (
+                    'user_id', 'username', 'firstname', 'lastname', 'email', 'country', 'address',
+                    'state', 'city', 'primary_contact_number',
+                )
+            }
+        ),
+        (
+            'Account Info',
+            {
+                'fields': (
+                    'last_login', 'groups', 'user_permissions', 'password'
+                )
+            }
+        ),
+        ('Permissions', {'fields': ('is_active', 'is_staff', 'is_superuser',
+                                       'groups', 'user_permissions')}),
+    )
+
+
     readonly_fields = ['user_id']
     ordering = ('-created_date',)
 
@@ -50,10 +85,10 @@ class UserProfileAdmin(UserAdmin):
 
     def get_fieldsets(self, request, obj=None):
 
-        # if not request.user.is_superuser:
-        #     return self.restricted_fieldsets
-        # else:
-        return super(UserProfileAdmin, self).get_fieldsets(request, obj=obj)
+        if not request.user.is_superuser:
+            return self.restricted_fieldsets
+        else:
+            return super(UserProfileAdmin, self).get_fieldsets(request, obj=obj)
 
     def save_model(self, request, obj, form, change):
         """ """
