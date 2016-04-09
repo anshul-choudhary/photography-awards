@@ -5,6 +5,7 @@ def contextprocessor_samplelists(request):
 
     ctx = {}
     ctx['STATIC_URL'] = settings.STATIC_URL
+    ctx['MEDIA_URL'] = settings.MEDIA_URL
     return ctx
 
 def media_globals(request):

@@ -124,6 +124,7 @@ class UserProfile(AbstractBaseUser, PermissionsMixin):
     user_id = models.CharField(unique=True, max_length=20, null=True, blank=True, verbose_name="User ID")
     firstname = models.CharField(max_length=50, blank=True, null=True)
     lastname = models.CharField(max_length=50, blank=True, null=True)
+    businessname = models.CharField(max_length=50, blank=True, null=True)
 
     instagram_link1 = models.CharField(max_length=200, blank=True, null=True)
     instagram_link2 = models.CharField(max_length=200, blank=True, null=True)
@@ -192,6 +193,7 @@ class WinnerMonth(models.Model):
 
 class Photographer(models.Model):
     """
+    Photographers model
     """
 
     user_ref = models.ForeignKey(settings.AUTH_USER_MODEL, verbose_name='Foreign Key User Model')
@@ -208,6 +210,7 @@ class Photographer(models.Model):
         verbose_name='Has been announced as a winner', default=False,
         help_text='Designates whether the user has won the award or not'
     )
+
     winner_month = models.ManyToManyField(WinnerMonth, blank=True, null=True)
     winning_date = models.DateTimeField(verbose_name="Winning Date", blank=True, null=True)
 
@@ -230,14 +233,18 @@ class Photographer(models.Model):
     created_date = models.DateTimeField(auto_now_add=True, verbose_name="Created Date")
     modified_date = models.DateTimeField(auto_now=True, verbose_name="Last Modified")
 
+
     class Meta:
         verbose_name = 'Photographer'
         verbose_name_plural = 'Photographers'
         db_table = 'photographer'
 
 
+    def save(self, *args, **kwargs):
+        """ """
 
-
-
+        super(Photographer, self).save(*args, **kwargs)
+        if self.user_id in [None,'']:
+            self.user_id = generate_user_id()
 
 

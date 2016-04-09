@@ -69,5 +69,12 @@ IMAGE_NAME_CHOICES = {
         ('Award6', _('Award6')),
         ('Award7', _('Award7')),
         ('Award8', _('Award8')),
+        ('Footer1', _('Footer1')),
+        ('Footer2', _('Footer2')),
+        ('Footer3', _('Footer3')),
+        ('Footer4', _('Footer4')),
+        ('Coverimage', _('Coverimage')),
+        ('Profileimage', _('Profileimage')),
+        ('landingpageimage', _('landingpageimage')),
     )
 }

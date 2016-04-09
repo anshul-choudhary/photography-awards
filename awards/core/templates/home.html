@@ -48,27 +48,18 @@
 
 <!-- Award Section -->
 <section class="">
-    <h2 class="text-center">12 Collection Winners</h2>
+    <h2 class="text-center">Winners 2016</h2>
     <div class="container text-center previous-awards"><h5>
-    <a href="">12 Collection</a> &nbsp; &nbsp;
-    <a href="award/11">11 Collection</a> &nbsp; &nbsp;
-    <a href="award/Final2015">Final 2015</a> &nbsp; &nbsp;
-    <a href="award/December">December</a> &nbsp; &nbsp;
-    <a href="award/November">November</a> &nbsp; &nbsp;
-    <a href="award/October">October</a> &nbsp; &nbsp;
-    <a href="award/September">September</a> &nbsp; &nbsp;
-    <a href="award/August">August</a> &nbsp; &nbsp;
-    <a href="award/July">July</a> &nbsp; &nbsp;
-    <a href="award/June">June</a> &nbsp; &nbsp;
-    <a href="award/May">May</a> &nbsp; &nbsp;
-    <a href="award/April">April</a>
+    <a href="#">Final 2015</a> &nbsp; &nbsp;
+    <a href="#">April</a> &nbsp; &nbsp;
+    <a href="#">March</a> &nbsp; &nbsp;
+    <a href="#">February</a> &nbsp; &nbsp;
+    <a href="#">January</a>
     </h5>
     </div>
 
 
     <div class="owl-carousel content-carousel content-slider award-slider">
-
-
 
 
     <div class="item">
@@ -472,7 +463,7 @@
             
                         <div class="row">
                   <div class="mt-15 mb-60 col-md-8 col-md-offset-2 text-center">
-             <a class="buttonclass" href="join_us">
+             <a class="buttonclass" href="{% url 'faqs' %}">
 <button name="submit" id="form-submit" type="submit" class="btn btn-md btn-black-line">Join us<i class="fa fa-chevron-right ml-10"></i></button></a>
 </div></div>
             
@@ -677,11 +668,7 @@
                         </div>
                     </div>
               
-                   
-                    
 
-                    
-             
                     <!-- End Team Box -->
                 </div>
             </div>
@@ -694,11 +681,18 @@
     <div class="container">
     <div class="row text-center plr-25 ">
 
-    <a href="https://instagram.com/wedisson_com" target="_blank"><div class="instagram-block">
-    <div class="col-md-3 col-sm-4 col-xs-6" style="padding:0;"><img alt="1" src="{{ STATIC_URL }}images/main_instagram/1.jpg" class="img-responsive"></div>
-    <div class="col-md-3 col-sm-4 col-xs-6" style="padding:0;"><img alt="1" src="{{ STATIC_URL }}images/main_instagram/2.jpg" class="item-container"></div>
-    <div class="col-md-3 col-sm-4 col-xs-6" style="padding:0;"><img alt="1" src="{{ STATIC_URL }}images/main_instagram/3.jpg" class="item-container"></div>
-    <div class="col-md-3 col-sm-4 col-xs-6" style="padding:0;"><img alt="1" src="{{ STATIC_URL }}images/main_instagram/4.jpg" class="item-container"></div>
+    {% for obj in footer %}
+        {% if forloop.counter == 1 %}
+            <a href="{{ obj.link }}" target="_blank">
+        {% endif %}
+    {% endfor %}
+    <div class="instagram-block">
+
+        {% for obj in footer %}
+            <div class="col-md-3 col-sm-4 col-xs-6" style="padding:0;">
+                <img alt="1" src="{{ MEDIA_URL }}/{{ obj.img }}" class="img-responsive">
+            </div>
+        {% endfor %}
 
     <div class="info">
     <div class="in">
@@ -707,7 +701,8 @@
     </div>
     </div>
     </div>
-    </div></a>
+    </div>
+    </a>
 
 
     </div>

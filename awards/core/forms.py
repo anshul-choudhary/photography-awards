@@ -100,6 +100,11 @@ class FooterImageForm(ModelForm):
             except Exception as e:
                 pass
 
+
+    # def save(self, commit=True):
+    #     pass
+
+
     class Meta:
         model = Footer
         exclude = []

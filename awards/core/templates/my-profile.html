@@ -1,392 +1,191 @@
 
+{% extends 'site_base.html' %}
+{% load compress %}
 
-<!DOCTYPE html>
-<html>
-<head>
-    <meta charset="utf-8" />
-    <link rel="stylesheet" type="text/css" href="/assets/c6ae2d4d/jui/css/base/jquery-ui.css" />
-<link rel="stylesheet" type="text/css" href="/assets/6a4ba948/css/jquery.fileupload-ui.css" />
-<link rel="stylesheet" type="text/css" href="/themes/classic/css/fonts.css" />
-<link rel="stylesheet" type="text/css" href="/themes/classic/css/style.css" />
-<link rel="stylesheet" type="text/css" href="/themes/classic/css/bootstrap.css" />
-<link rel="stylesheet" type="text/css" href="/themes/classic/css/font-awesome.css" />
-<link rel="stylesheet" type="text/css" href="/themes/classic/css/master.css" />
-<link rel="stylesheet" type="text/css" href="/themes/classic/css/jquery-ui.css" />
-<script type="text/javascript" src="/assets/c6ae2d4d/jquery.js"></script>
-<script type="text/javascript" src="/assets/c6ae2d4d/jui/js/jquery-ui.min.js"></script>
-<script type="text/javascript" src="/bootstrap/js/bootstrap.min.js"></script>
-<script type="text/javascript" src="/js/jquery.maskedinput.min.js"></script>
-<script type="text/javascript" src="/js/site.js"></script>
-<title>Profile - Wedisson</title>
-               <meta name="author" content="nileforest">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
-    <!--[if IE]><meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'><![endif]-->
+{% block meta_tags %}
+    {{block.super}}
+{% endblock meta_tags %}
 
-    <!-- Favicone Icon -->
-    <link rel="shortcut icon" type="image/x-icon" href="/themes/classic/images/favicon.ico">
-    <link rel="icon" type="image/png" href="/themes/classic/images/favicon.png">
-    <link rel="apple-touch-icon" href="/themes/classic/images/favicon.png">
+{% block title %}
+    {{ block.super }}
+{% endblock title %}
 
-    <!-- CSS -->
-                        
+{% block css_section %}
+    {{ block.super }}
+{% endblock css_section %}
 
-</head>
+{% block top_header %}
+{% endblock top_header %}
 
 
-<body class="">
-
-     <!-- Preloader -->
-
-    <!-- End Preloader -->
-
-    <!-- Sidemenu -->
-    
-    <!--End Sidemenu -->
-
+{% block main_container %}
 
     <!-- Site Wraper -->
     <div class="wrapper">
 
         <!-- HEADER -->
 
-        <div class="container">						
-					<div class="logo">
-						<a href="http://wedisson.com">
-						<div class="logo-text">International Wedding<br>Photography Contest</div>
-						</a>
-					</div>
-
-                  
-                    
-                                        <ul class="navlinks text-center" id="yw2">
-<li><a href="http://wedisson.com/"><span class="login">Award</span></a></li>
-<li><a href="/user/profile"><span class="login">Anshul Choudhary</span></a></li>
-<li><a href="/user/logout"><span class='login'>Logout</span></a></li>
-</ul>
-
-			</div>
-        
-        
-        <!-- END HEADER -->
-        
-        
-       <!-- CONTENT ---------------------------------------------------------------------------------> 
+        <div class="container">
+        <div class="logo">
+        <a href="{% url 'home' %}">
+        <div class="logo-text">International Wedding<br>Photography Contest</div>
+        </a>
+        </div>
 
 
 
-                    <!-- breadcrumbs -->
-                    
-<!-- CONTENT --------------------------------------------------------------------------------->
+        <ul class="navlinks text-center" id="yw0">
+        <li><a href="{% url 'home' %}"><span class="login">Award</span></a></li>
+        <li><a href="{% url 'user_login' %}"><span class="login">Log in</span></a></li>
+        </ul>
 
-<section class="pt-15 pb-80" style="">
+        </div>
+
+
+        {% if request.user.is_authenticated %}
+            <input typ="button" value="Logout" />
+        {% else %}
+            <input typ="button" value="Login" />
+        {% endif %}
+
+
+        <!-- breadcrumbs -->
+        <div class="col-sm-12">
+
+            <!-- Login Section -->
+            <section class="pt-15 pb-80" style="">
             <div class="container ">
             <div class="row text-center">
-                    <div class="col-md-8 col-md-offset-2">
-                        <h1>Profile</h1>
- <div class="sidebar-widget">
-                            <hr>
-            <div class="name" id="yw0">
-<div class="portlet-content">
-        <ul class="cabinet-menu" id="yw1">
-<li><a href="/user/awardphotos/activate">Award</a></li>
-<li><a href="/user/profile">Personal info</a></li>
-</ul></div>
-</div>
+            <div class="col-md-8 col-md-offset-2 mb-15">
+            <h1>Registration</h1>
+            </div>
+            </div>
+            <div class="row">
+            <div class="col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">
+            <div class="border-box">
 
-                        </div>
-                    </div>
-                </div>
-                
+
+            <!-- Registration form -->
+            <form role="form" class="form-horizontal" id="registration-form" action="{% url 'user_signup' %}" method="post">
+            {% csrf_token %}
+
+            <div class="form-field-wrapper">
+            <input class="input-sm form-full text-center"
+                   maxlength="50" placeholder="First Name" name="firstname" value="{{ signupform.data.firstname }}" type="text" required/>
+            <div class="clearfix"></div>
+            <div class="errorMessage" >{{ signupform.firstname.errors }}
+            </div>
+            </div>
+
+            <div class="form-field-wrapper">
+            <input class="input-sm form-full text-center" placeholder="Last Name"
+               name="lastname" type="text" value="{{ signupform.data.lastname }}" maxlength="50" />
+            <div class="clearfix"></div>
+            <div class="errorMessage" >{{ signupform.lastname.errors }}
+            </div>
+            <p style="margin-top:5px; font-size:12px; line-height:14px; color:#A7A7A7;">This First and Last Names will be written on the website and Awarded photos. Do not use the studio name. Only photos taken by this photographer may be added to this profile. Each membership and profile page is for one photographer only. If there are many photographers from the same studio, each photographer must sign up for his/her own membership account.</p>
+            </div>
+
+            <div class="form-field-wrapper">
+            <input class="input-sm form-full text-center" placeholder="Business or Studio Name"
+                   name="businessname" value="{{ signupform.data.businessname }}"type="text" maxlength="25" />
+            <div class="clearfix"></div>
+            <div class="errorMessage">{{ signupform.businessname.errors }}
+            </div>
+            <p style="margin-top:5px; font-size:12px; line-height:14px; color:#A7A7A7;">If applicable</p>
+            </div>
+
+            <div class="form-field-wrapper">
+            <input class="input-sm form-full text-center" placeholder="Instagram Link"
+                   name="instagram_link1" type="text" value="{{ signupform.data.Instagram }}" maxlength="100" />
+            <div class="clearfix"></div>
+            <div class="errorMessage">{{ signupform.instagram_link1.errors }}
+            </div>
+            <p style="margin-top:5px; font-size:12px; line-height:14px; color:#A7A7A7;"><b>Example: @wedding</b><br>
+            It will be published on the website and during posting on Instagram</p>
+            </div>
+
+            <div class="form-field-wrapper">
+            <input class="input-sm form-full text-center" placeholder="Username"
+                   value="{{ signupform.data.username }}" name="username" type="text" maxlength="30" required/>
+            <div class="clearfix"></div>
+            <div class="errorMessage">{{ signupform.username.errors }}
+            </div>
+            </div>
+
+            <div class="form-field-wrapper">
+            <input class="input-sm form-full text-center" placeholder="Your City"
+                   name="city" value="{{ signupform.data.city }}" type="text" value="" />
+            <div id="RegistrationForm_city_id_em_" class="errorMessage" style="display:none">
+            </div>
+{#            <p class="gray text-center" style="font-size:14px;">start typing the name of your city...</p>#}
+
+            </div>
+
+            <div class="form-field-wrapper">
+            <input class="input-sm form-full text-center" placeholder="Email"
+                   name="email" value="{{ signupform.data.email }}" type="text" required/>
+            <div class="clearfix"></div>
+            <div id="RegistrationForm_email_em_" class="errorMessage" style="display:none">{{ signupform.email.errors }}
+            </div>
+            <p style="margin-top:5px; font-size:12px; line-height:14px; color:#A7A7A7;">Your email address will not be displayed on the website.</p>
             </div>
 
 
-<div class="container">
-                <div class="row">
-                     <div class="col-md-4 col-sm-5 mb-30 text-center" style="max-width:250px;">
-                                   <!-- The template to display files available for upload -->
-<script id="template-upload" type="text/x-tmpl">
-{% for (var i=0, file; file=o.files[i]; i++) { %}
-    <div class="template-download fade col-md-4">
-        <div class="template-wrap clearfix">
-            
-            {% if (file.error) { %}
-                <div class="error" colspan="2"><span class="label label-important">{%=locale.fileupload.error%}</span>
-                    {%=locale.fileupload.errors[file.error] || file.error%}
-                </div>
-            {% } else if (o.files.valid && !i) { %}
-                <div class="preview">
-                </div>
-                <div class="start">{% if (!o.options.autoUpload) { %}
-                    <button class="btn btn-primary">
-                        <i class="icon-upload icon-white"></i>
-                        <span>{%=locale.fileupload.start%}</span>
-                    </button>
-                {% } %}</div>
-            {% } %}
-            {% if (file.error) { %}
-            <div class="delete">
-                <button class="btn btn-danger">
-                    <span class="glyphicon glyphicon-remove"></span>
-                </button>
-            </div> 
-            {% } %}
-        </div>
-    </div>
-{% } %}
-</script>
-<script id="template-download" type="text/x-tmpl">
-{% for (var i=0, file; file=o.files[i]; i++) { %}
-    <div class="template-download fade">
-        <div class="template-wrap clearfix">
-            {% if (file.error) { %}
-                <div class="error" colspan="2"><span class="label label-important">{%=locale.fileupload.error%}</span> {%=locale.fileupload.errors[file.error] || file.error%}</div>
-            {% } else { %}
-                <div class="preview">{% if (file.thumbnail_url) { %}
-                    <img src="{%=file.thumbnail_url%}" class="img-responsive img-circle">
-                {% } %}</div>
-            {% } %}
-        </div>
-    </div>
-{% } %}
-</script>
-<!-- The file upload form used as target for the file upload widget -->
-
-<form id="user-thumb" enctype="multipart/form-data" action="/photo/uploaduserthumb" method="post">
-<div class="clearfix">
-
-    <div class="fileupload-buttonbar" >
-
-        <div>
-
-            <!-- The fileinput-button span is used to style the file input field as button -->
-
-            <span class="   fileinput-button" style='color: rgb(56, 55, 55); margin-bottom: 5px; border-bottom: 1px dotted rgb(56, 55, 55);'>
-
-                <i class="icon-plus icon-white"></i>
-
-                <span>Change profile photo</span>
-
-                <input id="ytXUploadForm_userthumb" type="hidden" value="" name="XUploadForm[userthumb]" /><input multiple="multiple" name="XUploadForm[userthumb]" id="XUploadForm_userthumb" type="file" />
-
-            </span>
-
-        </div>
-
-    </div>
-
-</div>
-<div class="clearfix"></div>
-<div class="spacer-30"></div>
-<!-- The table listing the files available for upload/download -->
-
-<div class=" files user-thumb-file clearfix" data-toggle="modal-gallery" data-target="#modal-gallery"></div>
-
-</form>
+            <div class="form-field-wrapper">
+            <input class="input-sm form-full text-center" placeholder="Password"
+                   name="password" value="{{ signupform.data.password }}" type="password" maxlength="20" />
+            <p class="gray text-center" style="font-size:14px;">minimal length 6 symbols.</p>
+            <div id="RegistrationForm_password_em_" class="errorMessage">{{ signupform.password.errors }}
+            </div>
+            </div>
 
 
-                     </div>
-                    
-                    
-                    
-                    <div class="col-md-9 col-sm-8">
-                        
-                        
-                            
+            <div class="spacer-15"></div>
+            <button name="submit" id="form-submit" type="submit" class="text-center btn center-block btn-md btn-black-line">Let's go!
+                <i class="fa fa-chevron-right ml-10"></i>
+            </button>
+            </form>
+            <!-- Registration form ends -->
 
-<form enctype="multipart/form-data" class="form-horizontal addform" role="form" id="profile-form" action="/user/profile/edit" method="post"><div class="success"> </div>
-        <div class="clearfix"></div>
-<form>
-<div class="form-field-wrapper">
-<label class="col-md-2 form-label required" for="User_username">Username <span class="required">*</span></label><input size="20" maxlength="20" class="col-md-4 input-sm form-full" disabled="disabled" name="User[username]" id="User_username" type="text" value="aphdapplicant" /><div class="clearfix"></div></div>
-                              
-<div class="form-field-wrapper">
-<label class="col-md-2 form-label required" for="User_firstname">First Name <span class="required">*</span></label><input size="20" maxlength="20" class="col-md-4 input-sm form-full" name="User[firstname]" id="User_firstname" type="text" value="Anshul" /><div class="clearfix"></div></div>
+            </div>
+            </div>
 
-<div class="form-field-wrapper">
-<label class="col-md-2 form-label" for="User_lastname">Last Name</label><input size="20" maxlength="20" class="col-md-4 input-sm form-full" name="User[lastname]" id="User_lastname" type="text" value="Choudhary" /><div class="clearfix"></div></div>
-    
-<div class="form-field-wrapper">
-<label class="col-md-2 form-label" for="User_business_name">Business or Studio Name</label><input size="20" maxlength="30" class="col-md-4 input-sm form-full" name="User[business_name]" id="User_business_name" type="text" value="Ht media Ltd" /><div class="clearfix"></div></div>   
- 
-    
-
-<div class="form-field-wrapper">
-<label class="col-md-2 form-label required" for="User_city_id">City <span class="required">*</span></label> <input size="20" maxlength="20" class="col-md-4 input-sm form-full" name="User[city_id]" id="User_city_id" type="text" value="New Delhi, India">
-<div class="clearfix"></div></div>
-
-<div class="form-field-wrapper">
-<label class="col-md-2 form-label required" for="User_email">E-mail <span class="required">*</span></label><input size="20" maxlength="20" class="col-md-4 input-sm form-full" name="User[email]" id="User_email" type="text" value="anshulmaniareloaded@gmail.com" /><div class="clearfix"></div></div>
-    
-<div class="form-field-wrapper">
-<label class="col-md-2 form-label" for="User_phone">Mobile phone</label><input class="col-md-4 input-sm form-full" name="User[phone]" id="User_phone" type="text" maxlength="30" value="" /><div class="clearfix"></div></div> 
-    
-
-<div class="form-field-wrapper">
-<label class="col-md-2 form-label" for="User_site_link">Website</label><input class="col-md-4 input-sm form-full" name="User[site_link]" id="User_site_link" type="text" /><div class="clearfix"></div></div>
-	
-    
-<div class="form-field-wrapper">
-<label class="col-md-2 form-label" for="User_ig_link">Instagram</label><input class="col-md-4 input-sm form-full" name="User[ig_link]" id="User_ig_link" type="text" value="" /><p class="gray text-center" style="font-size:14px;">example: @wedding</p><div class="clearfix"></div>
-<div class="clearfix"></div></div>
-
-<div class="form-field-wrapper">
-<label class="col-md-2 form-label" for="User_anons">Description</label><textarea class="col-md-8 input-sm form-full" maxlength="700" rows="12" name="User[anons]" id="User_anons"></textarea><div class="clearfix"></div></div>
-     
-      
-     
-<div class="spacer-15"></div>
-<button name="submit" id="form-submit" type="submit" class="btn btn-lg btn-black-line plr-30 col-md-offset-2">Save <i class="fa fa-check ml-10"></i></button>
-
-</form>
-<div class="clearfix"></div>
-<div class="spacer-60"></div>
-
-                     <a class="dotted" style="font-size:16px;" data-toggle="collapse" href="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
-  Change password
-</a>
-
-<div class="collapse mt-15" id="collapseExample">
-<h4>Change password</h4>
-<form enctype="multipart/form-data" class="form-horizontal addform" role="form" id="profile-form" action="/user/profile/changepassword" method="post"><div class="form-field-wrapper">
-<label class="col-md-2 form-label required" for="UserChangePassword_password">password <span class="required">*</span></label><input class="col-md-4 input-sm form-full" name="UserChangePassword[password]" id="UserChangePassword_password" type="password" maxlength="128" /><div class="clearfix"></div></div>
-
-
-<div class="form-field-wrapper">
-<label class="col-md-2 form-label required" for="UserChangePassword_verifyPassword">Retype Password <span class="required">*</span></label><input class="col-md-4 input-sm form-full" name="UserChangePassword[verifyPassword]" id="UserChangePassword_verifyPassword" type="password" /><div class="clearfix"></div> </div>
-
-                                
-                                                                
-                              
-                            <button name="submit" id="form-submit" type="submit" class="btn btn-lg btn-black-line">Change</button>
-                            </form>
-
-
-
-
-</form>   
-<script>
-$(function(){
-    createCitiesList("User_city_id");
-})    
-</script>
-                  
-                    </div>
-                </div>
-
+            </div>
             </div>
         </section>
+            <!-- End Login Section -->
 
 
+<script>
+$(function(){
+createCitiesList("RegistrationForm_city_id");
+})
+</script>
 
- 
- 
 
-        <!-- End CONTENT ------------------------------------------------------------------------------>
-
-
-                    
-                     <!-- END CONTENT ---------------------------------------------------------------------------->
-
-        <!-- FOOTER -->
+</div>
 
 <div class="clearfix"></div>
-<footer class="footer pt-15">
-            
-        <!-- Yandex.Metrika counter -->
-<script type="text/javascript">
-(function (d, w, c) {
-    (w[c] = w[c] || []).push(function() {
-        try {
-            w.yaCounter29394455 = new Ya.Metrika({id:29394455,
-                    clickmap:true,
-                    trackLinks:true,
-                    accurateTrackBounce:true});
-        } catch(e) { }
-    });
 
-    var n = d.getElementsByTagName("script")[0],
-        s = d.createElement("script"),
-        f = function () { n.parentNode.insertBefore(s, n); };
-    s.type = "text/javascript";
-    s.async = true;
-    s.src = (d.location.protocol == "https:" ? "https:" : "http:") + "//mc.yandex.ru/metrika/watch.js";
+<!-- Scroll Top -->
+<a class="scroll-top">
+<i class="fa fa-angle-double-up"></i>
+</a>
 
-    if (w.opera == "[object Opera]") {
-        d.addEventListener("DOMContentLoaded", f, false);
-    } else { f(); }
-})(document, window, "yandex_metrika_callbacks");
-</script>
-<noscript><div><img src="//mc.yandex.ru/watch/29394455" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
-<!-- /Yandex.Metrika counter -->
 
-            <!-- Copyright Bar -->
-            <section class="copyright ptb-15">
-                <div class="container">
-                    <p class="">
-                        © 2015 <b>Wedisson Awards</b> All Rights Reserved
-                        <br />
-                        <div class="col-md-12 mb-30">
-                        <ul class="link list-inline">
-                            <li><a href="http://wedisson.com/">Award</a></li>
-                            <li><a href="http://wedisson.com/photographers">Photographers</a></li>
-                            <li><a href="http://wedisson.com/join_us">FAQ</a></li>
-                            <li><a href="http://wedissonaward.com/user/registration">Register</a></li>
-                            <li><a href="http://wedissonaward.com/user/login">Log in</a></li>
+</div>
 
-                        </ul>
-                    </div>
-                    </p>
-                </div>
-            </section>
-            <!-- End Copyright Bar -->
+{% endblock main_container %}
 
 
 
-
-        </footer>
-        <!-- END FOOTER -->
-
-        <!-- Scroll Top -->
-        <a class="scroll-top">
-            <i class="fa fa-angle-double-up"></i>
-        </a>
-        <!-- End Scroll Top -->
-
-    </div>
-    <!-- Site Wraper End -->
+{% block footer %}
+    {{ block.super }}
+{% endblock footer %}
 
 
+{% block js_section_bottom %}
+    {{ block.super }}
+{% endblock js_section_bottom %}
 
-
-
-
-<script type="text/javascript" src="/assets/6a4ba948/js/tmpl.min.js"></script>
-<script type="text/javascript" src="/assets/6a4ba948/js/jquery.fileupload.js"></script>
-<script type="text/javascript" src="/assets/6a4ba948/js/load-image.min.js"></script>
-<script type="text/javascript" src="/assets/6a4ba948/js/canvas-to-blob.min.js"></script>
-<script type="text/javascript" src="/assets/6a4ba948/js/jquery.iframe-transport.js"></script>
-<script type="text/javascript" src="/assets/6a4ba948/js/jquery.fileupload-ip.js"></script>
-<script type="text/javascript" src="/assets/6a4ba948/js/jquery.fileupload-ui.js"></script>
-<script type="text/javascript">
-/*<![CDATA[*/
-window.locale = {'fileupload':{'errors':{'maxFileSize':'File is too big','minFileSize':'File is too small','acceptFileTypes':'Filetype not allowed','maxNumberOfFiles':'Max number of files exceeded','uploadedBytes':'Uploaded bytes exceed file size','emptyResult':'Error'},'error':'Error','start':'Start','cancel':'Cancel','destroy':'Delete'}}
-jQuery(function($) {
-jQuery('#user-thumb').fileupload({'maxFileSize':7000000,'url':'/photo/uploaduserthumb','autoUpload':true});
-});
-/*]]>*/
-</script>
-</body>
-</html><script>
-    $(function () {
-        var objForm = $('#user-thumb');
-        objForm.bind('fileuploadstart', function (e) {
-            objForm.find(".user-thumb-file .template-download:first").hide();
-            setTimeout('$("#user-thumb").find(".user-thumb-file .template-download:first").remove()', 500)            
-        })
-        $.getJSON('/photo/loaduserthumb', function (result) {
-            if (result && result.length) {
-                objForm.fileupload('option', 'done').call(objForm, null, {result: result});
-            }
-        });
-    })
-</script>

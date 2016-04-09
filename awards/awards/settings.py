@@ -42,6 +42,8 @@ STATIC_URL = '/static/'
 # URL that handles the media served from MEDIA_ROOT.
 # MEDIA_URL = '/media/'
 
+STATIC_URL = '/static/'
+
 # Absolute filesystem path to the directory that will hold user-uploaded files.
 # MEDIA_ROOT = normpath(join(PROJECT_PATH, 'media'))
 MEDIA_URL = '/media/'
@@ -193,14 +195,35 @@ REST_FRAMEWORK = {
 
 EMAIL_SITE_URL = 'http://www.awards.com'
 
+#############File Browser settings
 
+FILEBROWSER_EXTENSIONS = {"Image": []}
 
-# Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/1.9/howto/static-files/
+FILEBROWSER_VERSIONS = {
+    # thumbnails for all the small listing displays
+    'thumbnail': {'verbose_name': 'Thumbnail', 'width': 250, 'height': 160, 'opts': 'crop upscale'},
+    # medium size for slider on detail page (contains watermark after verified)
+    'medium': {'verbose_name': 'Medium', 'width': 720, 'height': 405, 'opts': 'crop upscale'},
+    # # large size for zoomed view on detail page (contains watermark after verified)
+    'large': {'verbose_name': 'Original', 'width': 1600, 'height': 1200, 'opts': 'upscale'},
+    # original sized image just for backup.
+    'original': {'verbose_name': 'Original', 'width': '', 'height': '', 'opts': ''},
+    # logos small with no cropping
+    'logo': {'verbose_name': 'Logo', 'width': '', 'height': 40, 'opts': ''},
+}
 
-STATIC_URL = '/static/'
+FILEBROWSER_ADMIN_VERSIONS = ['thumbnail', 'large', 'medium', 'logo']
+FILEBROWSER_ADMIN_THUMBNAIL = 'thumbnail'
+FILEBROWSER_MAX_UPLOAD_SIZE = 5242880
+# END FileBrowser
 
+FILEBROWSER_DIRECTORY = "uploads/"
+FILEBROWSER_VERSIONS_BASEDIR = '_versions/'
+FILEBROWSER_MEDIA_ROOT=os.path.join(MEDIA_ROOT, 'uploads/')
+FILEBROWSER_MEDIA_URL = MEDIA_URL + "uploads/"
 
+# FILEBROWSER_URL_FILEBROWSER_MEDIA= MEDIA_URL + 'filebrowser/'
+# FILEBROWSER_PATH_FILEBROWSER_MEDIA= os.path.join(MEDIA_ROOT, 'filebrowser/')
 
 try:
     from awards.local_settings import *

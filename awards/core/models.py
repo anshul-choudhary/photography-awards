@@ -231,6 +231,8 @@ class Footer(models.Model):
 
     link1 = models.CharField(max_length=200, blank=True, null=True)
     image = GenericRelation('core.Image')
+    priority = models.SmallIntegerField(blank=True, null=True, verbose_name="Order in which it will appear")
+    active = models.BooleanField(default=False, verbose_name="To be displayed or not")
 
     created_date = models.DateTimeField(auto_now_add=True, verbose_name="Created Date")
     modified_date = models.DateTimeField(auto_now=True, verbose_name="Last Modified")
@@ -247,6 +249,8 @@ class Faqs(models.Model):
 
     title = models.CharField(max_length=200, blank=True, null=True)
     description = models.CharField(max_length=200, blank=True, null=True)
+    description = models.CharField(max_length=200, blank=True, null=True)
+    priority = models.SmallIntegerField(blank=True, null=True, verbose_name="Order in which it will appear")
 
     created_date = models.DateTimeField(auto_now_add=True, verbose_name="Created Date")
     modified_date = models.DateTimeField(auto_now=True, verbose_name="Last Modified")

@@ -1,55 +1,31 @@
 
+{% extends 'site_base.html' %}
+{% load compress %}
 
-<!DOCTYPE html>
-<html>
-<head>
-    <meta charset="utf-8" />
+{% block meta_tags %}
+    {{block.super}}
+{% endblock meta_tags %}
 
+{% block title %}
+    {{ block.super }}
+{% endblock title %}
 
-    <!-- CSS -->
-    <link rel="stylesheet" href="{{ STATIC_URL }}styles/css/fonts.css" type="text/css">
-    <link href="{{ STATIC_URL }}styles/css/style.css" rel="stylesheet" type="text/css" />
-    <link href="{{ STATIC_URL }}styles/css/bootstrap.css" rel="stylesheet" type="text/css" />
-    <link href="{{ STATIC_URL }}styles/css/font-awesome.css" rel="stylesheet" type="text/css" />
-    <link href="{{ STATIC_URL }}styles/css/master.css" rel="stylesheet" type="text/css" />
-    <link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}styles/css/jquery-ui.css" />
+{% block css_section %}
+    {{ block.super }}
 
+    <style>
+    .errorMessage
+    {
+        color: red;
+    }
+    </style>
+{% endblock css_section %}
 
-    <script type="text/javascript" src="{{ STATIC_URL }}styles/js/plugin/jquery.js"></script>
-    <script type="text/javascript" src="{{ STATIC_URL }}styles/js/plugin/jquery.yiiactiveform.js"></script>
-    <script type="text/javascript" src="{{ STATIC_URL }}styles/js/plugin/jquery-ui.min.js"></script>
-    <script type="text/javascript" src="{{ STATIC_URL }}styles/js/plugin/bootstrap.min.js"></script>
-    <script type="text/javascript" src="{{ STATIC_URL }}styles/js/plugin/jquery.maskedinput.min.js"></script>
-    <script type="text/javascript" src="{{ STATIC_URL }}styles/js/site.js"></script>
-
-
-
-    <title>Wedisson Award - Registration</title>
-    <meta name="author" content="nileforest">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
-    <!--[if IE]><meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'><![endif]-->
-
-    <!-- Favicone Icon -->
-    <link rel="shortcut icon" type="image/x-icon" href="{{ STATIC_URL }}images/favicon.ico">
-    <link rel="icon" type="image/png" href="{{ STATIC_URL }}images/favicon.png">
-    <link rel="apple-touch-icon" href="{{ STATIC_URL }}images/favicon.png">
-
-<!-- CSS -->
+{% block top_header %}
+{% endblock top_header %}
 
 
-</head>
-
-
-<body class="">
-
-     <!-- Preloader -->
-
-    <!-- End Preloader -->
-
-    <!-- Sidemenu -->
-
-    <!--End Sidemenu -->
-
+{% block main_container %}
 
     <!-- Site Wraper -->
     <div class="wrapper">
@@ -57,200 +33,181 @@
         <!-- HEADER -->
 
         <div class="container">
-					<div class="logo">
-						<a href="http://wedisson.com">
-						<div class="logo-text">International Wedding<br>Photography Contest</div>
-						</a>
-					</div>
+        <div class="logo">
+        <a href="{% url 'home' %}">
+        <div class="logo-text">International Wedding<br>Photography Contest</div>
+        </a>
+        </div>
 
 
+        <ul class="navlinks text-center" id="yw0">
+        <li><a href="{% url 'home' %}"><span class="login">Award</span></a></li>
+        <li><a href="{% url 'user_login' %}"><span class="login">Log in</span></a></li>
+        </ul>
 
-                                        <ul class="navlinks text-center" id="yw0">
-<li><a href="http://wedisson.com/"><span class="login">Award</span></a></li>
-<li><a href="/user/login"><span class="login">Log in</span></a></li>
-<li><a class="button button_orange" href="/user/registration">Join</a></li>
-</ul>
+        </div>
 
-			</div>
+        
+        <!-- breadcrumbs -->
+        <div class="col-sm-12">
 
-
-        <!-- END HEADER -->
-
-
-       <!-- CONTENT --------------------------------------------------------------------------------->
-
-
-
-                    <!-- breadcrumbs -->
-                    	<div class="col-sm-12">
-		<!-- CONTENT --------------------------------------------------------------------------------->
-
-        <!-- Intro Section -->
-
-
-        <!-- End Intro Section -->
-
-
-        <!-- Login Section -->
-<section class="pt-15 pb-80" style="">
+            <!-- Login Section -->
+            <section class="pt-15 pb-80" style="">
             <div class="container ">
             <div class="row text-center">
-                    <div class="col-md-8 col-md-offset-2 mb-15">
-                        <h1>Registration</h1>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">
-                        <div class="border-box">
-            <form role="form" class="form-horizontal" id="registration-form" action="/user/registration" method="post">
-
-<div class="form-field-wrapper">
-<input class="input-sm form-full text-center" placeholder="Name" name="RegistrationForm[firstname]" id="RegistrationForm_firstname" type="text" /><div class="clearfix"></div><div id="RegistrationForm_firstname_em_" class="errorMessage" style="display:none"></div></div>
-
-<div class="form-field-wrapper">
-<input class="input-sm form-full text-center" placeholder="Lastname" name="RegistrationForm[lastname]" id="RegistrationForm_lastname" type="text" maxlength="20" /><div class="clearfix"></div><div id="RegistrationForm_lastname_em_" class="errorMessage" style="display:none"></div>
-<p style="margin-top:5px; font-size:12px; line-height:14px; color:#A7A7A7;">This First and Last Names will be written on the website and Awarded photos. Do not use the studio name. Only photos taken by this photographer may be added to this profile. Each membership and profile page is for one photographer only. If there are many photographers from the same studio, each photographer must sign up for his/her own membership account.</p>
-</div>
-
-<div class="form-field-wrapper">
-<input class="input-sm form-full text-center" placeholder="Business or Studio Name" name="RegistrationForm[business_name]" id="RegistrationForm_business_name" type="text" maxlength="25" /><div class="clearfix"></div><div id="RegistrationForm_business_name_em_" class="errorMessage" style="display:none"></div><p style="margin-top:5px; font-size:12px; line-height:14px; color:#A7A7A7;">If applicable</p>
-</div>
-
-<div class="form-field-wrapper">
-<input class="input-sm form-full text-center" placeholder="Instagram link" name="RegistrationForm[ig_link]" id="RegistrationForm_ig_link" type="text" maxlength="35" /><div class="clearfix"></div><div id="RegistrationForm_ig_link_em_" class="errorMessage" style="display:none"></div><p style="margin-top:5px; font-size:12px; line-height:14px; color:#A7A7A7;"><b>Example: @wedding</b><br>
-It will be published on the website and during posting on Instagram</p>
-</div>
-
-<div class="form-field-wrapper">
-<input class="input-sm form-full text-center" placeholder="Username" name="RegistrationForm[username]" id="RegistrationForm_username" type="text" maxlength="30" /><div class="clearfix"></div><div id="RegistrationForm_username_em_" class="errorMessage" style="display:none"></div></div>
-
-<div class="form-field-wrapper">
-<input class="input-sm form-full text-center" placeholder="Your City" name="RegistrationForm[city_id]" id="RegistrationForm_city_id" type="text" value="" /><div id="RegistrationForm_city_id_em_" class="errorMessage" style="display:none"></div><p class="gray text-center" style="font-size:14px;">start typing the name of your city...</p>
-
-</div>
-
-<div class="form-field-wrapper">
-<input class="input-sm form-full text-center" placeholder="Email" name="RegistrationForm[email]" id="RegistrationForm_email" type="text" /><div class="clearfix"></div><div id="RegistrationForm_email_em_" class="errorMessage" style="display:none"></div>
-<p style="margin-top:5px; font-size:12px; line-height:14px; color:#A7A7A7;">Your email address will not be displayed on the website.</p>
-</div>
+            <div class="col-md-8 col-md-offset-2 mb-15">
+            <h1>Registration</h1>
+            </div>
+            </div>
+            <div class="row">
+            <div class="col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">
+            <div class="border-box">
 
 
-<div class="form-field-wrapper">
-<input class="input-sm form-full text-center" placeholder="Password" name="RegistrationForm[password]" id="RegistrationForm_password" type="text" maxlength="128" /><p class="gray text-center" style="font-size:14px;">minimal length 4 symbols.</p><div id="RegistrationForm_password_em_" class="errorMessage" style="display:none"></div></div>
+            <!-- Registration form -->
+            <form role="form" class="form-horizontal" id="registration-form" action="{% url 'user_signup' %}" method="post">
+            {% csrf_token %}
 
-<div class="form-field-wrapper">
-<input class="input-sm form-full text-center" placeholder="Re-enter password" name="RegistrationForm[verifyPassword]" id="RegistrationForm_verifyPassword" type="text" /><div class="clearfix"></div><div id="RegistrationForm_verifyPassword_em_" class="errorMessage" style="display:none"></div></div>
+            <div class="form-field-wrapper">
+            <input autocomplete="off" class="input-sm form-full text-center"
+                   maxlength="50" placeholder="First Name" name="firstname" value="{{ signupform.data.firstname }}" type="text" required/>
+            <div class="clearfix"></div>
+            <div class="errorMessage" >{{ signupform.errors.firstname }}
+            </div>
+            </div>
+
+            <div class="form-field-wrapper">
+            <input autocomplete="off" class="input-sm form-full text-center" placeholder="Last Name"
+               name="lastname" type="text" value="{{ signupform.data.lastname }}" maxlength="50" />
+            <div class="clearfix"></div>
+            <div class="errorMessage" >{{ signupform.errors.lastname }}
+            </div>
+            <p style="margin-top:5px; font-size:12px; line-height:14px; color:#A7A7A7;">This First and Last Names will be written on the website and Awarded photos. Do not use the studio name. Only photos taken by this photographer may be added to this profile. Each membership and profile page is for one photographer only. If there are many photographers from the same studio, each photographer must sign up for his/her own membership account.</p>
+            </div>
+
+            <div class="form-field-wrapper">
+            <input autocomplete="off" class="input-sm form-full text-center" placeholder="Business or Studio Name"
+                   name="businessname" value="{{ signupform.data.businessname }}"type="text" maxlength="25" />
+            <div class="clearfix"></div>
+            <div class="errorMessage">{{ signupform.errors.businessname }}
+            </div>
+            <p style="margin-top:5px; font-size:12px; line-height:14px; color:#A7A7A7;">If applicable</p>
+            </div>
+
+            <div class="form-field-wrapper">
+            <input autocomplete="off" class="input-sm form-full text-center" placeholder="Instagram Link"
+                   name="instagram_link1" type="text" value="{{ signupform.data.instagram_link1 }}" maxlength="100" />
+            <div class="clearfix"></div>
+            <div class="errorMessage">{{ signupform.errors.instagram_link1 }}
+            </div>
+            <p style="margin-top:5px; font-size:12px; line-height:14px; color:#A7A7A7;"><b>Example: @wedding</b><br>
+            It will be published on the website and during posting on Instagram</p>
+            </div>
+
+            <div class="form-field-wrapper">
+            <input autocomplete="off" class="input-sm form-full text-center" placeholder="Username"
+                   value="{{ signupform.data.username }}" name="username" type="text" maxlength="30" required/>
+            <div class="clearfix"></div>
+            <div class="errorMessage">{{ signupform.username.errors }}
+            </div>
+            </div>
+
+            <div class="form-field-wrapper">
+            <input autocomplete="off" class="input-sm form-full text-center" placeholder="Contact Number"
+                   value="{{ signupform.data.primary_contact_number }}" name="primary_contact_number" type="text" maxlength="15" required/>
+            <div class="clearfix"></div>
+            <div class="errorMessage">{{ signupform.errors.primary_contact_number }}
+            </div>
+            </div>
 
 
+            <div class="form-field-wrapper">
+            <select class="input-sm form-full text-center" placeholder="Your Country"
+                   id="awd_country" name="countryval" required >
+                    <option value="-1">Select Country</option>
+                {% for k in country %}
+                    <option value="{{ k.id }}">{{ k.name }}</option>
+                {% endfor %}
+
+            </select>
+
+            <div class="errorMessage">{{ signupform.errors.countryval }}
+            </div>
+{#            <p class="gray text-center" style="font-size:14px;">Start typing the name of your country...</p>#}
+            </div>
+
+            <div class="form-field-wrapper">
+            <input autocomplete="off" class="input-sm form-full text-center" placeholder="Your City"
+                   name="city" value="{{ signupform.data.city }}" type="text" value="" />
+            <div class="errorMessage">{{ signupform.errors.city }}
+            </div>
+{#            <p class="gray text-center" style="font-size:14px;">start typing the name of your city...</p>#}
+            </div>
+
+            <div class="form-field-wrapper">
+            <input autocomplete="off" class="input-sm form-full text-center" placeholder="Email"
+                   name="email" value="{{ signupform.data.email }}" type="text" required/>
+            <div class="clearfix"></div>
+            <div id="RegistrationForm_email_em_" class="errorMessage">{{ signupform.errors.email }}
+            </div>
+            <p style="margin-top:5px; font-size:12px; line-height:14px; color:#A7A7A7;">Your email address will not be displayed on the website.</p>
+            </div>
 
 
+            <div class="form-field-wrapper">
+            <input autocomplete="off" class="input-sm form-full text-center" placeholder="Password"
+                   name="password" value="{{ signupform.data.password }}" type="text" maxlength="20" />
+            <p class="gray text-center" style="font-size:14px;">Minimal length 6 symbols.</p>
+            <div id="RegistrationForm_password_em_" class="errorMessage">{{ signupform.errors.password }}
+            </div>
+            </div>
 
-<div class="spacer-15"></div>
-<button name="submit" id="form-submit" type="submit" class="text-center btn center-block btn-md btn-black-line">Let's go! <i class="fa fa-chevron-right ml-10"></i></button>
 
-            </form>        </div>
-                    </div>
+            <div class="spacer-15"></div>
+            <button name="submit" id="form-submit" type="submit" class="text-center btn center-block btn-md btn-black-line">Let's go!
+                <i class="fa fa-chevron-right ml-10"></i>
+            </button>
+            </form>
+            <!-- Registration form ends -->
 
-                </div>
+            </div>
+            </div>
+
+            </div>
             </div>
         </section>
-        <!-- End Login Section -->
-
-        <!-- End CONTENT ------------------------------------------------------------------------------>
-
-		    <!-- JS -->
+            <!-- End Login Section -->
 
 
-		<script>
+<script>
 $(function(){
-    createCitiesList("RegistrationForm_city_id");
+createCitiesList("RegistrationForm_city_id");
 })
 </script>
 
 
-                              	</div><!-- content -->
-
-                     <!-- END CONTENT ---------------------------------------------------------------------------->
-
-        <!-- FOOTER -->
+</div>
 
 <div class="clearfix"></div>
-<footer class="footer pt-15">
 
-        <!-- Yandex.Metrika counter -->
-<script type="text/javascript">
-(function (d, w, c) {
-    (w[c] = w[c] || []).push(function() {
-        try {
-            w.yaCounter29394455 = new Ya.Metrika({id:29394455,
-                    clickmap:true,
-                    trackLinks:true,
-                    accurateTrackBounce:true});
-        } catch(e) { }
-    });
+<!-- Scroll Top -->
+<a class="scroll-top">
+<i class="fa fa-angle-double-up"></i>
+</a>
 
-    var n = d.getElementsByTagName("script")[0],
-        s = d.createElement("script"),
-        f = function () { n.parentNode.insertBefore(s, n); };
-    s.type = "text/javascript";
-    s.async = true;
-    s.src = (d.location.protocol == "https:" ? "https:" : "http:") + "//mc.yandex.ru/metrika/watch.js";
 
-    if (w.opera == "[object Opera]") {
-        d.addEventListener("DOMContentLoaded", f, false);
-    } else { f(); }
-})(document, window, "yandex_metrika_callbacks");
-</script>
-<noscript><div><img src="//mc.yandex.ru/watch/29394455" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
-<!-- /Yandex.Metrika counter -->
+</div>
 
-            <!-- Copyright Bar -->
-            <section class="copyright ptb-15">
-                <div class="container">
-                    <p class="">
-                        © 2015 <b>Wedisson Awards</b> All Rights Reserved
-                        <br />
-                        <div class="col-md-12 mb-30">
-                        <ul class="link list-inline">
-                            <li><a href="http://wedisson.com/">Award</a></li>
-                            <li><a href="http://wedisson.com/photographers">Photographers</a></li>
-                            <li><a href="http://wedisson.com/join_us">FAQ</a></li>
-                            <li><a href="http://wedissonaward.com/user/registration">Register</a></li>
-                            <li><a href="http://wedissonaward.com/user/login">Log in</a></li>
-
-                        </ul>
-                    </div>
-                    </p>
-                </div>
-            </section>
-            <!-- End Copyright Bar -->
+{% endblock main_container %}
 
 
 
-
-        </footer>
-        <!-- END FOOTER -->
-
-        <!-- Scroll Top -->
-        <a class="scroll-top">
-            <i class="fa fa-angle-double-up"></i>
-        </a>
-        <!-- End Scroll Top -->
-
-    </div>
-    <!-- Site Wraper End -->
+{% block footer %}
+    {{ block.super }}
+{% endblock footer %}
 
 
+{% block js_section_bottom %}
+    {{ block.super }}
+{% endblock js_section_bottom %}
 
-
-
-
-<script type="text/javascript">
-/*<![CDATA[*/
-jQuery(function($) {
-$('#registration-form').yiiactiveform({'attributes':[{'inputID':'RegistrationForm_firstname','errorID':'RegistrationForm_firstname_em_'},{'inputID':'RegistrationForm_lastname','errorID':'RegistrationForm_lastname_em_'},{'inputID':'RegistrationForm_business_name','errorID':'RegistrationForm_business_name_em_'},{'inputID':'RegistrationForm_ig_link','errorID':'RegistrationForm_ig_link_em_'},{'inputID':'RegistrationForm_username','errorID':'RegistrationForm_username_em_'},{'inputID':'RegistrationForm_city_id','errorID':'RegistrationForm_city_id_em_'},{'inputID':'RegistrationForm_email','errorID':'RegistrationForm_email_em_'},{'inputID':'RegistrationForm_password','errorID':'RegistrationForm_password_em_'},{'inputID':'RegistrationForm_verifyPassword','errorID':'RegistrationForm_verifyPassword_em_'}]});
-});
-/*]]>*/
-</script>
-</body>
-</html>

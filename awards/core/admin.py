@@ -65,7 +65,7 @@ class SettingAdmin(admin.ModelAdmin):
 
 class FaqsAdmin(admin.ModelAdmin):
 
-    list_display = ('id', 'title', 'description')
+    list_display = ('id', 'title', 'priority', 'description')
     save_on_top = True
     list_per_page = 40
     ordering = ('created_date',)
@@ -84,13 +84,13 @@ class FooterAdmin(admin.ModelAdmin):
 
     form = FooterImageForm
     inlines = [ImageFooterAdmin]
-    list_display = ('id', 'link1', 'created_date', 'modified_date')
-    search_fields = ['id']
+    list_display = ('id', 'link1', 'priority', 'active', 'created_date', 'modified_date')
+    search_fields = ['id', 'link1']
     ordering = ('-created_date',)
     readonly_fields = ['created_date', 'modified_date']
 
     class Media:
-        js = ('/static/js/footeradmin.js',)
+        js = ('/static/styles/js/footeradmin.js',)
 
     # def get_footer_url(self, obj):
     #     ''' Make the urls clickable '''
