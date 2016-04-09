@@ -43,9 +43,9 @@
 
 
         {% if request.user.is_authenticated %}
-            <input typ="button" value="Logout" />
+            <a id="awd_logout" href="/accounts/logout" >Logout</a>
         {% else %}
-            <input typ="button" value="Login" />
+            <input type="button" value="Login" />
         {% endif %}
 
 

@@ -188,6 +188,28 @@ class UserChangeForm(forms.ModelForm):
 #
 
 
+class UserLoginnForm(ModelForm):
+    """
+        A form for updating users. Includes all the fields on
+        the user, and extra field for  buyer_type/seller_type .
+    """
+
+    username = forms.CharField(min_length=6, max_length=30, required=True)
+    password = forms.CharField(required=True, min_length=6, max_length=20)
+
+    class Meta:
+        model = get_user_model()
+        fields = ('username', 'password')
+
+    def clean(self):
+        cleaned_data = super(UserLoginnForm, self).clean()
+
+        if len(self._errors) > 0:
+            return cleaned_data
+        return cleaned_data
+
+
+
 class SignupForm(forms.ModelForm):
 
     firstname = forms.CharField(label="First Name", max_length=50, min_length=2)

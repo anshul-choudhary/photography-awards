@@ -1,41 +1,17 @@
+{% extends 'site_base.html' %}
+{% load compress %}
 
+{% block meta_tags %}
+    {{block.super}}
+{% endblock meta_tags %}
 
-<!DOCTYPE html>
-<html>
-<head>
-    <meta charset="utf-8" />
+{% block title %}
+    {{ block.super }}
+{% endblock title %}
 
-
-    <!-- CSS -->
-    <link rel="stylesheet" href="{{ STATIC_URL }}styles/css/fonts.css" type="text/css">
-    <link href="{{ STATIC_URL }}styles/css/style.css" rel="stylesheet" type="text/css" />
-    <link href="{{ STATIC_URL }}styles/css/bootstrap.css" rel="stylesheet" type="text/css" />
-    <link href="{{ STATIC_URL }}styles/css/font-awesome.css" rel="stylesheet" type="text/css" />
-    <link href="{{ STATIC_URL }}styles/css/master.css" rel="stylesheet" type="text/css" />
-    <link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}styles/css/jquery-ui.css" />
-
-
-
-<script type="text/javascript" src="{{ STATIC_URL }}styles/js/plugin/jquery.js"></script>
-<script type="text/javascript" src="{{ STATIC_URL }}styles/js/plugin/jquery-ui.min.js"></script>
-<script type="text/javascript" src="{{ STATIC_URL }}styles/js/plugin/bootstrap.min.js"></script>
-<script type="text/javascript" src="{{ STATIC_URL }}styles/js/plugin/jquery.maskedinput.min.js"></script>
-<script type="text/javascript" src="{{ STATIC_URL }}styles/js/site.js"></script>
-<title>Wedisson Award - Login</title>
-<meta name="author" content="nileforest">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
-<!--[if IE]><meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'><![endif]-->
-
-    <!-- Favicone Icon -->
-    <link rel="shortcut icon" type="image/x-icon" href="{{ STATIC_URL }}images/favicon.ico">
-    <link rel="icon" type="image/png" href="{{ STATIC_URL }}images/favicon.png">
-    <link rel="apple-touch-icon" href="{{ STATIC_URL }}images/favicon.png">
-
-<!-- CSS -->
-
+{% block css_section %}
+    {{ block.super }}
     <style>
-
-
         input:-webkit-autofill,
         input:-webkit-autofill:hover,
         input:-webkit-autofill:focus,
@@ -43,179 +19,134 @@
             transition: all 5000s ease-in-out 0s;
             transition-property: background-color, color;
         }
+
+    .errorMessage{
+        color: red;
+    }
     </style>
 
+{% endblock css_section %}
 
-</head>
+{% block top_header %}
+{% endblock top_header %}
 
 
-<body class="">
-
-     <!-- Preloader -->
-
-    <!-- End Preloader -->
-
-    <!-- Sidemenu -->
-    
-    <!--End Sidemenu -->
+{% block main_container %}
 
 
     <!-- Site Wraper -->
     <div class="wrapper">
 
         <!-- HEADER -->
+        <div class="container">
+        <div class="logo">
+        <a href="{% url 'home' %}">
+        <div class="logo-text">International Wedding<br>Photography Contest</div>
+        </a>
+        </div>
 
-        <div class="container">						
-					<div class="logo">
-						<a href="http://wedisson.com">
-						<div class="logo-text">International Wedding<br>Photography Contest</div>
-						</a>
-					</div>
 
-                  
-                    
-                                        <ul class="navlinks text-center" id="yw0">
-<li><a href="/"><span class="login">Award</span></a></li>
-<li><a href="/user/login"><span class="login">Log in</span></a></li>
-<li><a class="button button_orange" href="/user/registration">Join</a></li>
-</ul>
 
-			</div>
-        
-        
+        <ul class="navlinks text-center" id="yw0">
+        <li><a href="{% url 'home' %}"><span class="login">Award</span></a></li>
+{#        <li><a href="/user/login"><span class="login">Log in</span></a></li>#}
+        <li><a class="button button_orange" href="{% url 'user_signup' %}">Join</a></li>
+        </ul>
+
+        </div>
+
+
         <!-- END HEADER -->
-        
-        
-       <!-- CONTENT ---------------------------------------------------------------------------------> 
+
+
+        <!-- CONTENT --------------------------------------------------------------------------------->
 
 
 
-                    <!-- breadcrumbs -->
-                    	<div class="col-sm-12">
-		
-<!-- CONTENT --------------------------------------------------------------------------------->
+        <!-- breadcrumbs -->
+        <div class="col-sm-12">
 
-        <!-- Intro Section -->
-        
-       
-        <!-- End Intro Section -->
 
 
         <!-- Login Section -->
-<section class="pt-15 pb-80" style="">
-            <div class="container">
-            <div class="row text-center">
-                    <div class="col-md-8 col-md-offset-2 mb-15">
-                        <h1>Login</h1>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">
+        <section class="pt-15 pb-80" style="">
+        <div class="container">
+        <div class="row text-center">
+        <div class="col-md-8 col-md-offset-2 mb-15">
+        <h1>Login</h1>
+        </div>
+        </div>
+        <div class="row">
+        <div class="col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">
 
-                        <div class="border-box">
-                                                                    
-           <form class="form-horizontal" role="form" id="user-login" action="/user/login" method="post">      
-      
-        
-        
-<div class="form-field-wrapper">
-<input class="input-sm form-full text-center" placeholder="E-mail or Username" name="UserLogin[username]" id="UserLogin_username" type="text" /><div class="clearfix"></div></div>
-                               
-<div class="form-field-wrapper">
-<input class="input-sm form-full text-center" placeholder="Password" name="UserLogin[password]" id="UserLogin_password" type="password" /><div class="clearfix"></div></div>
-                               
+        <div class="border-box">
 
-                                <div class="spacer-15"></div>
-                                <button name="submit" id="form-submit" type="submit" class="btn btn-md btn-black-line">Sign In <i class="fa fa-chevron-right ml-10"></i></button>
-                                
-                                <a href="/user/recovery" class="float-right">Forgot password?</a>
-                           </form>                        </div>
-                    </div>
 
-                </div>
+        <form class="form-horizontal" role="form" id="user-login" action="{% url 'user_login' %}" method="post">
+        {% csrf_token %}
+        <div class="form-field-wrapper">
+        <input autocomplete="off" class="input-sm form-full text-center"
+               placeholder="Username" name="username" value="{{ login.data.username }}" type="text" required/>
+            <div class="clearfix"></div>
+            <div class="errorMessage">{{ login.errors.username }}
             </div>
+        </div>
+
+        <div class="form-field-wrapper">
+        <input autocomplete="off" class="input-sm form-full text-center" placeholder="Password"
+               name="password" type="text" value="{{ login.data.password }}" required/>
+            <div class="clearfix"></div>
+            <div class="errorMessage">{{ login.errors.password }}
+            </div>
+        </div>
+
+        <div class="spacer-15"></div>
+        <button name="submit" id="form-submit" type="submit"
+                class="btn btn-md btn-black-line">Sign In <i class="fa fa-chevron-right ml-10"></i>
+        </button>
+
+        <a href="#" class="float-right">Forgot password?</a>
+        </form>
+
+        </div>
+        </div>
+
+        </div>
+        </div>
         </section>
         <!-- End Login Section -->
 
         <!-- End CONTENT ------------------------------------------------------------------------------>
 
 
-	</div><!-- content -->
-                    
-                     <!-- END CONTENT ---------------------------------------------------------------------------->
+        </div><!-- content -->
 
-        <!-- FOOTER -->
 
-<div class="clearfix"></div>
-<footer class="footer pt-15">
-            
-        <!-- Yandex.Metrika counter -->
-<script type="text/javascript">
-(function (d, w, c) {
-    (w[c] = w[c] || []).push(function() {
-        try {
-            w.yaCounter29394455 = new Ya.Metrika({id:29394455,
-                    clickmap:true,
-                    trackLinks:true,
-                    accurateTrackBounce:true});
-        } catch(e) { }
-    });
-
-    var n = d.getElementsByTagName("script")[0],
-        s = d.createElement("script"),
-        f = function () { n.parentNode.insertBefore(s, n); };
-    s.type = "text/javascript";
-    s.async = true;
-    s.src = (d.location.protocol == "https:" ? "https:" : "http:") + "//mc.yandex.ru/metrika/watch.js";
-
-    if (w.opera == "[object Opera]") {
-        d.addEventListener("DOMContentLoaded", f, false);
-    } else { f(); }
-})(document, window, "yandex_metrika_callbacks");
-</script>
-<noscript><div><img src="//mc.yandex.ru/watch/29394455" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
-<!-- /Yandex.Metrika counter -->
-
-            <!-- Copyright Bar -->
-            <section class="copyright ptb-15">
-                <div class="container">
-                    <p class="">
-                        © 2015 <b>Wedisson Awards</b> All Rights Reserved
-                        <br />
-                        <div class="col-md-12 mb-30">
-                        <ul class="link list-inline">
-                            <li><a href="http://wedisson.com/">Award</a></li>
-                            <li><a href="http://wedisson.com/photographers">Photographers</a></li>
-                            <li><a href="http://wedisson.com/join_us">FAQ</a></li>
-                            <li><a href="http://wedissonaward.com/user/registration">Register</a></li>
-                            <li><a href="http://wedissonaward.com/user/login">Log in</a></li>
-
-                        </ul>
-                    </div>
-                    </p>
-                </div>
-            </section>
-            <!-- End Copyright Bar -->
+    <div class="clearfix"></div>
 
 
 
-
-        </footer>
-        <!-- END FOOTER -->
-
-        <!-- Scroll Top -->
-        <a class="scroll-top">
-            <i class="fa fa-angle-double-up"></i>
-        </a>
-        <!-- End Scroll Top -->
+    <!-- Scroll Top -->
+    <a class="scroll-top">
+    <i class="fa fa-angle-double-up"></i>
+    </a>
+    <!-- End Scroll Top -->
 
     </div>
     <!-- Site Wraper End -->
 
 
 
+{% endblock main_container %}
 
 
 
-</body>
-</html>
+{% block footer %}
+    {{ block.super }}
+{% endblock footer %}
+
+
+{% block js_section_bottom %}
+    {{ block.super }}
+{% endblock js_section_bottom %}
+

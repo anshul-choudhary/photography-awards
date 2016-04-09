@@ -3,7 +3,7 @@ from django.contrib import admin
 from django.core.checks import messages
 from awards.utils import generate_user_id
 from useraccount.forms import UserCreationForm, UserChangeForm
-from useraccount.models import UserProfile
+from useraccount.models import UserProfile, Photographer
 
 
 class UserProfileAdmin(UserAdmin):
@@ -94,7 +94,8 @@ class UserProfileAdmin(UserAdmin):
         """ """
 
         if request.user.is_superuser:
-            obj.user_id = generate_user_id(prefix="USR")
+            if obj.user_id in [None,'']:
+                obj.user_id = generate_user_id(prefix="USR")
             if change and ('password' in form.changed_data):
                 obj.set_password(form.cleaned_data['password'])
             obj.save()
@@ -102,10 +103,72 @@ class UserProfileAdmin(UserAdmin):
             messages.error(request, "You are not authorized to create an entry")
         return
 
-    def change_view(self, request, object_id,extra_context=None):
+    # def change_view(self, request, object_id,extra_context=None):
+    #
+    #     result = super(UserProfileAdmin, self).change_view(request, object_id, extra_context)
+    #     result['Location'] = "/admin/useraccount/userprofile/"
+    #     return result
 
-        result = super(UserProfileAdmin, self).change_view(request, object_id, extra_context)
-        result['Location'] = "/admin/useraccount/userprofile/"
-        return result
 
+class PhotographerAdmin(admin.ModelAdmin):
+
+    list_display = (
+        'id', 'user_ref', 'user_id', 'firstname', 'lastname', 'username', \
+        'is_winner', 'activate_home_page', 'is_best_photographer', 'no_of_awards', 'created_date', \
+        'modified_date',
+    )
+
+    fieldsets = [
+        (
+            'User Information',
+            {
+                'fields': (
+                    'user_ref', 'user_id', 'username', 'firstname', 'lastname', 'user_ref__email',
+                    'primary_contact_number',
+                )
+            }
+        ),
+        (
+            'Photography Related Information',
+            {
+                'fields': (
+                    'instagram_link1', 'instagram_link2', 'is_winner', 'winner_month', 'winning_date', \
+                    'activate_home_page', 'home_page_desc', 'is_best_photographer'\
+                    'best_photographer_desc', 'no_of_awards', 'created_date',
+                    'modified_date'
+                )
+            }
+        ),
+    ]
+
+    readonly_fields = []
+    ordering = ('-created_date',)
+    list_filter = ('is_winner', 'activate_home_page', 'is_best_photographer', 'activate_home_page', \
+                   'created_date')
+
+    search_fields = ('id', 'user_id', 'username', 'user_ref__email')
+
+    # def save_model(self, request, obj, form, change):
+    #     """ """
+    #
+    #     if request.user.is_superuser:
+    #         obj.user_id = generate_user_id(prefix="USR")
+    #         if change and ('password' in form.changed_data):
+    #             obj.set_password(form.cleaned_data['password'])
+    #         obj.save()
+    #     else:
+    #         messages.error(request, "You are not authorized to create an entry")
+    #     return
+
+    # def change_view(self, request, object_id,extra_context=None):
+    #
+    #     result = super(UserProfileAdmin, self).change_view(request, object_id, extra_context)
+    #     result['Location'] = "/admin/useraccount/userprofile/"
+    #     return result
+
+
+admin.site.register(Photographer, PhotographerAdmin)
 admin.site.register(UserProfile, UserProfileAdmin)
+
+
+
