@@ -201,6 +201,14 @@ class UserLoginnForm(ModelForm):
         model = get_user_model()
         fields = ('username', 'password')
 
+    def clean_username(self):
+
+        cleaned_data = super(UserLoginnForm, self).clean()
+
+        if len(self._errors) > 0:
+            return cleaned_data
+        return cleaned_data
+
     def clean(self):
         cleaned_data = super(UserLoginnForm, self).clean()
 
@@ -274,5 +282,105 @@ class SignupForm(forms.ModelForm):
         if commit:
             user.save()
         return user
+
+
+
+
+class EditMyprofile(forms.ModelForm):
+
+    username = forms.CharField(label="User Name", max_length=20, min_length=6, required=True)
+    firstname = forms.CharField(label="First Name", max_length=50, min_length=2, required=True)
+    lastname = forms.CharField(label="Last Name", max_length=50, min_length=2, required=True)
+    businessname = forms.CharField(label="Business Name", max_length=30, min_length=6, required=True)
+    instagram_link1 = forms.CharField(label="Instagram Link", max_length=100, min_length=10, required=True)
+    primary_contact_number = forms.CharField(label="Contact Number", max_length=15, min_length=8, required=True)
+    countryval = forms.IntegerField(label="Country", required=True)
+    city = forms.CharField(label="City", max_length=50, required=True)
+    email = forms.EmailField(label="Email", max_length=50, required=True)
+
+
+    def __init__(self, *args, **kwargs):
+        super(EditMyprofile, self).__init__(*args, **kwargs)
+
+        # del self.fields['primary_contact_number']
+        # del self.fields['username']
+        # del self.fields['email']
+        # del self.fields['firstname']
+        # del self.fields['lastname']
+        # del self.fields['businessname']
+        # del self.fields['instagram_link1']
+        # del self.fields['countryval']
+        # del self.fields['city']
+
+    class Meta:
+        model = get_user_model()
+        fields = ("firstname", "lastname", "email", "primary_contact_number",
+                  "instagram_link1", "city", "username")
+
+    def validate_unique(self):
+        pass
+
+    def clean(self):
+        """ Clean Method """
+
+        cleaned_data = super(EditMyprofile, self).clean()
+
+        if len(self._errors) > 0:
+            if 'username' in self._errors.keys():
+                del self._errors['username']
+
+            if 'country' in self._errors.keys():
+                del self._errors['country']
+
+            if 'primary_contact_number' in self._errors.keys() and self._errors['primary_contact_number'] == "User with this Primary contact number already exists.":
+                del self._errors['primary_contact_number']
+
+            if 'email' in self._errors.keys() and self._errors['email'] == "User with this Email address already exists.":
+                del self._errors['email']
+
+            # return cleaned_data
+
+        try:
+            ActualUserObj = UserProfile.objects.get(username__exact=cleaned_data['username'])
+            try:
+                UserObj = UserProfile.objects.get(primary_contact_number__exact=cleaned_data['primary_contact_number'])
+            except:
+                UserObj = None
+            if UserObj is None or (UserObj.primary_contact_number == ActualUserObj.primary_contact_number):
+                pass
+            else:
+                self._errors['primary_contact_number'] = ErrorList()
+                self._errors['primary_contact_number'].append("Contact Number already exist, Please enter another contact")
+
+            try:
+                UserObj = UserProfile.objects.get(email__exact=cleaned_data['email'])
+            except:
+                UserObj=None
+
+            if UserObj is None or (UserObj.email == ActualUserObj.email):
+                pass
+            else:
+                self._errors['email'] = ErrorList()
+                self._errors['email'].append("Email already exist, Please enter another email")
+
+            if cleaned_data['countryval'] == -1:
+                self._errors['countryval'] = ErrorList()
+                self._errors['countryval'].append("This field is required")
+
+        except Exception as e:
+            pass
+        return cleaned_data
+
+
+    def save(self, instance=None):
+
+        # user = super(SignupForm, self).save(commit=False)
+        try:
+            if instance is not None:
+                instance.save()
+        except:
+            pass
+        return instance
+
 
 

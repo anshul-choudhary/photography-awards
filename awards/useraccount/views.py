@@ -4,8 +4,8 @@ from django.shortcuts import redirect
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from core.models import Country
-from useraccount.forms import SignupForm, UserLoginnForm
-from useraccount.models import Photographer
+from useraccount.forms import SignupForm, UserLoginnForm, EditMyprofile
+from useraccount.models import Photographer, UserProfile
 
 
 class SignupView(APIView):
@@ -72,7 +72,7 @@ class UserLogin(APIView):
                     ctx['email'] = user.email
                     ctx['businessname'] = user.businessname
                     ctx['city'] = user.city
-                    ctx['country'] = user.country.id
+                    ctx['countryval'] = user.country.id
                     request.session['loggedin_user_credentials'] = ctx
                     return redirect('my_profile')
 
@@ -85,6 +85,8 @@ class UserLogin(APIView):
                 return Response({'login': loginform}, template_name='login.html')
 
         else:
+            if 'username' in loginform.errors:
+                del loginform.errors['username']
             loginform.errors['password'] = '* Invalid username and password'
             return Response({'login': loginform}, template_name='login.html')
 
@@ -99,7 +101,8 @@ class UserSignupView(APIView):
     def get(self, request, *args, **kwargs):
         ''' Receives the request '''
 
-        return Response({}, template_name=self.template_name)
+        CountryQuerySet = Country.objects.all().order_by('name')
+        return Response({'country': CountryQuerySet}, template_name=self.template_name)
 
     def post(self, request, *args, **kwargs):
 
@@ -134,7 +137,7 @@ class UserSignupView(APIView):
             ctx['email'] = signupform.cleaned_data['email']
             ctx['businessname'] = signupform.cleaned_data['businessname']
             ctx['city'] = signupform.cleaned_data['city']
-            ctx['country'] = signupform.cleaned_data['countryval']
+            ctx['countryval'] = signupform.cleaned_data['countryval']
             request.session['loggedin_user_credentials'] = ctx
 
             #Dummy Check
@@ -154,6 +157,37 @@ class MyProfile(APIView):
     ''' Home Page view '''
 
     template_name = 'my-profile.html'
+    editform = EditMyprofile
+
+    def get(self, request, *args, **kwargs):
+        ''' Receives the request '''
+
+        ctx = {}
+        if 'loggedin_user_credentials' in request.session:
+            ctx = request.session['loggedin_user_credentials']
+
+        CountryQuerySet = Country.objects.all().order_by('name')
+        editform = self.editform(ctx)
+
+        editform.errors['firstname'] = ""
+        editform.errors['city'] = ""
+        editform.errors['primary_contact_number'] = ""
+        editform.errors['businessname'] = ""
+        editform.errors['email'] = ErrorList()
+        editform.errors['username'] = ""
+        editform.errors['countryval'] = ""
+
+
+        ctx.update({'country': CountryQuerySet})
+        ctx.update({'editform': editform})
+        return Response(ctx, template_name=self.template_name)
+
+
+
+class MyUploads(APIView):
+    ''' Home Page view '''
+
+    template_name = 'uploads.html'
 
     def get(self, request, *args, **kwargs):
         ''' Receives the request '''
@@ -162,5 +196,109 @@ class MyProfile(APIView):
         if 'loggedin_user_credentials' in request.session:
             ctx = request.session['loggedin_user_credentials']
         return Response(ctx, template_name=self.template_name)
+
+    def post(self, request, *args, **kwargs):
+        ''' Receives the request '''
+
+        pass
+        # return Response(ctx, template_name=self.template_name)
+
+
+class EditMyProfile(APIView):
+    ''' Home Page view '''
+
+    template_name = 'uploads.html'
+    editform = EditMyprofile
+
+    def get(self, request, *args, **kwargs):
+        ''' Receives the request '''
+
+        ctx = {}
+        if 'loggedin_user_credentials' in request.session:
+            ctx = request.session['loggedin_user_credentials']
+
+        CountryQuerySet = Country.objects.all().order_by('name')
+        editform = self.editform(ctx)
+
+        editform.errors['firstname'] = ""
+        editform.errors['city'] = ""
+        editform.errors['primary_contact_number'] = ""
+        editform.errors['businessname'] = ""
+        editform.errors['email'] = ErrorList()
+        editform.errors['username'] = ""
+        editform.errors['countryval'] = ""
+
+
+        ctx.update({'country': CountryQuerySet})
+        ctx.update({'editform': editform})
+        return Response(ctx, template_name='my-profile.html')
+
+
+    def edit_form_save(self, UserObj, editform):
+
+        ctx = {}
+        if 'loggedin_user_credentials' in self.request.session:
+            ctx = self.request.session['loggedin_user_credentials']
+
+        UserObj.firstname = editform.data['firstname']
+        UserObj.lastname = editform.data['lastname']
+        UserObj.instagram_link1 = editform.data['instagram_link1']
+        UserObj.email = editform.data['email']
+        UserObj.businessname = editform.data['businessname']
+        UserObj.city = editform.data['city']
+        UserObj.primary_contact_number = editform.data['primary_contact_number']
+        UserObj.country = Country.objects.get(id=int(editform.data['countryval']))
+        UserObj.save()
+        # UserObj = editform.save(instance=UserObj)
+
+        #Add values in session
+        ctx['username'] = editform.data['username']
+        ctx['primary_contact_number'] = editform.data['primary_contact_number']
+        ctx['firstname'] = editform.data['firstname']
+        ctx['lastname'] = editform.data['lastname']
+        ctx['instagram_link1'] = editform.data['instagram_link1']
+        ctx['email'] = editform.data['email']
+        ctx['businessname'] = editform.data['businessname']
+        ctx['city'] = editform.data['city']
+        ctx['countryval'] = editform.data['countryval']
+
+        self.request.session['loggedin_user_credentials'] = ctx
+        return redirect("my_uploads")
+
+
+    def post(self, request, *args, **kwargs):
+
+        kwargs = request.POST.copy()
+        editform = self.editform(kwargs)
+
+        if editform.is_valid():
+            UserObj = request.user
+            return self.edit_form_save(UserObj, editform)
+
+        else:
+            # ActualUserObj = UserProfile.objects.get(username__exact=editform.data['username'])
+            # UserObj = UserProfile.objects.get(primary_contact_number__exact=editform.data['primary_contact_number'])
+            #
+            # process_to_save = True
+            # attrib = ['username', 'firstname', 'lastname', 'businessname', 'instagram_link1', 'countryval', 'city']
+            # for k in attrib:
+            #     if k in editform.errors:
+            #         process_to_save = False
+            #
+            # if process_to_save:
+            #     if 'primary_contact_number' in editform.errors and ActualUserObj.primary_contact_number == UserObj.primary_contact_number:
+            #         UserObj = UserProfile.objects.get(email__exact=editform.data['email'])
+            #         if 'email' in editform.errors and ActualUserObj.email == UserObj.email:
+            #             return self.edit_form_save(UserObj, editform)
+            #
+            #         else:
+            #             return self.edit_form_save(UserObj, editform)
+            #     else:
+            #         return self.edit_form_save(UserObj, editform)
+
+            CountryQuerySet = Country.objects.all().order_by('name')
+            return Response({'editform': editform, 'country': CountryQuerySet}, template_name='my-profile.html')
+
+
 
 

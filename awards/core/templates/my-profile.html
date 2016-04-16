@@ -1,191 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<META NAME="ROBOTS" CONTENT="NOINDEX, NOFOLLOW">
+<title>Dashboard</title>
 
-{% extends 'site_base.html' %}
-{% load compress %}
+<link href="{{ STATIC_URL }}styles/css/bootstrap.min.css" rel="stylesheet">
+<link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300' rel='stylesheet' type='text/css'>
 
-{% block meta_tags %}
-    {{block.super}}
-{% endblock meta_tags %}
+<link href="{{ STATIC_URL }}styles/css/font-awesome.min.css" rel="stylesheet">
+<link href="{{ STATIC_URL }}styles/css/styledash.css" rel="stylesheet">
+<link href="{{ STATIC_URL }}styles/css/style-responsive.css" rel="stylesheet">
+<link href="{{ STATIC_URL }}styles/css/kalendar.css" rel="stylesheet">
+<link href="{{ STATIC_URL }}styles/css/jquerysctipttop.css" rel="stylesheet" type="text/css">
+<script type="text/javascript" src="http://code.jquery.com/jquery.min.js"></script>
+<style>
+.errorMessage
+{
+    color: red;
+}
 
-{% block title %}
-    {{ block.super }}
-{% endblock title %}
+</style>
 
-{% block css_section %}
-    {{ block.super }}
-{% endblock css_section %}
+</head>
+<body class="dark-theme">
+<div class="header navbar navbar-inverse box-shadow navbar-fixed-top">
+  <div class="navbar-inner">
+    <div class="header-seperation">
+      <ul class="nav navbar-nav">
 
-{% block top_header %}
-{% endblock top_header %}
-
-
-{% block main_container %}
-
-    <!-- Site Wraper -->
-    <div class="wrapper">
-
-        <!-- HEADER -->
-
-        <div class="container">
-        <div class="logo">
-        <a href="{% url 'home' %}">
-        <div class="logo-text">International Wedding<br>Photography Contest</div>
-        </a>
-        </div>
-
-
-
-        <ul class="navlinks text-center" id="yw0">
-        <li><a href="{% url 'home' %}"><span class="login">Award</span></a></li>
-        <li><a href="{% url 'user_login' %}"><span class="login">Log in</span></a></li>
-        </ul>
-
-        </div>
+{#        <li class="sidebar-toggle-box"> <a href="#"><i class="fa fa-bars"></i></a> </li>#}
 
 
-        {% if request.user.is_authenticated %}
-            <a id="awd_logout" href="/accounts/logout" >Logout</a>
-        {% else %}
-            <input type="button" value="Login" />
-        {% endif %}
+        <li> <a href="index.html" class="qr-logo"><strong>qr</strong></a> </li>
+        <li class="hidden-xs"> <a href="{% url 'home' %}"><i class="fa fa-angle-double-left"></i> Go to the Home page</a> </li>
+        <li id="last-one"> <a href="{% url 'user_logout' %}">Log Out <i class="fa fa-angle-double-right"></i></a> </li>
+      </ul><!--/nav navbar-nav--> 
+    </div><!--/header-seperation--> 
+  </div><!--/navbar-inner--> 
+</div><!--/header--> 
 
 
-        <!-- breadcrumbs -->
-        <div class="col-sm-12">
+<div class="page-container">
+<div class="nav-collapse top-margin fixed box-shadow2 hidden-xs" id="sidebar">
+  <div class="leftside-navigation">
+    <div class="sidebar-section sidebar-user clearfix">
+{#      <div class="sidebar-user-avatar"> <a href="#"> <img alt="avatar" src="images/logo-webitude.png"> </div>#}
+      <div class="sidebar-user-name">DASHBOARD</div>
 
-            <!-- Login Section -->
-            <section class="pt-15 pb-80" style="">
-            <div class="container ">
-            <div class="row text-center">
-            <div class="col-md-8 col-md-offset-2 mb-15">
-            <h1>Registration</h1>
-            </div>
-            </div>
-            <div class="row">
-            <div class="col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">
-            <div class="border-box">
-
-
-            <!-- Registration form -->
-            <form role="form" class="form-horizontal" id="registration-form" action="{% url 'user_signup' %}" method="post">
-            {% csrf_token %}
-
-            <div class="form-field-wrapper">
-            <input class="input-sm form-full text-center"
-                   maxlength="50" placeholder="First Name" name="firstname" value="{{ signupform.data.firstname }}" type="text" required/>
-            <div class="clearfix"></div>
-            <div class="errorMessage" >{{ signupform.firstname.errors }}
-            </div>
-            </div>
-
-            <div class="form-field-wrapper">
-            <input class="input-sm form-full text-center" placeholder="Last Name"
-               name="lastname" type="text" value="{{ signupform.data.lastname }}" maxlength="50" />
-            <div class="clearfix"></div>
-            <div class="errorMessage" >{{ signupform.lastname.errors }}
-            </div>
-            <p style="margin-top:5px; font-size:12px; line-height:14px; color:#A7A7A7;">This First and Last Names will be written on the website and Awarded photos. Do not use the studio name. Only photos taken by this photographer may be added to this profile. Each membership and profile page is for one photographer only. If there are many photographers from the same studio, each photographer must sign up for his/her own membership account.</p>
-            </div>
-
-            <div class="form-field-wrapper">
-            <input class="input-sm form-full text-center" placeholder="Business or Studio Name"
-                   name="businessname" value="{{ signupform.data.businessname }}"type="text" maxlength="25" />
-            <div class="clearfix"></div>
-            <div class="errorMessage">{{ signupform.businessname.errors }}
-            </div>
-            <p style="margin-top:5px; font-size:12px; line-height:14px; color:#A7A7A7;">If applicable</p>
-            </div>
-
-            <div class="form-field-wrapper">
-            <input class="input-sm form-full text-center" placeholder="Instagram Link"
-                   name="instagram_link1" type="text" value="{{ signupform.data.Instagram }}" maxlength="100" />
-            <div class="clearfix"></div>
-            <div class="errorMessage">{{ signupform.instagram_link1.errors }}
-            </div>
-            <p style="margin-top:5px; font-size:12px; line-height:14px; color:#A7A7A7;"><b>Example: @wedding</b><br>
-            It will be published on the website and during posting on Instagram</p>
-            </div>
-
-            <div class="form-field-wrapper">
-            <input class="input-sm form-full text-center" placeholder="Username"
-                   value="{{ signupform.data.username }}" name="username" type="text" maxlength="30" required/>
-            <div class="clearfix"></div>
-            <div class="errorMessage">{{ signupform.username.errors }}
-            </div>
-            </div>
-
-            <div class="form-field-wrapper">
-            <input class="input-sm form-full text-center" placeholder="Your City"
-                   name="city" value="{{ signupform.data.city }}" type="text" value="" />
-            <div id="RegistrationForm_city_id_em_" class="errorMessage" style="display:none">
-            </div>
-{#            <p class="gray text-center" style="font-size:14px;">start typing the name of your city...</p>#}
-
-            </div>
-
-            <div class="form-field-wrapper">
-            <input class="input-sm form-full text-center" placeholder="Email"
-                   name="email" value="{{ signupform.data.email }}" type="text" required/>
-            <div class="clearfix"></div>
-            <div id="RegistrationForm_email_em_" class="errorMessage" style="display:none">{{ signupform.email.errors }}
-            </div>
-            <p style="margin-top:5px; font-size:12px; line-height:14px; color:#A7A7A7;">Your email address will not be displayed on the website.</p>
-            </div>
+{#      <div class="sidebar-user-links">#}
+{#          <a title="" data-placement="bottom" data-toggle="" href="profile.html" data-original-title="User">#}
+{#              <i class="fa fa-user"></i></a> <a title="" data-placement="bottom" data-toggle="" href="inbox.html" data-original-title="Messages">#}
+{#          <i class="fa fa-envelope-o"></i></a> <a title="" data-placement="bottom" data-toggle="" href="lockscreen.html" data-original-title="Logout">#}
+{#          <i class="fa fa-sign-out"></i></a>#}
+{#      </div>#}
 
 
-            <div class="form-field-wrapper">
-            <input class="input-sm form-full text-center" placeholder="Password"
-                   name="password" value="{{ signupform.data.password }}" type="password" maxlength="20" />
-            <p class="gray text-center" style="font-size:14px;">minimal length 6 symbols.</p>
-            <div id="RegistrationForm_password_em_" class="errorMessage">{{ signupform.password.errors }}
-            </div>
-            </div>
+    </div>
+    <ul id="nav-accordion" class="sidebar-menu">
+      <li>
+        <h3>Options</h3>
+      </li>
+{#      <li> <a href="dashboard.html"> <i class="fa fa-dashboard"></i> <span>Dashboard</span> </a> </li>#}
+      
+      <li> <a href="{% url 'my_profile' %}" {% if 'my-profile' in request.path %}class="active"{% endif %}>
+          <!--<i class="fa fa-upload"></i>-->
+          <span>My Profile</span>
+      </a>
+      </li>
+
+      <li> <a href="{% url 'my_uploads' %}" {% if 'my-uploads' in request.path %}class="active"{% endif %}>
+          <!--<i class="fa fa-upload"></i>-->
+          <span>My Uploads</span>
+      </a>
+      </li>
 
 
-            <div class="spacer-15"></div>
-            <button name="submit" id="form-submit" type="submit" class="text-center btn center-block btn-md btn-black-line">Let's go!
-                <i class="fa fa-chevron-right ml-10"></i>
-            </button>
-            </form>
-            <!-- Registration form ends -->
-
-            </div>
-            </div>
-
-            </div>
-            </div>
-        </section>
-            <!-- End Login Section -->
+    </ul><!--/nav-accordion sidebar-menu-->
+  </div><!--/leftside-navigation--> 
+</div><!--/sidebar--> 
 
 
-<script>
-$(function(){
-createCitiesList("RegistrationForm_city_id");
-})
-</script>
+<div id="main-content"> 
+  <div class="page-content">
+    <div class="row">
+      <div class="col-md-12">
+        <h2 class="span-box">{% comment %}<i class="fa fa-upload"></i>{% endcomment %} Welcome {{ username }}!!!</h2>
+      </div><!--/col-md-12--> 
+    </div><!--/row--> 
+   
+     <div class="row">
+        <div class="col-md-12">
+          <div class="block-web">
+            <div class="porlets-content">
 
 
-</div>
+              <form class="form-horizontal group-border-dashed" action="{% url 'edit_myprofile' %}" method="post" parsley-validate novalidate>
+                {% csrf_token %}
 
-<div class="clearfix"></div>
+                <div class="form-group">
+                  <label class="col-sm-3 control-label">First Name</label>
+                  <div class="col-sm-6">
+                    <input type="text" maxlength="50" class="form-control" value="{{ editform.data.firstname }}" name="firstname" required placeholder="Enter first name" />
+                    <div class="errorMessage">{{ editform.errors.firstname }}</div>
+                  </div>
+                </div><!--/form-group-->
 
-<!-- Scroll Top -->
-<a class="scroll-top">
-<i class="fa fa-angle-double-up"></i>
-</a>
+
+                <div class="form-group">
+                  <label class="col-sm-3 control-label">Last Name</label>
+                  <div class="col-sm-6">
+                    <input type="text" maxlength="50" class="form-control" value="{{ editform.data.lastname }}" name="lastname" required placeholder="Enter Last name" />
+                    <div class="errorMessage">{{ editform.errors.lasttname }}</div>
+                  </div>
+                </div><!--/form-group-->
 
 
-</div>
+                <div class="form-group">
+                  <label class="col-sm-3 control-label">Business Name</label>
+                  <div class="col-sm-6">
+                    <input type="text" maxlength="25" class="form-control" name="businessname" value="{{ editform.data.businessname }}" placeholder="Enter business name" />
+                    <div class="errorMessage">{{ editform.errors.businessname }}</div>
+                  </div>
+                </div><!--/form-group-->
 
-{% endblock main_container %}
+
+                <div class="form-group">
+                  <label class="col-sm-3 control-label">Instagram Link</label>
+                  <div class="col-sm-6">
+                    <input maxlength="100" type="text" class="form-control" name="instagram_link1" value="{{ editform.data.instagram_link1 }}" required placeholder="Enter instagram link" />
+                    <div class="errorMessage">{{ editform.errors.instagram_link1 }}</div>
+                  </div>
+                </div><!--/form-group-->
 
 
 
-{% block footer %}
-    {{ block.super }}
-{% endblock footer %}
+                <div class="form-group">
+                  <label class="col-sm-3 control-label">Primary Contact Number</label>
+                  <div class="col-sm-6">
+                    <input type="text" maxlength="15" class="form-control" name="primary_contact_number" value="{{ editform.data.primary_contact_number }}" placeholder="Enter contact number" />
+                    <div class="errorMessage">{{ editform.errors.primary_contact_number }}</div>
+                  </div>
+                </div><!--/form-group-->
 
 
-{% block js_section_bottom %}
-    {{ block.super }}
-{% endblock js_section_bottom %}
 
+
+                <div class="form-group">
+                  <label class="col-sm-3 control-label">Country</label>
+                  <div class="col-sm-6">
+                    <select id="source" class="form-control" name="countryval" required>
+                        <option value="-1">Select Country</option>
+                        {% for k in country %}
+                            <option name="countryval" {% if editform.data.countryval|slugify == k.id|slugify %}selected="selected"{% endif %} value="{{ k.id }}">{{ k.name }}</option>
+                        {% endfor %}
+                    </select>
+                    <div class="errorMessage">{{ editform.errors.countryval }}</div>
+                  </div>
+                </div><!--/form-group-->
+
+
+                <div class="form-group">
+                  <label class="col-sm-3 control-label">City</label>
+                  <div class="col-sm-6">
+                    <input maxlength="50" type="text" class="form-control" name="city" value="{{ editform.data.city }}" required placeholder="Enter city" />
+                    <div class="errorMessage">{{ editform.errors.city }}</div>
+                  </div>
+                </div><!--/form-group-->
+
+
+
+
+                <div class="form-group">
+                  <label class="col-sm-3 control-label">Email</label>
+                  <div class="col-sm-6">
+                    <input maxlength="100" type="text" class="form-control" name="email" value="{{ editform.data.email }}" required placeholder="Enter email" />
+                    <div class="errorMessage">{{ editform.errors.email }}</div>
+                  </div>
+                </div><!--/form-group-->
+
+
+
+                <div class="form-group">
+                  <div class="col-sm-offset-2 col-sm-10">
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                  </div>
+                </div><!--/form-group-->
+
+
+                    <input maxlength="50" type="hidden" name="username" value="{{ editform.data.username }}" />
+
+              </form>
+            </div><!--/porlets-content--> 
+          </div><!--/block-web--> 
+        </div><!--/col-md-12--> 
+      </div><!--/row end-->
+  </div>  <!--/page-content end--> 
+</div><!--/main-content end-->
+</div><!--/page-container end-->
+
+
+
+<script src="bootstrap/js/bootstrap.min.js"></script> 
+<script src="js/common-script.js"></script> 
+<script src="js/jquery.nicescroll.js"></script>
+</body>
+</html>

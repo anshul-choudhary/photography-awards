@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<META NAME="ROBOTS" CONTENT="NOINDEX, NOFOLLOW">
+<title>Dashboard</title>
+
+<link href="{{ STATIC_URL }}styles/css/bootstrap.min.css" rel="stylesheet">
+<link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300' rel='stylesheet' type='text/css'>
+
+<link href="{{ STATIC_URL }}styles/css/font-awesome.min.css" rel="stylesheet">
+<link href="{{ STATIC_URL }}styles/css/styledash.css" rel="stylesheet">
+<link href="{{ STATIC_URL }}styles/css/style-responsive.css" rel="stylesheet">
+<link href="{{ STATIC_URL }}styles/css/kalendar.css" rel="stylesheet">
+<link href="{{ STATIC_URL }}styles/css/jquerysctipttop.css" rel="stylesheet" type="text/css">
+<script type="text/javascript" src="http://code.jquery.com/jquery.min.js"></script>
+
+
+</head>
+<body class="dark-theme">
+<div class="header navbar navbar-inverse box-shadow navbar-fixed-top">
+  <div class="navbar-inner">
+    <div class="header-seperation">
+      <ul class="nav navbar-nav">
+        <li class="sidebar-toggle-box"> <a href="#"><i class="fa fa-bars"></i></a> </li>
+        <li> <a href="index.html" class="qr-logo"><strong>qr</strong></a> </li>
+        <li class="hidden-xs"> <a href="{% url 'home' %}"><i class="fa fa-angle-double-left"></i> Go to the Home page</a> </li>
+        <li id="last-one"> <a href="{% url 'user_logout' %}">Log Out <i class="fa fa-angle-double-right"></i></a> </li>
+      </ul><!--/nav navbar-nav--> 
+    </div><!--/header-seperation--> 
+  </div><!--/navbar-inner--> 
+</div><!--/header--> 
+
+
+<div class="page-container">
+<div class="nav-collapse top-margin fixed box-shadow2 hidden-xs" id="sidebar">
+  <div class="leftside-navigation">
+    <div class="sidebar-section sidebar-user clearfix">
+{#      <div class="sidebar-user-avatar"> <a href="#"> <img alt="avatar" src="images/logo-webitude.png"> </div>#}
+      <div class="sidebar-user-name">DASHBOARD</div>
+
+{#      <div class="sidebar-user-links">#}
+{#          <a title="" data-placement="bottom" data-toggle="" href="profile.html" data-original-title="User">#}
+{#              <i class="fa fa-user"></i></a> <a title="" data-placement="bottom" data-toggle="" href="inbox.html" data-original-title="Messages">#}
+{#          <i class="fa fa-envelope-o"></i></a> <a title="" data-placement="bottom" data-toggle="" href="lockscreen.html" data-original-title="Logout">#}
+{#          <i class="fa fa-sign-out"></i></a>#}
+{#      </div>#}
+
+
+    </div>
+    <ul id="nav-accordion" class="sidebar-menu">
+      <li>
+        <h3>Options</h3>
+      </li>
+
+      <li> <a href="{% url 'my_profile' %}" {% if 'my-profile' in request.path %}class="active"{% endif %}>
+          <!--<i class="fa fa-upload"></i>-->
+          <span>My Profile</span>
+      </a>
+      </li>
+
+      <li> <a href="{% url 'my_uploads' %}" {% if 'my-uploads' in request.path %}class="active"{% endif %}>
+          <!--<i class="fa fa-upload"></i>-->
+          <span>My Uploads</span>
+      </a>
+      </li>
+
+
+    </ul><!--/nav-accordion sidebar-menu--> 
+  </div><!--/leftside-navigation--> 
+</div><!--/sidebar--> 
+
+
+<div id="main-content"> 
+  <div class="page-content">
+    <div class="row">
+      <div class="col-md-12">
+        <h2 class="span-box">{% comment %}<i class="fa fa-upload"></i>{% endcomment %} Welcome {{ username }}!!!</h2>
+      </div><!--/col-md-12--> 
+    </div><!--/row--> 
+   
+     <div class="row">
+        <div class="col-md-12">
+          <div class="block-web">
+            <div class="porlets-content">
+              <form class="form-horizontal group-border-dashed" action="#" parsley-validate novalidate>
+                <div class="form-group">
+                  <label class="col-sm-3 control-label">First Name</label>
+                  <div class="col-sm-6">
+                    <input type="text" class="form-control" required placeholder="Enter first name" />
+                  </div>
+                </div><!--/form-group--> 
+
+                <div class="form-group">
+                  <label class="col-sm-3 control-label">Last Name</label>
+                  <div class="col-sm-6">
+                    <input type="text" class="form-control" required parsley-minlength="6" placeholder="Enter Last name" />
+                  </div>
+                </div><!--/form-group-->
+
+                <div class="form-group">
+                  <label class="col-sm-3 control-label">Business Name</label>
+                  <div class="col-sm-6">
+                    <input type="text" class="form-control" required parsley-minlength="6" placeholder="Enter business name" />
+                  </div>
+                </div><!--/form-group-->
+
+
+                <div class="form-group">
+                  <label class="col-sm-3 control-label">Email</label>
+                  <div class="col-sm-6">
+                    <input type="text" class="form-control" required placeholder="Enter email" />
+                  </div>
+                </div><!--/form-group-->
+
+
+                <div class="form-group">
+                  <label class="col-sm-3 control-label">City</label>
+                  <div class="col-sm-6">
+                    <input type="text" class="form-control" required placeholder="Enter city" />
+                  </div>
+                </div><!--/form-group-->
+
+
+                <div class="form-group">
+                  <label class="col-sm-3 control-label">Instagram Link</label>
+                  <div class="col-sm-6">
+                    <input type="text" class="form-control" required placeholder="Enter instagram link" />
+                  </div>
+                </div><!--/form-group-->
+
+
+{#                <div class="form-group">#}
+{#                  <label class="col-sm-3 control-label">Client Rate</label>#}
+{#                  <div class="col-sm-6">#}
+{#                    <input type="text" class="form-control" required placeholder="Add files" />#}
+{#                  </div>#}
+{#                </div><!--/form-group--> #}
+{#                <div class="form-group">#}
+{#                  <label class="col-sm-3 control-label">Date</label>#}
+{#                  <div class="col-sm-6">#}
+{#                    <div class="input-group input-large" data-date="13/07/2013" data-date-format="mm/dd/yyyy">#}
+{#                      <input type="text" class="form-control dpd1" name="from">#}
+{#                      <span class="input-group-addon">To</span>#}
+{#                      <input type="text" class="form-control dpd2" name="to">#}
+{#                    </div>#}
+{#                  </div>#}
+{#                </div><!--/form-group--> #}
+
+                <div class="form-group">
+                  <label class="col-sm-3 control-label">Country</label>
+                  <div class="col-sm-6">
+                    <select id="source" class="form-control">
+                        <option value="-1">Select Country</option>
+                        {% for k in country %}
+                            <option value="{{ k.id }}">{{ k.name }}</option>
+                        {% endfor %}
+                    </select>
+                  </div>
+                </div><!--/form-group-->
+
+{#                <div class="form-group">#}
+{#                  <label class="col-sm-3 control-label">Goal</label>#}
+{#                  <div class="col-sm-6">#}
+{#                    <input type="text" class="form-control" required placeholder="Enter only number" />#}
+{#                  </div>#}
+{#                </div><!--/form-group--> #}
+{#                <div class="form-group">#}
+{#                  <label class="col-sm-3 control-label">Client's email</label>#}
+{#                  <div class="col-sm-6">#}
+{#                    <input type="email" class="form-control" required parsley-type="email" placeholder="Enter a valid e-mail" />#}
+{#                  </div>#}
+{#                </div><!--/form-group--> #}
+{#                  #}
+
+                <!--/form-group--> 
+                <!--/form-group--> 
+{#                <div class="form-group">#}
+{#                  <label class="col-sm-3 control-label">Upload</label>#}
+{#                  <div class="col-sm-6">#}
+{#                    <input type="email" class="form-control" required placeholder="Add file" />#}
+{#                  </div>#}
+{#                </div><!--/form-group-->#}
+{##}
+
+                <div class="form-group">
+                  <div class="col-sm-offset-2 col-sm-10">
+                    <button type="submit" class="btn btn-primary">Submit</button>
+{#                    <button class="btn btn-default">Cancel</button>#}
+                  </div>
+                </div><!--/form-group-->
+
+
+              </form>
+            </div><!--/porlets-content--> 
+          </div><!--/block-web--> 
+        </div><!--/col-md-12--> 
+      </div><!--/row end-->
+  </div>  <!--/page-content end--> 
+</div><!--/main-content end-->
+</div><!--/page-container end-->
+
+
+
+<script src="bootstrap/js/bootstrap.min.js"></script> 
+<script src="js/common-script.js"></script> 
+<script src="js/jquery.nicescroll.js"></script>
+</body>
+</html>
