@@ -34,7 +34,7 @@
 {#        <li class="sidebar-toggle-box"> <a href="#"><i class="fa fa-bars"></i></a> </li>#}
 
 
-        <li> <a href="index.html" class="qr-logo"><strong>qr</strong></a> </li>
+        <li style="visibility: hidden;"> <a href="{% url 'home' %}" class="qr-logo"><strong>qr</strong></a> </li>
         <li class="hidden-xs"> <a href="{% url 'home' %}"><i class="fa fa-angle-double-left"></i> Go to the Home page</a> </li>
         <li id="last-one"> <a href="{% url 'user_logout' %}">Log Out <i class="fa fa-angle-double-right"></i></a> </li>
       </ul><!--/nav navbar-nav--> 
@@ -203,8 +203,5 @@
 
 
 
-<script src="bootstrap/js/bootstrap.min.js"></script> 
-<script src="js/common-script.js"></script> 
-<script src="js/jquery.nicescroll.js"></script>
 </body>
 </html>

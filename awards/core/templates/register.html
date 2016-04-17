@@ -42,7 +42,11 @@
 
         <ul class="navlinks text-center" id="yw0">
         <li><a href="{% url 'home' %}"><span class="login">Award</span></a></li>
-        <li><a href="{% url 'user_login' %}"><span class="login">Log in</span></a></li>
+        {% if request.user.is_authenticated %}
+            <li><a href="{% url 'my_profile' %}"><span class="login">Dashboard</span></a></li>
+        {% else %}
+            <li><a href="{% url 'user_login' %}"><span class="login">Log in</span></a></li>
+        {% endif %}
         </ul>
 
         </div>

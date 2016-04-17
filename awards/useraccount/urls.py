@@ -1,7 +1,7 @@
 from django.conf.urls import patterns, url
 from django.contrib.auth.decorators import login_required
 from useraccount.views import SignupView, UserLogin, LogoutView, UserSignupView, MyProfile, MyUploads, \
-    EditMyProfile
+    EditMyProfile, CompleteUpload
 
 urlpatterns = patterns(
     '',
@@ -16,4 +16,8 @@ urlpatterns = patterns(
     url(r'^my-uploads/$', login_required(MyUploads.as_view()), name='my_uploads'),
 
     url(r'^edit-profile/$', login_required(EditMyProfile.as_view()), name='edit_myprofile'),
+
+    url(r'^complete-uploads/$', login_required(CompleteUpload.as_view()), name='complete_upload'),
+
 )
+

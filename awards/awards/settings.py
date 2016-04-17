@@ -52,9 +52,12 @@ MEDIA_ROOT = os.path.join(PROJECT_PATH, 'media')
 
 # temp file upload dir
 TEMP_UPLOAD_DIR = 'temp/'
+FILEBROWSER_VERSION_BASEDIR = '_versions/'
+
 
 # URL that handles the media served from MEDIA_ROOT.
 UPLOAD_DEVICE_DIR = normpath('uploads/devices/')
+UPLOAD_PHOTO_DIR = normpath('uploads/')
 # UPLOAD_VENDOR_DIR = normpath('uploads/vendor/')
 UPLOAD_FOOTER_DIR = normpath('uploads/footer/')
 UPLOAD_PHOTOGRAPHER_DIR = normpath('uploads/photographer/')

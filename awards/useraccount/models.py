@@ -220,13 +220,20 @@ class Photographer(models.Model):
         verbose_name='If True, Profile will be seen on the home page', default=False,
         help_text="Designates whether to show the photographer's profile on home page or not"
     )
+
     home_page_desc = models.TextField(blank=True, null=True)
+    image_1_desc = models.TextField(blank=True, null=True)
+    image_2_desc = models.TextField(blank=True, null=True)
+    image_3_desc = models.TextField(blank=True, null=True)
+    image_4_desc = models.TextField(blank=True, null=True)
+    image_5_desc = models.TextField(blank=True, null=True)
 
     #Best photograph1er fields
     is_best_photographer = models.BooleanField(
         verbose_name='If True, Profile will be seen under best phtotographer section', default=False,
         help_text="Designates whether to show the photographer's profile under best photographer section"
     )
+
     best_photographer_desc = models.TextField(blank=True, null=True)
     no_of_awards = models.SmallIntegerField(verbose_name="No of awards being won", default=0)
 

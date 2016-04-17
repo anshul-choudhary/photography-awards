@@ -1,11 +1,14 @@
 import datetime
+import os
 from django import forms
+from django.core.exceptions import ValidationError
 from django.forms import ModelForm, CharField
 from django.forms.utils import ErrorList
 from awards.choices import USER
+from awards.settings import MEDIA_ROOT, TEMP_UPLOAD_DIR
 from awards.utils import get_user_model
 from core.models import Country
-from useraccount.models import UserProfile
+from useraccount.models import UserProfile, Photographer
 
 
 class UserCreationForm(forms.ModelForm):
@@ -87,105 +90,6 @@ class UserChangeForm(forms.ModelForm):
         model = get_user_model()
         fields = ("email", "primary_contact_number")
 
-#
-# class UserLoginForm(ModelForm):
-#     """
-#         A form for updating users. Includes all the fields on
-#         the user, and extra field for  buyer_type/seller_type .
-#     """
-#
-#     username = CharField(max_length=30, required=True)  #Customer Id
-#     password = CharField(max_length=20, required=True)  #Customer Dob
-#     primary_contact_number = CharField(max_length=30, required=True)  #Contact Number
-#
-#     def clean(self):
-#         cleaned_data = super(UserLoginForm, self).clean()
-#
-#         if len(self._errors) > 0:
-#             return cleaned_data
-#
-#         UserObj = UserProfile.objects.filter(user_id__exact=cleaned_data['user_id'].upper())
-#         if not UserObj.count():
-#             self._errors['user_id'] = ErrorList(["* Incorrect Customer Id"])
-#             return cleaned_data
-#         else:
-#             if not UserObj[0].check_password(cleaned_data['password']):
-#                 self._errors['password'] = ErrorList(["* Incorrect Username and Password"])
-#                 return cleaned_data
-#
-#         if len(cleaned_data['password']) != 8:
-#             self._errors['password'] = ErrorList(["* Invalid password"])
-#             return cleaned_data
-#
-#         try:
-#             dob = datetime.datetime.strptime(cleaned_data['password'], "%d%m%Y")
-#         except:
-#             #Wrong password entered
-#             self._errors['password'] = ErrorList(["* Invalid date format"])
-#             return cleaned_data
-#
-#         UserObj = UserProfile.objects.filter(user_id__exact=cleaned_data['user_id'].upper(), primary_contact_number__exact=cleaned_data['primary_contact_number'])
-#         if not UserObj.count():
-#             self._errors['primary_contact_number'] = ErrorList(["* Invalid Mobile No"])
-#             return cleaned_data
-#
-#         UserObj = UserProfile.objects.filter(user_id__exact=cleaned_data['user_id'].upper(), primary_contact_number__exact=cleaned_data['primary_contact_number'], servicetype__in=[int(cleaned_data['servicetype'])])
-#         if int(cleaned_data['servicetype']) not in [USER['SERVICE_TYPE'].Unknown, USER['SERVICE_TYPE'].Insurance, USER['SERVICE_TYPE'].Service]:
-#             self._errors['servicetype'] = ErrorList(["* Invalid Service Type"])
-#             return cleaned_data
-#
-#         return cleaned_data
-#
-#
-#     class Meta:
-#         model = get_user_model()
-#         fields = ('user_id', 'password', 'primary_contact_number')
-#
-#
-# class UserSignupForm(ModelForm):
-#     """
-#         A form for updating users. Includes all the fields on
-#         the user, and extra field for  buyer_type/seller_type .
-#     """
-#
-#     user_id = CharField(max_length=6, required=True)
-#     password = forms.RegexField(regex=r'^\d{8}$', required=True)
-#     primary_contact_number = forms.RegexField(regex=r'^\d{10}$', required=True, error_message="Enter a valid mobile number")
-#     servicetype = CharField(max_length=20, required=True)
-#
-#     def clean(self):
-#         cleaned_data = super(UserSignupForm, self).clean()
-#
-#         if len(self._errors) > 0:
-#             return cleaned_data
-#
-#         UserObj = UserProfile.objects.filter(user_id__exact=cleaned_data['user_id'].upper())
-#         if UserObj.count() > 0:
-#             self._errors['user_id'] = ErrorList(["* User Id already exists, Type another one"])
-#
-#         if len(cleaned_data['password']) != 8:
-#             self._errors['password'] = ErrorList(["* Invalid password"])
-#
-#         try:
-#             dob = datetime.datetime.strptime(cleaned_data['password'], "%d%m%Y")
-#         except:
-#             #Wrong password entered
-#             self._errors['password'] = ErrorList(["* Invalid date format"])
-#
-#         UserObj = UserProfile.objects.filter(primary_contact_number__exact=cleaned_data['primary_contact_number'])
-#         if UserObj.count() > 0:
-#             self._errors['primary_contact_number'] = ErrorList(["* Number already exists, Enter another one"])
-#
-#         if int(cleaned_data['servicetype']) not in [USER['SERVICE_TYPE'].Unknown, USER['SERVICE_TYPE'].Insurance, USER['SERVICE_TYPE'].Service]:
-#             self._errors['servicetype'] = ErrorList(["* Service does not exist"])
-#
-#         return cleaned_data
-#
-#     class Meta:
-#         model = get_user_model()
-#         fields = ('user_id', 'password', 'primary_contact_number', 'servicetype')
-#
-#
 
 
 class UserLoginnForm(ModelForm):
@@ -384,3 +288,58 @@ class EditMyprofile(forms.ModelForm):
 
 
 
+
+
+class CompleteUploadForm(ModelForm):
+
+
+    username = forms.CharField(max_length=500, required=True)
+    home_page_desc = forms.CharField(max_length=500, required=True)
+    image_1 = forms.CharField(max_length=250, required=True)
+    image_1_name = forms.CharField(label='', widget=forms.HiddenInput(), required=True)
+    image_1_desc = forms.CharField(label='', required=True)
+
+
+    # # temporary field to store layout image location
+    # image_1 = forms.CharField(max_length=250, required=False)
+    # image_1_name = forms.CharField(label='', widget=forms.HiddenInput(), required=False)
+    #
+    #
+    # # temporary field to store layout image location
+    # image_1 = forms.CharField(max_length=250, required=False)
+    # image_1_name = forms.CharField(label='', widget=forms.HiddenInput(), required=False)
+    #
+    #
+    # # temporary field to store layout image location
+    # image_1 = forms.CharField(max_length=250, required=False)
+    # image_1_name = forms.CharField(label='', widget=forms.HiddenInput(), required=False)
+    #
+    #
+    # # temporary field to store layout image location
+    # image_1 = forms.CharField(max_length=250, required=False)
+    # image_1_name = forms.CharField(label='', widget=forms.HiddenInput(), required=False)
+
+    def __init__(self, *args, **kwargs):
+        super(CompleteUploadForm, self).__init__(*args, **kwargs)
+
+        # self.fields['product_type'].widget.choices[0] = ('', '*Select Device Type')
+
+    class Meta:
+        model = Photographer
+        fields = ['image_1_desc', 'home_page_desc']
+
+    def clean(self):
+        cleaned_data = super(CompleteUploadForm, self).clean()
+
+        if len(self._errors) > 0:
+            return cleaned_data
+
+        if cleaned_data['image_1_name'] != '':
+            plan_path = os.path.join(MEDIA_ROOT, os.path.join(TEMP_UPLOAD_DIR, cleaned_data['username']))
+            if not os.path.exists(plan_path + '/' + cleaned_data['image_1_name']):
+                raise ValidationError('Image does not exists!!')
+
+        return cleaned_data
+
+    def validate_unique(self):
+        pass

@@ -3108,7 +3108,7 @@ div[data-role="editor-toolbar"] {
     font-weight: 700;
 }
 
-.qr-logo { background:url(../images/logo-qr.png) no-repeat center; text-indent:-99999px;width: 90px;}
+.qr-logo { background:url(../../images/logo.jpg) no-repeat center; text-indent:-99999px;width: 90px;}
 .span-box {background:#fff; padding:5px 10px 8px;border-radius:5px; margin-bottom:11px; display:inline-block; font-size:25px; font-weight:500}
 .span-box span { font-size:18px; font-weight:300}
 a.pop-ico {font-size:20px; color:#585858}

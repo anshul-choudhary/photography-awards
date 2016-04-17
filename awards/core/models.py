@@ -8,7 +8,7 @@ from django.db import models
 from filebrowser import storage
 from filebrowser.fields import FileBrowseField
 from awards.choices import IMAGE_NAME_CHOICES
-from awards.settings import MEDIA_ROOT, TEMP_UPLOAD_DIR, UPLOAD_DEVICE_DIR
+from awards.settings import MEDIA_ROOT, TEMP_UPLOAD_DIR, UPLOAD_DEVICE_DIR, UPLOAD_PHOTO_DIR
 from awards.utils import generate_unique_file_name, normalize_file_name
 
 
@@ -137,10 +137,16 @@ class Image(models.Model):
     content_type = models.ForeignKey(ContentType)
     object_id = models.PositiveIntegerField()
     content_object = GenericForeignKey('content_type', 'object_id')
+
+    #Image Type
     image_name = models.SmallIntegerField(
         blank=True, null=True, choices=IMAGE_NAME_CHOICES['TYPE'],
         help_text=('Fill image name from the dropdown.')
     )
+    image_a_name = models.CharField(
+        blank=True, null=True, max_length=50, help_text=('Fill actual image name.')
+    )
+
     created_date = models.DateTimeField(auto_now_add=True)
     cover_image = models.BooleanField(
         default=False, verbose_name="Cover Image",
@@ -162,16 +168,11 @@ class Image(models.Model):
     def __init__(self, *args, **kwargs):
         super(Image, self).__init__(*args, **kwargs)
 
-    def copy_device_image(self, DeviceObj, img_name):
+    def copy_upload_image(self, PhotoPbj, img_name, username):
         """ """
 
         source_dir = os.path.join(MEDIA_ROOT)
-        destination_rel = os.path.join(
-            UPLOAD_DEVICE_DIR,
-            str.format(
-                '{0}_{1}_{2}/', DeviceObj.buyer.user_id, DeviceObj.id, DeviceObj.user.username
-            )
-        )
+        destination_rel = os.path.join(UPLOAD_PHOTO_DIR,username)
         destination_dir = os.path.join(MEDIA_ROOT, destination_rel)
         try:
             os.makedirs(destination_dir)
@@ -179,16 +180,18 @@ class Image(models.Model):
             # Do nothing Assume that dir is already created.
             pass
 
-        src = os.path.join(source_dir, img_name)
+        # src = os.path.join(source_dir, img_name)
+        src = os.path.join(MEDIA_ROOT,os.path.join(TEMP_UPLOAD_DIR,username))
+        src = os.path.join(src,img_name)
 
         ext = '.' + os.path.splitext(img_name)[1][1:]
-        img_name = img_name.split('__')[0]
-        # dst = os.path.join(destination_dir, img_name)
+        img_name = img_name.split(ext)[0]
         img_name = generate_unique_file_name(destination_dir, img_name, ext)
 
         shutil.copy(src, os.path.join(destination_dir, img_name))
         os.remove(src)
-        return os.path.join(destination_rel, img_name)
+        return (os.path.join(destination_rel, img_name),img_name)
+
 
     @staticmethod
     def delete_image(path_absolute):

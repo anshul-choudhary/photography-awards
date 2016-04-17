@@ -66,7 +66,7 @@ class RestrictedFileField(forms.FileField):
                         )
                     )
             else:
-                raise ValidationError(_('This type of file is not supported.'))
+                raise ValidationError(('This type of file is not supported.'))
         except AttributeError:
             pass
 
@@ -77,7 +77,9 @@ class ImageUploadForm(forms.Form):
     """Image upload form."""
 
     db_image = RestrictedFileField(
-        content_types=['image/png', 'image/jpeg', 'image/gif'], max_upload_size=5242880, min_upload_size=20480)
+        content_types=['image/png', 'image/jpeg', 'image/gif', 'image/jpg'], max_upload_size=25242880, min_upload_size=40480)
+
+
 
 
 class FooterImageForm(ModelForm):

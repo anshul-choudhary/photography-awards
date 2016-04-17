@@ -1,7 +1,7 @@
 from django.conf.urls import patterns, url
 
 from . import views
-from core.views import HomeView
+from core.views import HomeView, FileUploadHandler
 
 urlpatterns = patterns(
     '',
@@ -14,11 +14,11 @@ urlpatterns = patterns(
     url(r'^faqs$', views.FaqsView.as_view(), name='faqs'),
 
     # file upload handler
-    # url(
-    #     r'fileuploadhandler/(?P<operation>\w+)/$',
-    #     FileUploadHandler.as_view(),
-    #     name='file_upload_handler'
-    # ),
+    url(
+        r'fileuploadhandler/(?P<operation>\w+)/$',
+        FileUploadHandler.as_view(),
+        name='file_upload_handler'
+    ),
 )
 
 #

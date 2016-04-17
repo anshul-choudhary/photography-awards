@@ -52,8 +52,12 @@
     <li><a href=''>AWARD</a></li>
     <li><a href='best2015'>BEST 2015</a></li>
     <li><a href='photographers'>PHOTOGRAPHERS</a></li>
-    <li><a href='join_us'>JOIN</a></li><li><a href=''>LOGIN</a></li>
-
+    <li><a href='join_us'>JOIN</a></li>
+    {% if request.user.is_authenticated %}
+        <li><a href="{% url 'my_profile' %}">DASHBOARD</a></li>
+    {% else %}
+        <li><a href='{% url 'user_login' %}'>LOGIN</a></li>
+    {% endif %}
     </ul>
     </div>
 
