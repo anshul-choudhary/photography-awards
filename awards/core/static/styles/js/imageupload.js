@@ -70,7 +70,11 @@ $(function () {
                         IMG.attr('value', d.version);
 
 
-                        if (IMG_SET == 'image_1'){
+                        if (IMG_SET == 'profile_image') {
+                            var p = $('<p><img ' + _attrs + '></img><span>' + d.name + '</span>' +
+                                '<input class="aw_image" type="hidden" value="' + d.version + '" name="profile_image"></p>');
+                        }
+                        else if (IMG_SET == 'image_1'){
                             var p = $('<p><img ' + _attrs + '></img><span>' + d.name + '</span>' +
                                 '<input class="aw_image" type="hidden" value="' + d.version + '" name="image_1"></p>');
                         }else if (IMG_SET == 'image_2'){
@@ -87,7 +91,7 @@ $(function () {
                                 '<input class="aw_image" type="hidden" value="' + d.version + '" name="image_5"></p>');
                         }
                         UP.prepend(p);
-
+                        MC.attr("data-uploaded", "true");
 
                         if (F.attr('data-has-document-type')) {
                             p.addClass('document-type')
@@ -186,6 +190,7 @@ $(function () {
                 'n"]');
             F.closest('.db_uploadbox').removeClass('has-error');
             //Jimg = JSON.parse(I.val());
+            F.closest('.db_uploadbox').attr("data-uploaded","false");
 
             file_row = $(this).parent();
             $.post( "/fileuploadhandler/delete/", {'name': file_row.find('span').text()}, function(d){

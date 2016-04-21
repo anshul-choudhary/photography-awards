@@ -1,9 +1,12 @@
 from django.contrib.auth.admin import UserAdmin
 from django.contrib import admin
+from django.contrib.contenttypes.admin import GenericTabularInline
 from django.core.checks import messages
 from awards.utils import generate_user_id
-from useraccount.forms import UserCreationForm, UserChangeForm
-from useraccount.models import UserProfile, Photographer
+from core.forms import ImageInlineForm
+from core.models import Image
+from useraccount.forms import UserCreationForm, UserChangeForm, PhotographerImageForm
+from useraccount.models import UserProfile, Photographer, WinnerMonth
 
 
 class UserProfileAdmin(UserAdmin):
@@ -110,7 +113,17 @@ class UserProfileAdmin(UserAdmin):
     #     return result
 
 
+
+class ImagePhotographerAdmin(GenericTabularInline):
+    model = Image
+    extra = 1
+    verbose_name_plural = 'Images'
+    form = ImageInlineForm
+
+
 class PhotographerAdmin(admin.ModelAdmin):
+    form = PhotographerImageForm
+    inlines = [ImagePhotographerAdmin]
 
     list_display = (
         'id', 'user_ref', 'user_id', 'firstname', 'lastname', 'username', \
@@ -123,8 +136,7 @@ class PhotographerAdmin(admin.ModelAdmin):
             'User Information',
             {
                 'fields': (
-                    'user_ref', 'user_id', 'username', 'firstname', 'lastname', 'user_ref__email',
-                    'primary_contact_number',
+                    'user_ref', 'user_id', 'username', 'firstname', 'lastname',
                 )
             }
         ),
@@ -133,9 +145,8 @@ class PhotographerAdmin(admin.ModelAdmin):
             {
                 'fields': (
                     'instagram_link1', 'instagram_link2', 'is_winner', 'winner_month', 'winning_date', \
-                    'activate_home_page', 'home_page_desc', 'is_best_photographer'\
-                    'best_photographer_desc', 'no_of_awards', 'created_date',
-                    'modified_date'
+                    'activate_home_page', 'home_page_desc', 'is_best_photographer', \
+                    'best_photographer_desc', 'no_of_awards',
                 )
             }
         ),
@@ -147,6 +158,9 @@ class PhotographerAdmin(admin.ModelAdmin):
                    'created_date')
 
     search_fields = ('id', 'user_id', 'username', 'user_ref__email')
+
+    class Media:
+        js = ('/static/styles/js/photographeradmin.js',)
 
     # def save_model(self, request, obj, form, change):
     #     """ """
@@ -167,8 +181,15 @@ class PhotographerAdmin(admin.ModelAdmin):
     #     return result
 
 
+class WinnermonthAdmin(admin.ModelAdmin):
+    search_fields = ['month_name', 'id']
+    list_display = ('id', 'month_name')
+
+
+
 admin.site.register(Photographer, PhotographerAdmin)
 admin.site.register(UserProfile, UserProfileAdmin)
+admin.site.register(WinnerMonth, WinnermonthAdmin)
 
 
 

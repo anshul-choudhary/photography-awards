@@ -370,6 +370,26 @@ class CompleteUpload(APIView):
                 image.image_a_name = image_name
                 image.save()
 
+                image = Image(content_object=PhotoObj)
+                (image.image,image_name) = Image().copy_upload_image(PhotoObj, upload_form.cleaned_data['image_2_name'], request.user.username)
+                image.image_name = IMAGE_NAME_CHOICES['TYPE'].Award2
+                image.image_a_name = image_name
+                image.save()
+
+                image = Image(content_object=PhotoObj)
+                (image.image,image_name) = Image().copy_upload_image(PhotoObj, upload_form.cleaned_data['image_3_name'], request.user.username)
+                image.image_name = IMAGE_NAME_CHOICES['TYPE'].Award3
+                image.image_a_name = image_name
+                image.save()
+
+
+                image = Image(content_object=PhotoObj)
+                (image.image,image_name) = Image().copy_upload_image(PhotoObj, upload_form.cleaned_data['profile_image_name'], request.user.username)
+                image.image_name = IMAGE_NAME_CHOICES['TYPE'].Profileimage
+                image.image_a_name = image_name
+                image.profile_image = True
+                image.save()
+
                 # image = Image(content_object=PhotoObj, image_name=upload_form.cleaned_data['image_2_name'])
                 # image.image = Image().copy_upload_image(PhotoObj, upload_form.cleaned_data['image_2_name'], request.user_id, upload_form.cleaned_data['image_2'])
                 # image.save()

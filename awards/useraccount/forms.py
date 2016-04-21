@@ -1,11 +1,13 @@
 import datetime
 import os
+import shutil
 from django import forms
 from django.core.exceptions import ValidationError
 from django.forms import ModelForm, CharField
 from django.forms.utils import ErrorList
+from django.utils.text import slugify
 from awards.choices import USER
-from awards.settings import MEDIA_ROOT, TEMP_UPLOAD_DIR
+from awards.settings import MEDIA_ROOT, TEMP_UPLOAD_DIR, UPLOAD_PHOTO_DIR
 from awards.utils import get_user_model
 from core.models import Country
 from useraccount.models import UserProfile, Photographer
@@ -293,12 +295,22 @@ class EditMyprofile(forms.ModelForm):
 class CompleteUploadForm(ModelForm):
 
 
-    username = forms.CharField(max_length=500, required=True)
-    home_page_desc = forms.CharField(max_length=500, required=True)
-    image_1 = forms.CharField(max_length=250, required=True)
+    username = forms.CharField(max_length=1000, required=True)
+    home_page_desc = forms.CharField(max_length=1000, required=True)
+    profile_image = forms.CharField(max_length=200, required=True)
+    profile_image_name = forms.CharField(max_length=200, widget=forms.HiddenInput(), required=True)
+
+    image_1 = forms.CharField(max_length=200, required=True)
     image_1_name = forms.CharField(label='', widget=forms.HiddenInput(), required=True)
     image_1_desc = forms.CharField(label='', required=True)
 
+    image_2 = forms.CharField(max_length=200, required=True)
+    image_2_name = forms.CharField(label='', widget=forms.HiddenInput(), required=True)
+    image_2_desc = forms.CharField(label='', required=True)
+
+    image_3 = forms.CharField(max_length=200, required=True)
+    image_3_name = forms.CharField(label='', widget=forms.HiddenInput(), required=True)
+    image_3_desc = forms.CharField(label='', required=True)
 
     # # temporary field to store layout image location
     # image_1 = forms.CharField(max_length=250, required=False)
@@ -334,12 +346,81 @@ class CompleteUploadForm(ModelForm):
         if len(self._errors) > 0:
             return cleaned_data
 
+        if cleaned_data['profile_image_name'] != '':
+            plan_path = os.path.join(MEDIA_ROOT, os.path.join(TEMP_UPLOAD_DIR, cleaned_data['username']))
+            if not os.path.exists(plan_path + '/' + cleaned_data['profile_image_name']):
+                raise ValidationError('Image does not exists!!')
+
         if cleaned_data['image_1_name'] != '':
             plan_path = os.path.join(MEDIA_ROOT, os.path.join(TEMP_UPLOAD_DIR, cleaned_data['username']))
             if not os.path.exists(plan_path + '/' + cleaned_data['image_1_name']):
+                raise ValidationError('Image does not exists!!')
+
+        if cleaned_data['image_2_name'] != '':
+            plan_path = os.path.join(MEDIA_ROOT, os.path.join(TEMP_UPLOAD_DIR, cleaned_data['username']))
+            if not os.path.exists(plan_path + '/' + cleaned_data['image_2_name']):
+                raise ValidationError('Image does not exists!!')
+
+        if cleaned_data['image_3_name'] != '':
+            plan_path = os.path.join(MEDIA_ROOT, os.path.join(TEMP_UPLOAD_DIR, cleaned_data['username']))
+            if not os.path.exists(plan_path + '/' + cleaned_data['image_3_name']):
                 raise ValidationError('Image does not exists!!')
 
         return cleaned_data
 
     def validate_unique(self):
         pass
+
+
+
+
+class PhotographerImageForm(ModelForm):
+    photographer_media_dir = CharField(label='', widget=forms.HiddenInput(), required=False)
+
+    def __init__(self, *args, **kwargs):
+        super(PhotographerImageForm, self).__init__(*args, **kwargs)
+
+        # We need to create directory for images and docs of this plan if uploaded from admin
+        # since uploads/ is the root of file browser so build path from inside it.
+
+        # Plan images are stored inside the project directory
+        PhotographerObj = self.instance
+
+        if PhotographerObj.id:
+            media_path = str.format('{0}', slugify(PhotographerObj.username))
+            #media_path = os.path.join(media_path, str.format('{0}-{1}', slugify(plan.name), plan.plan_id))
+            self.fields['photographer_media_dir'].initial = media_path
+            media_path = os.path.join(os.path.join(MEDIA_ROOT, UPLOAD_PHOTO_DIR), media_path)
+            try:
+                os.makedirs(media_path)
+            except Exception as e:
+                pass
+
+            #Patch to change the file path
+            try:
+                if len(PhotographerObj.image.all()):
+                    for imgObj in PhotographerObj.image.all():
+                        if len(imgObj.image.path.split('/')) <= 2:
+                            source_dir = os.path.join(MEDIA_ROOT)
+                            destination_rel = os.path.join(UPLOAD_PHOTO_DIR,PhotographerObj.username)
+                            destination_dir = os.path.join(MEDIA_ROOT, destination_rel)
+                            try:
+                                os.makedirs(destination_dir)
+                            except OSError:
+                                # Do nothing Assume that dir is already created.
+                                pass
+
+                            oimg = os.path.join(MEDIA_ROOT, imgObj.image.path)
+                            shutil.copy(oimg, os.path.join(destination_dir, imgObj.image.original_filename))
+                            imgObj.image.path = os.path.join(destination_rel, imgObj.image.original_filename)
+                            imgObj.save()
+                            os.remove(oimg)
+            except:
+                pass
+
+
+    class Meta:
+        model = Photographer
+        exclude = []
+
+

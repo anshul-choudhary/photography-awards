@@ -190,6 +190,9 @@ class WinnerMonth(models.Model):
         help_text=('Month in which photographer is announced as a winner')
     )
 
+    def __unicode__(self):
+        return "%s" % (unicode(self.month_name) + "," + dict(USER['WINNER_MONTH']).get(self.month_name))
+
 
 class Photographer(models.Model):
     """
@@ -255,3 +258,10 @@ class Photographer(models.Model):
             self.user_id = generate_user_id()
 
 
+    def get_email(self):
+        if self.user_ref:
+            return self.user_ref.email
+        else:
+            return ""
+
+    get_email.short_description = 'Email'

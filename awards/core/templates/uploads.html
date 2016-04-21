@@ -28,6 +28,15 @@
 
 <style>
 
+
+.error {
+    font-size: 12px;
+    color: red;
+    display: block;
+    margin-left: 26%;
+    margin-bottom: 17px;
+}
+
 .progress{height: 8px !important;}
 .progress-bar-success {background-color: #9fc343 !important;}
 .progress_container{float: left;
@@ -105,7 +114,7 @@
             <div class="porlets-content">
 
 
-              <form class="form-horizontal group-border-dashed" action="{% url 'complete_upload' %}" method="post">
+              <form class="form-horizontal group-border-dashed" action="{% url 'complete_upload' %}" id="upload_form" method="post">
                 {% csrf_token %}
 
                 <div class="form-group">
@@ -116,7 +125,41 @@
                 </div><!--/form-group--> 
 
 
-                <div class="form-group db_uploadbox" data-imageset="image_1">
+
+                <div id="profile_image" data-uploaded="false" class="form-group db_uploadbox" data-imageset="profile_image">
+                  <label class="col-sm-3 control-label">Upload Profile Image</label>
+                  <div class="col-sm-6 db_input_box" {% if upload_form and upload_form.cleaned_data.profile_image|length %}style="display: none;"{% endif %}>
+                    <!-- The file input field used as target for the file upload widget -->
+                    <input class="fileupload_btn" data-postname="profile_image_name" type="file"
+                           data-accept="/(\.|\/)(jpe?g|png|gif)$/i" data-max-size="25242880"
+                           data-url="/fileuploadhandler/image/" name="db_image">
+                  </div>
+
+                    <div class="progress_container">
+                    <p class="prog_counter"></p>
+                    <div class="progress">
+                    <div class="progress-bar progress-bar-success"></div>
+                    </div>
+                    </div>
+
+                    <span class="error"></span>
+                    <!-- The container for the uploaded files -->
+                    <div class="uploaded_files" >
+                        {% if upload_form and upload_form.cleaned_data.profile_image|length %}
+                            <p>
+                            <img style="width:250px;height:160px;background-image:url('{{ upload_form.cleaned_data.image_1 }}');background-repeat: no-repeat;" />
+                            <span>{{ upload_form.cleaned_data.profile_image_name }}</span>
+                            <a class="db-remove-image">&times; Remove</a>
+                            <input class="aw_image" type="hidden" value="{{ upload_form.cleaned_data.profile_image }}" name="image_1">
+                            </p>
+                        {% endif %}
+                    </div>
+                </div>
+
+
+
+
+                <div id="image_1" data-uploaded="false" class="form-group db_uploadbox" data-imageset="image_1">
                   <label class="col-sm-3 control-label">Upload Image 1</label>
 
                   <div class="col-sm-6 db_input_box" {% if upload_form and upload_form.cleaned_data.image_1|length %}style="display: none;"{% endif %}>
@@ -141,13 +184,105 @@
                             <img style="width:250px;height:160px;background-image:url('{{ upload_form.cleaned_data.image_1 }}');background-repeat: no-repeat;" />
                             <span>{{ upload_form.cleaned_data.image_1_name }}</span>
                             <a class="db-remove-image">&times; Remove</a>
-                            <input class="aw_image" type="hidden" value="{{ upload_form.cleaned_data.image_1 }}" name="image_1">
+                            <input class="aw_image" type="hidden" value="{{ upload_form.cleaned_data.image_1 }}"  name="image_1">
                             </p>
                         {% endif %}
                     </div>
 
 
                 </div>
+
+
+                <div class="form-group">
+                  <label class="col-sm-3 control-label">Image 1 Description</label>
+                  <div class="col-sm-6">
+                    <input type="text" name="image_1_desc" value="{{ upload_form.data.image_1_desc }}" class="form-control" required placeholder="Enter image description" />
+                  </div>
+                </div><!--/form-group-->
+
+
+
+                <div id="image_2" data-uploaded="false" class="form-group db_uploadbox" data-imageset="image_2">
+                  <label class="col-sm-3 control-label">Upload Image 2</label>
+                  <div class="col-sm-6 db_input_box" {% if upload_form and upload_form.cleaned_data.image_2|length %}style="display: none;"{% endif %}>
+                    <!-- The file input field used as target for the file upload widget -->
+                    <input class="fileupload_btn" data-postname="image_2_name" type="file"
+                           data-accept="/(\.|\/)(jpe?g|png|gif)$/i" data-max-size="25242880"
+                           data-url="/fileuploadhandler/image/" name="db_image">
+                  </div>
+
+                    <div class="progress_container">
+                    <p class="prog_counter"></p>
+                    <div class="progress">
+                    <div class="progress-bar progress-bar-success"></div>
+                    </div>
+                    </div>
+
+                    <span class="error"></span>
+                    <!-- The container for the uploaded files -->
+                    <div class="uploaded_files" >
+                        {% if upload_form and upload_form.cleaned_data.image_2|length %}
+                            <p>
+                            <img style="width:250px;height:160px;background-image:url('{{ upload_form.cleaned_data.image_2 }}');background-repeat: no-repeat;" />
+                            <span>{{ upload_form.cleaned_data.image_2_name }}</span>
+                            <a class="db-remove-image">&times; Remove</a>
+                            <input class="aw_image" type="hidden" value="{{ upload_form.cleaned_data.image_1 }}" name="image_2">
+                            </p>
+                        {% endif %}
+                    </div>
+                </div>
+
+
+                <div class="form-group">
+                  <label class="col-sm-3 control-label">Image 2 Description</label>
+                  <div class="col-sm-6">
+                    <input type="text" name="image_2_desc" value="{{ upload_form.data.image_2_desc }}" class="form-control" required placeholder="Enter image description" />
+                  </div>
+                </div><!--/form-group-->
+
+
+
+
+                <div id="image_3" data-uploaded="false" class="form-group db_uploadbox" data-imageset="image_3">
+                  <label class="col-sm-3 control-label">Upload Image 3</label>
+
+                  <div class="col-sm-6 db_input_box" {% if upload_form and upload_form.cleaned_data.image_3|length %}style="display: none;"{% endif %}>
+                    <!-- The file input field used as target for the file upload widget -->
+                    <input class="fileupload_btn" data-postname="image_3_name" type="file"
+                           data-accept="/(\.|\/)(jpe?g|png|gif)$/i" data-max-size="25242880"
+                           data-url="/fileuploadhandler/image/" name="db_image">
+                  </div>
+
+                    <div class="progress_container">
+                    <p class="prog_counter"></p>
+                    <div class="progress">
+                    <div class="progress-bar progress-bar-success"></div>
+                    </div>
+                    </div>
+
+                    <span class="error"></span>
+                    <!-- The container for the uploaded files -->
+                    <div class="uploaded_files" >
+                        {% if upload_form and upload_form.cleaned_data.image_3|length %}
+                            <p>
+                            <img style="width:250px;height:160px;background-image:url('{{ upload_form.cleaned_data.image_3 }}');background-repeat: no-repeat;" />
+                            <span>{{ upload_form.cleaned_data.image_3_name }}</span>
+                            <a class="db-remove-image">&times; Remove</a>
+                            <input class="aw_image" type="hidden" value="{{ upload_form.cleaned_data.image_3 }}" name="image_3">
+                            </p>
+                        {% endif %}
+                    </div>
+                </div>
+
+
+                <div class="form-group">
+                  <label class="col-sm-3 control-label">Image 3 Description</label>
+                  <div class="col-sm-6">
+                    <input type="text" name="image_3_desc" value="{{ upload_form.data.image_3_desc }}" class="form-control" required placeholder="Enter image description" />
+                  </div>
+                </div><!--/form-group-->
+
+
 
 
                   <!-- Image 1 -->
@@ -203,14 +338,6 @@
 
 
                 <div class="form-group">
-                  <label class="col-sm-3 control-label">Image 1 Description</label>
-                  <div class="col-sm-6">
-                    <input type="text" name="image_1_desc" value="{{ upload_form.data.image_1_desc }}" class="form-control" required placeholder="Enter image description" />
-                  </div>
-                </div><!--/form-group-->
-
-
-                <div class="form-group">
                   <div class="col-sm-offset-2 col-sm-10">
                     <button type="submit" class="btn btn-primary">Submit</button>
 {#                    <button class="btn btn-default">Cancel</button>#}
@@ -229,6 +356,51 @@
 </div><!--/page-container end-->
 
 
+
+<script>
+    $(document).ready(function(){
+
+
+            var fields = ['#profile_image', '#image_1', '#image_2', '#image_3'];
+            $(fields.join(',')).keydown(function(){
+                if ($(this).next().hasClass('error')){
+                    $(this).next().remove();
+                }
+            });
+
+            $("#upload_form").on('submit', function(e) {
+                var toSubmit = true;
+                var fields = ['#profile_image', '#image_1', '#image_2', '#image_3'];
+
+                var messages = ['<label class="error">* Please upload a profile image</label>',
+                    '<label class="error">* Please upload image 1</label>',
+                    '<label class="error">* Please upload image 2</label>',
+                    '<label class="error">* Please upload image 2</label>'
+                ];
+
+
+
+					for (k in fields){
+						if ($(fields[k]).attr("data-uploaded") != "true"){
+							toSubmit = false;
+							if (!$(fields[k]).next().hasClass('error')){
+								$(messages[k]).insertAfter($(fields[k]));
+								//toSubmit = false;
+							}
+						}
+                    }
+					if (!toSubmit){
+						e.preventDefault();
+						return false;
+					}
+					return true;
+
+            });
+
+
+});
+
+</script>
 
 </body>
 </html>
