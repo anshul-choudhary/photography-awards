@@ -186,10 +186,18 @@ class MyProfile(APIView):
         editform.errors['email'] = ErrorList()
         editform.errors['username'] = ""
         editform.errors['countryval'] = ""
-
-
         ctx.update({'country': CountryQuerySet})
         ctx.update({'editform': editform})
+        ctx.update({"show_profile": "0"})
+
+        try:
+            PhotographerObj = Photographer.objects.get(user_ref=request.user)
+            if len(PhotographerObj.image.all()):
+                ctx.update({"show_profile": "1"})
+        except:
+            ctx.update({"show_profile": "0"})
+
+
         return Response(ctx, template_name=self.template_name)
 
 
@@ -232,7 +240,6 @@ class PhotographerProfile(APIView):
         return Response(ctx, template_name=self.template_name)
 
 
-
 class EditMyProfile(APIView):
     ''' Home Page view '''
 
@@ -257,9 +264,16 @@ class EditMyProfile(APIView):
         editform.errors['username'] = ""
         editform.errors['countryval'] = ""
 
-
         ctx.update({'country': CountryQuerySet})
         ctx.update({'editform': editform})
+
+        try:
+            PhotographerObj = Photographer.objects.get(user_ref=request.user)
+            if len(PhotographerObj.image.all()):
+                ctx.update({"show_profile": "1"})
+        except:
+            ctx.update({"show_profile": "0"})
+
         return Response(ctx, template_name='my-profile.html')
 
 
@@ -350,7 +364,7 @@ class MyUploads(APIView):
     def get(self, request, *args, **kwargs):
         ''' Receives the request '''
 
-        ctx = {}
+        ctx = {'show_profile': "0"}
         if 'loggedin_user_credentials' in request.session:
             ctx = request.session['loggedin_user_credentials']
 
@@ -367,7 +381,6 @@ class MyUploads(APIView):
                         version = a.version_generate('thumbnail').url
                         formargs.update({'profile_image_name': k.image.filename,
                                          'profile_image': version})
-
 
                     name = 'image_' + str(count) + '_desc'
                     rel_path = os.path.join(os.path.join(FILEBROWSER_DIRECTORY,request.user.username) + '/', k.image.filename)
@@ -387,11 +400,11 @@ class MyUploads(APIView):
 
                 formsubmit = self.form_class(formargs)
                 ctx.update({'upload_form': formsubmit})
+                ctx.update({'show_profile': "1"})
 
         except Exception as e:
+            ctx.update({'show_profile': "0"})
             pass
-
-
 
         ctx.update({'username': request.user.username})
         return Response(ctx, template_name=self.template_name)
@@ -400,15 +413,13 @@ class MyUploads(APIView):
         ''' Receives the request '''
 
         pass
-        # return Response(ctx, template_name=self.template_name)
-
 
 
 
 class CompleteUpload(APIView):
     ''' Home Page view '''
 
-    template_name = 'description.html'
+    template_name = 'photographerprofile.html'
     form_class = CompleteUploadForm
     results = {'error_message': '', 'status': 'Ok'}
 
@@ -515,7 +526,6 @@ class CompleteUpload(APIView):
                 #     fn = dt.split('_thumbnail')
                 #     ln = fn[1]
                 #     upload_form.cleaned_data['image_5_name'] = fn[0].split('/media/_versions/temp/')[1] + ln
-
 
             except Exception as e:
                 pass

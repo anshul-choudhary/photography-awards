@@ -57,7 +57,7 @@
     <div class="header-seperation">
       <ul class="nav navbar-nav">
 
-        <li class="sidebar-toggle-box"> <a href="#"><i class="fa fa-bars"></i></a> </li>
+{#        <li class="sidebar-toggle-box"> <a href="#"><i class="fa fa-bars"></i></a> </li>#}
         <li style="visibility: hidden;"> <a href="{% url 'home' %}" class="qr-logo"><strong>qr</strong></a> </li>
         <li class="hidden-xs"> <a href="{% url 'home' %}"><i class="fa fa-angle-double-left"></i> Go to the Home page</a> </li>
         <li id="last-one"> <a href="{% url 'user_logout' %}">Log Out <i class="fa fa-angle-double-right"></i></a> </li>
@@ -94,6 +94,13 @@
       </a>
       </li>
 
+      {% if show_profile == "1" %}
+      <li> <a target="_blank" href="{% url 'photographerprofile' %}">
+          <!--<i class="fa fa-upload"></i>-->
+          <span>Description Page</span>
+      </a>
+      </li>
+      {% endif %}
 
     </ul><!--/nav-accordion sidebar-menu--> 
   </div><!--/leftside-navigation--> 

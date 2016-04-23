@@ -8,7 +8,8 @@ from awards.settings import TEMP_UPLOAD_DIR, MEDIA_URL, FILEBROWSER_VERSION_BASE
 from awards.settings import MEDIA_ROOT
 from awards.utils import generate_unique_file_name
 from core.forms import ImageUploadForm
-from core.models import Footer
+from core.models import Footer, Country
+from useraccount.models import Photographer
 
 
 class HomeView(APIView):
@@ -26,6 +27,20 @@ class HomeView(APIView):
         for obj in FooterQuerySet:
             footer.append({'link': obj.link1, 'img': obj.image.all()[0].image.path})
         ctx['footer'] = footer
+        ctx['best_photographer'] = []
+
+        BestPhotographers = Photographer.objects.filter(is_best_photographer=True)[:12]
+
+        for obj in BestPhotographers:
+            ar = {}
+            CountryQuerySet = Country.objects.filter(id=obj.user_ref.country.id)
+            ar.update({'name': obj.firstname + ' ' + obj.lastname, 'awards': obj.no_of_awards})
+            ar.update({'country': CountryQuerySet[0].name})
+
+            for k in obj.image.all().order_by('created_date'):
+                if k.profile_image:
+                    ar.update({'profile_image': k.image.name})
+            ctx['best_photographer'].append(ar)
 
         return Response(ctx, template_name=self.template_name)
 

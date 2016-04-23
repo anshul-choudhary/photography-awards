@@ -50,7 +50,6 @@
 <section class="">
     <h2 class="text-center">Winners 2016</h2>
     <div class="container text-center previous-awards"><h5>
-    <a href="#">Final 2015</a> &nbsp; &nbsp;
     <a href="#">April</a> &nbsp; &nbsp;
     <a href="#">March</a> &nbsp; &nbsp;
     <a href="#">February</a> &nbsp; &nbsp;
@@ -474,200 +473,21 @@
                 </div>
                 <div class="spacer-15"></div>
                 <div class="row plr-25">
-                    <!-- Team Box -->
-                    
-    
-  
-                    <div class="pb-15 col-md-2 col-sm-4 col-xs-6 plr-10 text-center">
-                       <div class="team-item">
-<a href="photographers/kkoresh"><img src="{{ STATIC_URL }}images/userthumb/2d5ae1dff9b74df363371b0861927b42.jpg" class="img-circle" alt=""/></a>
-                            <div class="team-item-info">
-                                <h6 class="mb-0"><a href="photographers/kkoresh">Konstantin Koreshkov</a></h6>
-                                <p><span class="gray">Russia</span> <br>
-                        <span class="awardnumber" style="font-size:14px;">15 awards</span>
-                        
-                        </p>
+                <!-- Team Box -->
 
-                            </div>
+                {% for k in best_photographer %}
+                <div class="pb-15 col-md-2 col-sm-4 col-xs-6 plr-10 text-center">
+                   <div class="team-item">
+                        <a href="#"><img src="{{ MEDIA_URL }}{{ k.profile_image }}" class="img-circle" alt=""/></a>
+                        <div class="team-item-info">
+                            <h6 class="mb-0"><a href="#">{{ k.name }}</a></h6>
+                            <p><span class="gray">{{ k.country }}</span> <br>
+                            <span class="awardnumber" style="font-size:14px;">{{ k.awards }} awards</span>
+                            </p>
                         </div>
                     </div>
-              
-  
-  
-                    <div class="pb-15 col-md-2 col-sm-4 col-xs-6 plr-10 text-center">
-                       <div class="team-item">
-<a href="photographers/muri2000"><img src="{{ STATIC_URL }}images/userthumb/7af1d834b51a1a3b3802ea5bba6ec235.jpg" class="img-circle" alt=""/></a>
-                            <div class="team-item-info">
-                                <h6 class="mb-0"><a href="photographers/muri2000">ALBERTO MURIEL PINA</a></h6>
-                                <p><span class="gray">Spain</span> <br>
-                        <span class="awardnumber" style="font-size:14px;">14 awards</span>
-                        
-                        </p>
-
-                            </div>
-                        </div>
-                    </div>
-              
-  
-  
-                    <div class="pb-15 col-md-2 col-sm-4 col-xs-6 plr-10 text-center">
-                       <div class="team-item">
-<a href="photographers/Psicilianojr"><img src="{{ STATIC_URL }}images/userthumb/b274defc25631d87a0a919c354e25fde.jpeg" class="img-circle" alt=""/></a>
-                            <div class="team-item-info">
-                                <h6 class="mb-0"><a href="photographers/Psicilianojr">Philip Siciliano</a></h6>
-                                <p><span class="gray">United States</span> <br>
-                        <span class="awardnumber" style="font-size:14px;">12 awards</span>
-                        
-                        </p>
-
-                            </div>
-                        </div>
-                    </div>
-              
-  
-  
-                    <div class="pb-15 col-md-2 col-sm-4 col-xs-6 plr-10 text-center">
-                       <div class="team-item">
-<a href="photographers/MikaAlvarez"><img src="{{ STATIC_URL }}images/userthumb/89fea272c41e1e97d5decdd82b3a0c0e.jpg" class="img-circle" alt=""/></a>
-                            <div class="team-item-info">
-                                <h6 class="mb-0"><a href="photographers/MikaAlvarez">Mika Alvarez</a></h6>
-                                <p><span class="gray">Uruguay</span> <br>
-                        <span class="awardnumber" style="font-size:14px;">12 awards</span>
-                        
-                        </p>
-
-                            </div>
-                        </div>
-                    </div>
-              
-  
-  
-                    <div class="pb-15 col-md-2 col-sm-4 col-xs-6 plr-10 text-center">
-                       <div class="team-item">
-<a href="photographers/jere"><img src="{{ STATIC_URL }}images/userthumb/36c0ab85eb58f36ec50aad3ddd8d3e96.jpg" class="img-circle" alt=""/></a>
-                            <div class="team-item-info">
-                                <h6 class="mb-0"><a href="photographers/jere">Jere Satamo</a></h6>
-                                <p><span class="gray">Finland</span> <br>
-                        <span class="awardnumber" style="font-size:14px;">11 awards</span>
-                        
-                        </p>
-
-                            </div>
-                        </div>
-                    </div>
-              
-  
-  
-                    <div class="pb-15 col-md-2 col-sm-4 col-xs-6 plr-10 text-center">
-                       <div class="team-item">
-<a href="photographers/johnnygphoto"><img src="{{ STATIC_URL }}images/userthumb/c6883e4e1362bd05a65971744a6d3674.jpg" class="img-circle" alt=""/></a>
-                            <div class="team-item-info">
-                                <h6 class="mb-0"><a href="photographers/johnnygphoto">Johnny Garcia</a></h6>
-                                <p><span class="gray">Spain</span> <br>
-                        <span class="awardnumber" style="font-size:14px;">11 awards</span>
-                        
-                        </p>
-
-                            </div>
-                        </div>
-                    </div>
-              
-  
-  
-                    <div class="pb-15 col-md-2 col-sm-4 col-xs-6 plr-10 text-center">
-                       <div class="team-item">
-<a href="photographers/AladdinQattouri"><img src="{{ STATIC_URL }}images/userthumb/2d037c636bb7def2dfb201dbfe7c99a6.jpg" class="img-circle" alt=""/></a>
-                            <div class="team-item-info">
-                                <h6 class="mb-0"><a href="photographers/AladdinQattouri">Aladdin Qattouri</a></h6>
-                                <p><span class="gray">Amman</span> <br>
-                        <span class="awardnumber" style="font-size:14px;">11 awards</span>
-                        
-                        </p>
-
-                            </div>
-                        </div>
-                    </div>
-              
-  
-  
-                    <div class="pb-15 col-md-2 col-sm-4 col-xs-6 plr-10 text-center">
-                       <div class="team-item">
-<a href="photographers/hborislavova"><img src="{{ STATIC_URL }}images/userthumb/47c16a3f0b6cab7cfed0bfad9883c46f.jpg" class="img-circle" alt=""/></a>
-                            <div class="team-item-info">
-                                <h6 class="mb-0"><a href="photographers/hborislavova">Hristina Handzhieva</a></h6>
-                                <p><span class="gray">Bulgaria</span> <br>
-                        <span class="awardnumber" style="font-size:14px;">10 awards</span>
-                        
-                        </p>
-
-                            </div>
-                        </div>
-                    </div>
-              
-  
-  
-                    <div class="pb-15 col-md-2 col-sm-4 col-xs-6 plr-10 text-center">
-                       <div class="team-item">
-<a href="photographers/Nikolay"><img src="{{ STATIC_URL }}images/userthumb/4cddca2d6d3c55657e70554e8642c8a0.jpg" class="img-circle" alt=""/></a>
-                            <div class="team-item-info">
-                                <h6 class="mb-0"><a href="photographers/Nikolay">Nikolay Kireyev</a></h6>
-                                <p><span class="gray">Kazakhstan</span> <br>
-                        <span class="awardnumber" style="font-size:14px;">10 awards</span>
-                        
-                        </p>
-
-                            </div>
-                        </div>
-                    </div>
-              
-  
-  
-                    <div class="pb-15 col-md-2 col-sm-4 col-xs-6 plr-10 text-center">
-                       <div class="team-item">
-<a href="photographers/ramboestrada"><img src="{{ STATIC_URL }}images/userthumb/5e4222f5d13137ba50ca158e067a40aa.jpg" class="img-circle" alt=""/></a>
-                            <div class="team-item-info">
-                                <h6 class="mb-0"><a href="photographers/ramboestrada">Rambo Estrada</a></h6>
-                                <p><span class="gray">New Zealand</span> <br>
-                        <span class="awardnumber" style="font-size:14px;">10 awards</span>
-                        
-                        </p>
-
-                            </div>
-                        </div>
-                    </div>
-              
-  
-  
-                    <div class="pb-15 col-md-2 col-sm-4 col-xs-6 plr-10 text-center">
-                       <div class="team-item">
-<a href="photographers/vindrievsky"><img src="{{ STATIC_URL }}images/userthumb/f7383bec3daa753202e39170bc2780a7.jpg" class="img-circle" alt=""/></a>
-                            <div class="team-item-info">
-                                <h6 class="mb-0"><a href="photographers/vindrievsky">Artem Vindrievsky</a></h6>
-                                <p><span class="gray">Russia</span> <br>
-                        <span class="awardnumber" style="font-size:14px;">10 awards</span>
-                        
-                        </p>
-
-                            </div>
-                        </div>
-                    </div>
-              
-  
-  
-                    <div class="pb-15 col-md-2 col-sm-4 col-xs-6 plr-10 text-center">
-                       <div class="team-item">
-<a href="photographers/Yenweipeng"><img src="{{ STATIC_URL }}images/userthumb/5f802d0fb23bf95b406e62379433deb2.jpg" class="img-circle" alt=""/></a>
-                            <div class="team-item-info">
-                                <h6 class="mb-0"><a href="photographers/Yenweipeng">YenWei Peng</a></h6>
-                                <p><span class="gray">Canada</span> <br>
-                        <span class="awardnumber" style="font-size:14px;">10 awards</span>
-                        
-                        </p>
-
-                            </div>
-                        </div>
-                    </div>
-              
+                </div>
+                {% endfor %}
 
                     <!-- End Team Box -->
                 </div>

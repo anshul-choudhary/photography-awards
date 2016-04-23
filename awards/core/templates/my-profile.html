@@ -77,6 +77,15 @@
       </a>
       </li>
 
+      {% if show_profile == "1" %}
+      <li> <a target="_blank" href="{% url 'photographerprofile' %}" {% if '/profile' in request.path %}class="active"{% endif %}>
+          <!--<i class="fa fa-upload"></i>-->
+          <span>Description Page</span>
+      </a>
+      </li>
+      {% endif %}
+
+
 
     </ul><!--/nav-accordion sidebar-menu-->
   </div><!--/leftside-navigation--> 
