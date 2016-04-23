@@ -1,4 +1,5 @@
 import os
+from django.shortcuts import redirect
 from filebrowser.base import FileObject
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.renderers import JSONRenderer
@@ -36,6 +37,7 @@ class HomeView(APIView):
             CountryQuerySet = Country.objects.filter(id=obj.user_ref.country.id)
             ar.update({'name': obj.firstname + ' ' + obj.lastname, 'awards': obj.no_of_awards})
             ar.update({'country': CountryQuerySet[0].name})
+            ar.update({'username': obj.user_id})
 
             for k in obj.image.all().order_by('created_date'):
                 if k.profile_image:
@@ -43,6 +45,49 @@ class HomeView(APIView):
             ctx['best_photographer'].append(ar)
 
         return Response(ctx, template_name=self.template_name)
+
+
+
+class BestPhotographerProfile(APIView):
+    ''' Home Page view '''
+
+    template_name = 'bestphotographerprofile.html'
+
+    def get(self, request, *args, **kwargs):
+        ''' Receives the request '''
+
+        ctx = {}
+        if 'loggedin_user_credentials' in request.session:
+            ctx = request.session['loggedin_user_credentials']
+
+        try:
+            del ctx['password']
+        except:
+            pass
+
+        try:
+            PhotoObj = Photographer.objects.get(user_id=kwargs['key'])
+        except:
+            return redirect("home")
+
+        CountryQuerySet = Country.objects.filter(id=PhotoObj.user_ref.country.id).order_by('name')
+        ctx.update({'name': PhotoObj.firstname + ' ' + PhotoObj.lastname})
+        ctx.update({'country': CountryQuerySet[0].name})
+        ctx.update({'awards': PhotoObj.no_of_awards})
+        ctx.update({'contact': PhotoObj.user_ref.primary_contact_number})
+        ctx.update({'email': PhotoObj.user_ref.email})
+        ctx.update({'instagram_link1': PhotoObj.instagram_link1})
+        ctx.update({'instagram_link2': PhotoObj.instagram_link2})
+        ctx.update({'home_page_desc': PhotoObj.home_page_desc})
+        ctx.update({'images': []})
+
+        for k in PhotoObj.image.all().order_by('created_date'):
+            if k.profile_image:
+                ctx.update({'profile_image': k.image.name})
+            else:
+                ctx['images'].append(k.image.name)
+        return Response(ctx, template_name=self.template_name)
+
 
 
 

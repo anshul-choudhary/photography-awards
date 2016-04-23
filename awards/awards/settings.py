@@ -204,7 +204,7 @@ FILEBROWSER_EXTENSIONS = {"Image": []}
 
 FILEBROWSER_VERSIONS = {
     # thumbnails for all the small listing displays
-    'thumbnail': {'verbose_name': 'Thumbnail', 'width': 172, 'height': 172, 'opts': 'crop upscale'},
+    'thumbnail': {'verbose_name': 'Thumbnail', 'width': 250, 'height': 160, 'opts': 'crop upscale'},
     # medium size for slider on detail page (contains watermark after verified)
     'medium': {'verbose_name': 'Medium', 'width': 720, 'height': 405, 'opts': 'crop upscale'},
     # # large size for zoomed view on detail page (contains watermark after verified)

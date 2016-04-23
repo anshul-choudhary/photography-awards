@@ -1,7 +1,7 @@
 from django.conf.urls import patterns, url
 
 from . import views
-from core.views import HomeView, FileUploadHandler
+from core.views import HomeView, FileUploadHandler, BestPhotographerProfile
 
 urlpatterns = patterns(
     '',
@@ -19,6 +19,9 @@ urlpatterns = patterns(
         FileUploadHandler.as_view(),
         name='file_upload_handler'
     ),
+
+    url(r'^profile/(?P<key>\w+)/$', BestPhotographerProfile.as_view(), name='bestphotographersprofile'),
+
 )
 
 #
