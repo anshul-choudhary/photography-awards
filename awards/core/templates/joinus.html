@@ -3,7 +3,7 @@
 <html>
 <head>
     <meta charset="utf-8" />
-    <title>                            		        Add your portfolio | WEDISSON </title>
+    <title>Add your portfolio | WEDISSON </title>
     <meta name="description" content="" />
     <meta name="keywords" content="" />
     <meta name="author" content="nileforest">
@@ -27,14 +27,6 @@
 
 <body class="">
 
-     <!-- Preloader -->
-
-    <!-- End Preloader -->
-
-    <!-- Sidemenu -->
-
-    <!--End Sidemenu -->
-
 
     <!-- Site Wraper -->
     <div class="wrapper">
@@ -49,10 +41,10 @@
     </div>
 
     <ul class="navlinks text-center">
-    <li><a href=''>AWARD</a></li>
-    <li><a href='best2015'>BEST 2015</a></li>
-    <li><a href='photographers'>PHOTOGRAPHERS</a></li>
-    <li><a href='join_us'>JOIN</a></li>
+    <li><a href="{% url 'home' %}">AWARD</a></li>
+    <li><a href='{% url 'home' %}'>BEST 2015</a></li>
+    <li><a href="{% url 'photographers' %}">PHOTOGRAPHERS</a></li>
+    <li><a href="{% url 'user_register' %}">JOIN</a></li>
     {% if request.user.is_authenticated %}
         <li><a href="{% url 'my_profile' %}">DASHBOARD</a></li>
     {% else %}

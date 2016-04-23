@@ -296,21 +296,22 @@ class CompleteUploadForm(ModelForm):
 
 
     username = forms.CharField(max_length=1000, required=True)
-    home_page_desc = forms.CharField(max_length=1000, required=True)
+    home_page_desc = forms.CharField(max_length=400, required=True)
+
     profile_image = forms.CharField(max_length=200, required=True)
     profile_image_name = forms.CharField(max_length=200, widget=forms.HiddenInput(), required=True)
 
     image_1 = forms.CharField(max_length=200, required=True)
     image_1_name = forms.CharField(label='', widget=forms.HiddenInput(), required=True)
-    image_1_desc = forms.CharField(label='', required=True)
+    image_1_desc = forms.CharField(max_length=400, label='', required=True)
 
     image_2 = forms.CharField(max_length=200, required=True)
     image_2_name = forms.CharField(label='', widget=forms.HiddenInput(), required=True)
-    image_2_desc = forms.CharField(label='', required=True)
+    image_2_desc = forms.CharField(max_length=400, label='', required=True)
 
     image_3 = forms.CharField(max_length=200, required=True)
     image_3_name = forms.CharField(label='', widget=forms.HiddenInput(), required=True)
-    image_3_desc = forms.CharField(label='', required=True)
+    image_3_desc = forms.CharField(max_length=400, label='', required=True)
 
     # # temporary field to store layout image location
     # image_1 = forms.CharField(max_length=250, required=False)
@@ -335,6 +336,10 @@ class CompleteUploadForm(ModelForm):
         super(CompleteUploadForm, self).__init__(*args, **kwargs)
 
         # self.fields['product_type'].widget.choices[0] = ('', '*Select Device Type')
+        try:
+            del self.fields['db_image']
+        except:
+            pass
 
     class Meta:
         model = Photographer
@@ -343,28 +348,34 @@ class CompleteUploadForm(ModelForm):
     def clean(self):
         cleaned_data = super(CompleteUploadForm, self).clean()
 
+        # self._errors['home_page_desc'] = "error hai uyaa"
         if len(self._errors) > 0:
             return cleaned_data
 
-        if cleaned_data['profile_image_name'] != '':
-            plan_path = os.path.join(MEDIA_ROOT, os.path.join(TEMP_UPLOAD_DIR, cleaned_data['username']))
-            if not os.path.exists(plan_path + '/' + cleaned_data['profile_image_name']):
-                raise ValidationError('Image does not exists!!')
+        # if cleaned_data['profile_image_name'] != '':
+        #     plan_path = os.path.join(MEDIA_ROOT, os.path.join(TEMP_UPLOAD_DIR, cleaned_data['username']))
+        #     if not os.path.exists(plan_path + '/' + cleaned_data['profile_image_name']):
+        #         raise ValidationError('Image does not exists!!')
+        #
+        # if cleaned_data['image_1_name'] != '':
+        #     plan_path = os.path.join(MEDIA_ROOT, os.path.join(TEMP_UPLOAD_DIR, cleaned_data['username']))
+        #     if not os.path.exists(plan_path + '/' + cleaned_data['image_1_name']):
+        #         raise ValidationError('Image does not exists!!')
+        #
+        # if cleaned_data['image_2_name'] != '':
+        #     plan_path = os.path.join(MEDIA_ROOT, os.path.join(TEMP_UPLOAD_DIR, cleaned_data['username']))
+        #     if not os.path.exists(plan_path + '/' + cleaned_data['image_2_name']):
+        #         raise ValidationError('Image does not exists!!')
+        #
+        # if cleaned_data['image_3_name'] != '':
+        #     plan_path = os.path.join(MEDIA_ROOT, os.path.join(TEMP_UPLOAD_DIR, cleaned_data['username']))
+        #     if not os.path.exists(plan_path + '/' + cleaned_data['image_3_name']):
+        #         raise ValidationError('Image does not exists!!')
 
-        if cleaned_data['image_1_name'] != '':
-            plan_path = os.path.join(MEDIA_ROOT, os.path.join(TEMP_UPLOAD_DIR, cleaned_data['username']))
-            if not os.path.exists(plan_path + '/' + cleaned_data['image_1_name']):
-                raise ValidationError('Image does not exists!!')
-
-        if cleaned_data['image_2_name'] != '':
-            plan_path = os.path.join(MEDIA_ROOT, os.path.join(TEMP_UPLOAD_DIR, cleaned_data['username']))
-            if not os.path.exists(plan_path + '/' + cleaned_data['image_2_name']):
-                raise ValidationError('Image does not exists!!')
-
-        if cleaned_data['image_3_name'] != '':
-            plan_path = os.path.join(MEDIA_ROOT, os.path.join(TEMP_UPLOAD_DIR, cleaned_data['username']))
-            if not os.path.exists(plan_path + '/' + cleaned_data['image_3_name']):
-                raise ValidationError('Image does not exists!!')
+        try:
+            del self._errors['db_image']
+        except Exception as e:
+            pass
 
         return cleaned_data
 

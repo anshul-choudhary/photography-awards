@@ -121,12 +121,13 @@
                   <label class="col-sm-3 control-label">About Yourself</label>
                   <div class="col-sm-6">
                     <input type="text" name="home_page_desc" value="{{ upload_form.data.home_page_desc }}" class="form-control" required placeholder="Enter short description" />
+                    <label class="error">{{ upload_form.errors.home_page_desc }}</label>
                   </div>
                 </div><!--/form-group--> 
 
 
 
-                <div id="profile_image" data-uploaded="false" class="form-group db_uploadbox" data-imageset="profile_image">
+                <div id="profile_image" {% if upload_form and upload_form.cleaned_data.profile_image|length %}data-uploaded="true"{% else %}data-uploaded="false"{% endif %} class="form-group db_uploadbox" data-imageset="profile_image">
                   <label class="col-sm-3 control-label">Upload Profile Image</label>
                   <div class="col-sm-6 db_input_box" {% if upload_form and upload_form.cleaned_data.profile_image|length %}style="display: none;"{% endif %}>
                     <!-- The file input field used as target for the file upload widget -->
@@ -147,19 +148,20 @@
                     <div class="uploaded_files" >
                         {% if upload_form and upload_form.cleaned_data.profile_image|length %}
                             <p>
-                            <img style="width:250px;height:160px;background-image:url('{{ upload_form.cleaned_data.image_1 }}');background-repeat: no-repeat;" />
+                            <img style="width:250px;height:160px;background-image:url('{{ upload_form.cleaned_data.profile_image }}');background-repeat: no-repeat;" />
                             <span>{{ upload_form.cleaned_data.profile_image_name }}</span>
-                            <a class="db-remove-image">&times; Remove</a>
-                            <input class="aw_image" type="hidden" value="{{ upload_form.cleaned_data.profile_image }}" name="image_1">
+                            <a style="cursor:pointer;" class="db-remove-image">&times; Remove</a>
+                            <input class="aw_image" type="hidden" value="{{ upload_form.cleaned_data.profile_image }}" name="profile_image">
+                            <input type="hidden" value="{{ upload_form.cleaned_data.profile_image_name }}" name="profile_image_name">
                             </p>
                         {% endif %}
                     </div>
                 </div>
 
+                <br>
 
 
-
-                <div id="image_1" data-uploaded="false" class="form-group db_uploadbox" data-imageset="image_1">
+                <div id="image_1" {% if upload_form and upload_form.cleaned_data.image_1|length %}data-uploaded="true"{% else %}data-uploaded="false"{% endif %} class="form-group db_uploadbox" data-imageset="image_1">
                   <label class="col-sm-3 control-label">Upload Image 1</label>
 
                   <div class="col-sm-6 db_input_box" {% if upload_form and upload_form.cleaned_data.image_1|length %}style="display: none;"{% endif %}>
@@ -183,26 +185,28 @@
                             <p>
                             <img style="width:250px;height:160px;background-image:url('{{ upload_form.cleaned_data.image_1 }}');background-repeat: no-repeat;" />
                             <span>{{ upload_form.cleaned_data.image_1_name }}</span>
-                            <a class="db-remove-image">&times; Remove</a>
+                            <a style="cursor:pointer;" class="db-remove-image">&times; Remove</a>
                             <input class="aw_image" type="hidden" value="{{ upload_form.cleaned_data.image_1 }}"  name="image_1">
+                            <input type="hidden" value="{{ upload_form.cleaned_data.image_1_name }}" name="image_1_name">
                             </p>
                         {% endif %}
                     </div>
-
-
                 </div>
+
+                <br>
 
 
                 <div class="form-group">
                   <label class="col-sm-3 control-label">Image 1 Description</label>
                   <div class="col-sm-6">
                     <input type="text" name="image_1_desc" value="{{ upload_form.data.image_1_desc }}" class="form-control" required placeholder="Enter image description" />
+                    <label class="error">{{ upload_form.errors.image_1_desc }}</label>
                   </div>
                 </div><!--/form-group-->
 
 
 
-                <div id="image_2" data-uploaded="false" class="form-group db_uploadbox" data-imageset="image_2">
+                <div id="image_2" {% if upload_form and upload_form.cleaned_data.image_2|length %}data-uploaded="true"{% else %}data-uploaded="false"{% endif %} class="form-group db_uploadbox" data-imageset="image_2">
                   <label class="col-sm-3 control-label">Upload Image 2</label>
                   <div class="col-sm-6 db_input_box" {% if upload_form and upload_form.cleaned_data.image_2|length %}style="display: none;"{% endif %}>
                     <!-- The file input field used as target for the file upload widget -->
@@ -225,25 +229,28 @@
                             <p>
                             <img style="width:250px;height:160px;background-image:url('{{ upload_form.cleaned_data.image_2 }}');background-repeat: no-repeat;" />
                             <span>{{ upload_form.cleaned_data.image_2_name }}</span>
-                            <a class="db-remove-image">&times; Remove</a>
+                            <a style="cursor:pointer;" class="db-remove-image">&times; Remove</a>
                             <input class="aw_image" type="hidden" value="{{ upload_form.cleaned_data.image_1 }}" name="image_2">
+                            <input type="hidden" value="{{ upload_form.cleaned_data.image_2_name }}" name="image_2_name">
                             </p>
                         {% endif %}
                     </div>
                 </div>
 
+                <br>
 
                 <div class="form-group">
                   <label class="col-sm-3 control-label">Image 2 Description</label>
                   <div class="col-sm-6">
                     <input type="text" name="image_2_desc" value="{{ upload_form.data.image_2_desc }}" class="form-control" required placeholder="Enter image description" />
+                    <label class="error">{{ upload_form.errors.image_2_desc }}</label>
                   </div>
                 </div><!--/form-group-->
 
 
 
 
-                <div id="image_3" data-uploaded="false" class="form-group db_uploadbox" data-imageset="image_3">
+                <div id="image_3" {% if upload_form and upload_form.cleaned_data.image_3|length %}data-uploaded="true"{% else %}data-uploaded="false"{% endif %} class="form-group db_uploadbox" data-imageset="image_3">
                   <label class="col-sm-3 control-label">Upload Image 3</label>
 
                   <div class="col-sm-6 db_input_box" {% if upload_form and upload_form.cleaned_data.image_3|length %}style="display: none;"{% endif %}>
@@ -267,18 +274,21 @@
                             <p>
                             <img style="width:250px;height:160px;background-image:url('{{ upload_form.cleaned_data.image_3 }}');background-repeat: no-repeat;" />
                             <span>{{ upload_form.cleaned_data.image_3_name }}</span>
-                            <a class="db-remove-image">&times; Remove</a>
+                            <a style="cursor:pointer;" class="db-remove-image">&times; Remove</a>
                             <input class="aw_image" type="hidden" value="{{ upload_form.cleaned_data.image_3 }}" name="image_3">
+                            <input type="hidden" value="{{ upload_form.cleaned_data.image_3_name }}" name="image_3_name">
                             </p>
                         {% endif %}
                     </div>
                 </div>
 
+                <br>
 
                 <div class="form-group">
                   <label class="col-sm-3 control-label">Image 3 Description</label>
                   <div class="col-sm-6">
                     <input type="text" name="image_3_desc" value="{{ upload_form.data.image_3_desc }}" class="form-control" required placeholder="Enter image description" />
+                    <label class="error">{{ upload_form.errors.image_3_desc }}</label>
                   </div>
                 </div><!--/form-group-->
 
@@ -362,7 +372,7 @@
 
 
             var fields = ['#profile_image', '#image_1', '#image_2', '#image_3'];
-            $(fields.join(',')).keydown(function(){
+            $(fields.join(',')).click(function(){
                 if ($(this).next().hasClass('error')){
                     $(this).next().remove();
                 }

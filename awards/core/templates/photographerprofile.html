@@ -1,0 +1,147 @@
+{% extends 'site_base.html' %}
+{% load compress %}
+
+{% block meta_tags %}
+    {{block.super}}
+{% endblock meta_tags %}
+
+{% block title %}
+    {{ block.super }}
+{% endblock title %}
+
+{% block css_section %}
+    {{ block.super }}
+{% endblock css_section %}
+
+{% block top_header %}
+    {{ block.super }}
+{% endblock top_header %}
+
+
+{% block main_container %}
+<!-- Site Wraper -->
+
+
+    <!-- Site Wraper -->
+    <div class="wrapper">
+
+    <!-- HEADER -->
+
+    <div class="container">
+    <div class="logo">
+    <a href="/">
+    <div class="logo-text">International Wedding<br>Photography Contest</div>
+    </a>
+    </div>
+
+    <ul class="navlinks text-center">
+    <li><a href="{% url 'home' %}">AWARD</a></li>
+    <li><a href="{% url 'home' %}">BEST 2015</a></li>
+    <li><a href="{% url 'photographers' %}">PHOTOGRAPHERS</a></li>
+    <li><a href="{% url 'user_register' %}">JOIN</a></li>
+    {% if request.user.is_authenticated %}
+        <li><a href="{% url 'my_profile' %}">DASHBOARD</a></li>
+    {% else %}
+        <li><a href='{% url 'user_login' %}'>LOGIN</a></li>
+    {% endif %}
+    </ul>
+    </div>
+
+
+    <!-- END HEADER -->
+
+
+    <!-- CONTENT --------------------------------------------------------------------------------->
+    <!-- Profile Section -->
+    <section class="pt-30 pb-15" style="">
+
+
+    <div class="container ">
+    <div class="row ph-info">
+    <div class="col-md-3 mb-25 userthumb">
+    <img src="{{ MEDIA_URL }}{{ profile_image }}" class="img-responsive img-circle text-center ph-profile-photo">
+    </div>
+    <div class="col-lg-3">
+    <div class="p">
+    <h1 class="ph-h1">{{ name }}                                        </h1>
+    <p class="ph-city">{{ country }}</p>
+    <span class="ph-awardnumber"><i class="fa fa-asterisk"></i> {{ awards }} awards</span>
+    </div>
+    <div class="">
+    <p class='ph-tel mt-15'>{{ contact }} </p>						<p class='ph-desc'>
+    <a href='http://lubachulyaeva.com' target='blank_' rel='nofollow'>{{ email }}</a>
+    <br />{{ instagram_link1 }}                     </p>
+    </div>
+    </div>
+
+
+
+    </div>
+
+
+
+
+
+    <div class="row mt-15">
+
+
+    <div class="col-md-8 mb-15">
+    <p>{{ home_page_desc }}</p>
+    </div>
+    </div>
+
+    </div>
+    </section>
+
+
+
+
+
+    <!-- IMAGE Section -->
+    <section class="">
+    <div class="owl-carousel content-carousel content-slider award-slider">
+
+
+    {% for k in images %}
+    <div class="item">
+    <div class="container">
+    <div class="row">
+    <div class="col-md-10 mb-sm-30">
+    <img src="{{ MEDIA_URL }}{{ k }}" alt="" />
+    </div>
+    <div class="col-md-2">
+    <div class="spacer-30"></div>
+    <p class="pb-30"></p>
+    </div>
+    </div>
+    </div>
+    </div>
+    {% endfor %}
+
+
+
+    </div>
+    </section>
+    <!-- End IMAGE Section -->
+
+
+    <!-- Scroll Top -->
+    <a class="scroll-top">
+    <i class="fa fa-angle-double-up"></i>
+    </a>
+    <!-- End Scroll Top -->
+    </div>
+    <!-- Site Wraper End -->
+
+{% endblock main_container %}
+
+
+{% block footer %}
+    {{ block.super }}
+{% endblock footer %}
+
+
+{% block js_section_bottom %}
+    {{ block.super }}
+{% endblock js_section_bottom %}
+

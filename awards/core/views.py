@@ -6,6 +6,7 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 from awards.settings import TEMP_UPLOAD_DIR, MEDIA_URL, FILEBROWSER_VERSION_BASEDIR
 from awards.settings import MEDIA_ROOT
+from awards.utils import generate_unique_file_name
 from core.forms import ImageUploadForm
 from core.models import Footer
 
@@ -131,7 +132,14 @@ class FileUploadHandler(APIView):
             # Do nothing Assume that dir is already created.
             pass
 
-        rel_path = os.path.join(os.path.join(TEMP_UPLOAD_DIR,self.request.user.username) + '/', file.name)
+        source_dir = os.path.join(MEDIA_ROOT)
+        destination_dir = os.path.join(source_dir,os.path.join(TEMP_UPLOAD_DIR,self.request.user.username))
+
+        ext = '.' + os.path.splitext(file.name)[1][1:]
+        img_name = file.name.split(ext)[0]
+        img_name = generate_unique_file_name(destination_dir, img_name, ext)
+
+        rel_path = os.path.join(os.path.join(TEMP_UPLOAD_DIR,self.request.user.username) + '/', img_name)
         fd = open(os.path.join(MEDIA_ROOT, rel_path), 'wb')
         for chunk in file.chunks():
             fd.write(chunk)
@@ -143,7 +151,7 @@ class FileUploadHandler(APIView):
         except Exception as e:
             pass
 
-        return {'path': MEDIA_URL + rel_path, 'file': file.name, 'name': file.name, 'version': version}
+        return {'path': MEDIA_URL + rel_path, 'file': img_name, 'name': img_name, 'version': version}
 
 
     def delete_file(self, file):

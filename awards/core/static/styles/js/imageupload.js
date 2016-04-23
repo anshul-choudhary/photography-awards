@@ -107,12 +107,13 @@ $(function () {
                             sel.SumoSelect();
                         }
 
-                        p.append($('<a style="margin-left: 40px;">&times Remove</a>').on('click', function () {
+                        p.append($('<a style="margin-left: 40px; cursor:pointer;">&times Remove</a>').on('click', function () {
 
                             file_row = $(this).parent();
                             // make a call to delete that file
                             //DB.Ajax.post('/fileuploadhandler/delete/', {'name': d.file},
 
+                            $(this).closest('.db_uploadbox').attr("data-uploaded","false");
                             $.post( "/fileuploadhandler/delete/", {'name': d.file}, function(d){
                                     if (d.status == 'OK') {
                                         file_row.fadeOut(400, function () {

@@ -1,11 +1,15 @@
+import os
 from django.contrib.auth import authenticate, login
 from django.forms.utils import ErrorList
 from django.http import HttpResponse
 from django.shortcuts import redirect
+from filebrowser.base import FileObject
 from rest_framework.renderers import JSONRenderer
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from awards.choices import IMAGE_NAME_CHOICES
+from awards.settings import MEDIA_URL, TEMP_UPLOAD_DIR, FILEBROWSER_DIRECTORY, MEDIA_ROOT
+from awards.utils import generate_version_add_watermark
 from core.models import Country, Image
 from useraccount.forms import SignupForm, UserLoginnForm, EditMyprofile, CompleteUploadForm
 from useraccount.models import Photographer, UserProfile
@@ -190,10 +194,10 @@ class MyProfile(APIView):
 
 
 
-class MyUploads(APIView):
+class PhotographerProfile(APIView):
     ''' Home Page view '''
 
-    template_name = 'uploads.html'
+    template_name = 'photographerprofile.html'
 
     def get(self, request, *args, **kwargs):
         ''' Receives the request '''
@@ -202,14 +206,31 @@ class MyUploads(APIView):
         if 'loggedin_user_credentials' in request.session:
             ctx = request.session['loggedin_user_credentials']
 
-        ctx.update({'username': request.user.username})
+        try:
+            del ctx['password']
+        except:
+            pass
+
+        PhotoObj = Photographer.objects.get(user_ref=request.user)
+        CountryQuerySet = Country.objects.filter(id=PhotoObj.user_ref.country.id).order_by('name')
+
+        ctx.update({'name': PhotoObj.firstname + ' ' + PhotoObj.lastname})
+        ctx.update({'country': CountryQuerySet[0].name})
+        ctx.update({'awards': PhotoObj.no_of_awards})
+        ctx.update({'contact': PhotoObj.user_ref.primary_contact_number})
+        ctx.update({'email': PhotoObj.user_ref.email})
+        ctx.update({'instagram_link1': PhotoObj.instagram_link1})
+        ctx.update({'instagram_link2': PhotoObj.instagram_link2})
+        ctx.update({'home_page_desc': PhotoObj.home_page_desc})
+        ctx.update({'images': []})
+
+        for k in PhotoObj.image.all().order_by('created_date'):
+            if k.profile_image:
+                ctx.update({'profile_image': k.image.name})
+            else:
+                ctx['images'].append(k.image.name)
         return Response(ctx, template_name=self.template_name)
 
-    def post(self, request, *args, **kwargs):
-        ''' Receives the request '''
-
-        pass
-        # return Response(ctx, template_name=self.template_name)
 
 
 class EditMyProfile(APIView):
@@ -320,8 +341,66 @@ class EditMyProfile(APIView):
 
 
 
+class MyUploads(APIView):
+    ''' Home Page view '''
+
+    template_name = 'uploads.html'
+    form_class = CompleteUploadForm
+
+    def get(self, request, *args, **kwargs):
+        ''' Receives the request '''
+
+        ctx = {}
+        if 'loggedin_user_credentials' in request.session:
+            ctx = request.session['loggedin_user_credentials']
+
+        try:
+            PhotographerObj = Photographer.objects.get(user_ref=request.user)
+            if len(PhotographerObj.image.all()):
+                formargs = {'username': request.user.username, 'home_page_desc': PhotographerObj.home_page_desc}
+
+                count = 1
+                for k in PhotographerObj.image.all().order_by('created_date'):
+                    if k.profile_image:
+                        rel_path = os.path.join(os.path.join(FILEBROWSER_DIRECTORY,request.user.username) + '/', k.image.filename)
+                        a = FileObject(rel_path)
+                        version = a.version_generate('thumbnail').url
+                        formargs.update({'profile_image_name': k.image.filename,
+                                         'profile_image': version})
 
 
+                    name = 'image_' + str(count) + '_desc'
+                    rel_path = os.path.join(os.path.join(FILEBROWSER_DIRECTORY,request.user.username) + '/', k.image.filename)
+                    a = FileObject(rel_path)
+                    version = a.version_generate('thumbnail').url
+
+                    formargs.update({'image_' + str(count) + '_name': k.image.filename,
+                                     'image_' + str(count): version
+                                 })
+                    count += 1
+
+                formargs.update({'image_1_desc': PhotographerObj.image_1_desc,
+                                 'image_2_desc': PhotographerObj.image_2_desc,
+                                 'image_3_desc': PhotographerObj.image_3_desc,
+                                 'image_4_desc': PhotographerObj.image_4_desc,
+                                 })
+
+                formsubmit = self.form_class(formargs)
+                ctx.update({'upload_form': formsubmit})
+
+        except Exception as e:
+            pass
+
+
+
+        ctx.update({'username': request.user.username})
+        return Response(ctx, template_name=self.template_name)
+
+    def post(self, request, *args, **kwargs):
+        ''' Receives the request '''
+
+        pass
+        # return Response(ctx, template_name=self.template_name)
 
 
 
@@ -356,11 +435,16 @@ class CompleteUpload(APIView):
         if upload_form.is_valid():
             try:
                 PhotoObj = Photographer.objects.get(user_ref=request.user)
+                if len(PhotoObj.image.all()):
+                    for k in PhotoObj.image.all():
+                        k.delete_image(os.path.join(MEDIA_ROOT, k.image.name))
+                        k.delete()
+
+
+                PhotoObj.home_page_desc = upload_form.cleaned_data['home_page_desc']
                 PhotoObj.image_1_desc = upload_form.cleaned_data['image_1_desc']
-                # PhotoObj.image_2_desc = upload_form.cleaned_data['image_2_desc']
-                # PhotoObj.image_3_desc = upload_form.cleaned_data['image_3_desc']
-                # PhotoObj.image_4_desc = upload_form.cleaned_data['image_4_desc']
-                # PhotoObj.image_5_desc = upload_form.cleaned_data['image_5_desc']
+                PhotoObj.image_2_desc = upload_form.cleaned_data['image_2_desc']
+                PhotoObj.image_3_desc = upload_form.cleaned_data['image_3_desc']
                 PhotoObj.save()
 
                 # image = Image(content_object=PhotoObj, image_name=upload_form.cleaned_data['image_1_name'])
@@ -369,18 +453,21 @@ class CompleteUpload(APIView):
                 image.image_name = IMAGE_NAME_CHOICES['TYPE'].Award1
                 image.image_a_name = image_name
                 image.save()
+                generate_version_add_watermark(image.image.name, 'thumbnail')
 
                 image = Image(content_object=PhotoObj)
                 (image.image,image_name) = Image().copy_upload_image(PhotoObj, upload_form.cleaned_data['image_2_name'], request.user.username)
                 image.image_name = IMAGE_NAME_CHOICES['TYPE'].Award2
                 image.image_a_name = image_name
                 image.save()
+                generate_version_add_watermark(image.image.name, 'thumbnail')
 
                 image = Image(content_object=PhotoObj)
                 (image.image,image_name) = Image().copy_upload_image(PhotoObj, upload_form.cleaned_data['image_3_name'], request.user.username)
                 image.image_name = IMAGE_NAME_CHOICES['TYPE'].Award3
                 image.image_a_name = image_name
                 image.save()
+                generate_version_add_watermark(image.image.name, 'thumbnail')
 
 
                 image = Image(content_object=PhotoObj)
@@ -389,36 +476,20 @@ class CompleteUpload(APIView):
                 image.image_a_name = image_name
                 image.profile_image = True
                 image.save()
+                generate_version_add_watermark(image.image.name, 'thumbnail')
 
-                # image = Image(content_object=PhotoObj, image_name=upload_form.cleaned_data['image_2_name'])
-                # image.image = Image().copy_upload_image(PhotoObj, upload_form.cleaned_data['image_2_name'], request.user_id, upload_form.cleaned_data['image_2'])
-                # image.save()
-                #
-                # image = Image(content_object=PhotoObj, image_name=upload_form.cleaned_data['image_3_name'])
-                # image.image = Image().copy_upload_image(PhotoObj, upload_form.cleaned_data['image_3_name'], request.user_id, upload_form.cleaned_data['image_3'])
-                # image.save()
-                #
-                #
-                # image = Image(content_object=PhotoObj, image_name=upload_form.cleaned_data['image_4_name'])
-                # image.image = Image().copy_upload_image(PhotoObj, upload_form.cleaned_data['image_4_name'], request.user_id, upload_form.cleaned_data['image_4'])
-                # image.save()
-                #
-                # image = Image(content_object=PhotoObj, image_name=upload_form.cleaned_data['image_5_name'])
-                # image.image = Image().copy_upload_image(PhotoObj, upload_form.cleaned_data['image_5_name'], request.user_id, upload_form.cleaned_data['image_5'])
-                # image.save()
-
-                return Response({}, template_name=self.template_name)
+                return redirect("photographerprofile")
 
             except Exception as ex:
                 raise Exception(str(ex))
         else:
             try:
-                if len(upload_form.cleaned_data['image_1_name']):
-                    pass
-                    # dt = upload_form.cleaned_data['image_1_name']
-                    # fn = dt.split('_thumbnail')
-                    # ln = fn[1]
-                    # upload_form.cleaned_data['image_1_name'] = fn[0].split('/media/_versions/temp/')[1] + ln
+                pass
+                # if len(upload_form.cleaned_data['image_1_name']):
+                #     dt = upload_form.cleaned_data['image_1_name']
+                #     fn = dt.split('_thumbnail')
+                #     ln = fn[1]
+                #     upload_form.cleaned_data['image_1_name'] = fn[0].split('/media/_versions/temp/')[1] + ln
 
 
                 # if len(upload_form.cleaned_data['image_2']):
@@ -449,7 +520,7 @@ class CompleteUpload(APIView):
             except Exception as e:
                 pass
 
-            return Response({'upload_form': upload_form}, template_name='uploads.html')
+            return Response({'upload_form': upload_form, 'username': request.user.username}, template_name='uploads.html')
 
 
 

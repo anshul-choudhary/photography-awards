@@ -189,7 +189,7 @@ class Image(models.Model):
         img_name = generate_unique_file_name(destination_dir, img_name, ext)
 
         shutil.copy(src, os.path.join(destination_dir, img_name))
-        os.remove(src)
+        # os.remove(src)
         return (os.path.join(destination_rel, img_name),img_name)
 
 

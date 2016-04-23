@@ -68,3 +68,32 @@ def get_user_model():
 
 
 
+
+def generate_version_add_watermark(original_path, version_suffix):
+    """
+        Generate the given version of an image and adds watermark to it
+        NOTE: this function only generates a new version from original file (i.e in db) when
+          1. the version does not exists.
+          2. the modified date of original image is newer than version
+        :param original_path: relative path to original image
+        :param version_suffix: version prefix as defined in common settings
+        'medium'|'large'|'thumbnail'
+        :return: image object.
+    """
+
+    from filebrowser.base import FileObject
+    from filebrowser.sites import site
+    from core.models import Image
+
+    fob = FileObject(original_path, site=site)
+
+    version_path = fob.version_path(version_suffix)
+    if not site.storage.isfile(version_path):
+        version_path = fob._generate_version(version_suffix)
+        abs_path = os.path.join(settings.MEDIA_ROOT, version_path)
+        # Image.create_image_watermark(abs_path, abs_path, settings.WATERMARK_IMAGE_LOCATION)
+    elif site.storage.modified_time(original_path) > site.storage.modified_time(version_path):
+        version_path = fob._generate_version(version_suffix)
+        abs_path = os.path.join(settings.MEDIA_ROOT, version_path)
+        # Image.create_image_watermark(abs_path, abs_path, settings.WATERMARK_IMAGE_LOCATION)
+    return FileObject(version_path, site=site)
