@@ -223,6 +223,7 @@ class Photographer(models.Model):
         verbose_name='If True, Profile will be seen on the home page', default=False,
         help_text="Designates whether to show the photographer's profile on home page or not"
     )
+    priority = models.IntegerField(verbose_name="Home page profile visibility priority", default=1)
 
     home_page_desc = models.TextField(blank=True, null=True)
     image_1_desc = models.TextField(blank=True, null=True)

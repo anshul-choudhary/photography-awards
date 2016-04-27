@@ -61,384 +61,61 @@
     <div class="owl-carousel content-carousel content-slider award-slider">
 
 
+    {% for k in best_photographer %}
     <div class="item">
     <div class="container">
     <div class="row">
     <div class="col-md-10 mb-sm-30">
-    <img src="{{ STATIC_URL }}photos/awards/12/99.jpg" alt="" />
+    <img src="{{ MEDIA_URL }}{{ k.images.imagename }}" alt="Best photography image" />
     </div>
     <div class="col-md-2">
     <div class="row">
     <div class="ptb-15 col-xs-10 userthumb-main">
 
-    <img src="{{ STATIC_URL }}images/userthumb/a9124692338e3a56fd242e0ca4fda757.jpg" class="img-circle"  alt="" /></div></div>
-    <h5>Jonathan Udot<br>
+    <img src="{{ MEDIA_URL }}{{ k.images.profileimage }}" class="img-circle"  alt="Profile Image" /></div></div>
+    <h5>{{ k.name }}<br>
 
-    <i>Jonathan Udot</i> <br>
-    France</h5>
+{#    <i>Jonathan Udot</i> <br>#}
+    {{ k.country }}</h5>
     <div class="spacer-10"></div>
-    <p class="pb-30">When we organized this session in Paris with Agnes and Jonathan, Agnes who’s also wedding photographer, asked me if I could build a few images with slow shutter, like I did with bikers or peoples in the street on other pictures I shared on my blog. Since we were in Paris, I thought to the subway and she said me that there was a subway station who was more pretty than others. So we went in and I asked them to make hugs on the subway platform. Then I went on the other side of the railway and we waited for the train. I had prepared my camera and now I had to be on the good height to capture them trough the train’s windows… I shot several time with high cadence and when the subway stopped, I found this picture that I was glad to offer them.<br />
+    <p class="pb-30">{{ k.home_page_desc }}<br />
     </p>
     </div>
     </div>
     </div>
     </div>
+    {% endfor %}
 
 
 
+{##}
+{#    <div class="item">#}
+{#    <div class="container">#}
+{#    <div class="row">#}
+{#    <div class="col-md-10 mb-sm-30">#}
+{#    <img src="{{ STATIC_URL }}photos/awards/12/25.jpg" alt="" />#}
+{#    </div>#}
+{#    <div class="col-md-2">#}
+{#    <div class="row">#}
+{#    <div class="ptb-15 col-xs-10 userthumb-main">#}
+{##}
+{#    <img src="{{ STATIC_URL }}images/userthumb/blank_user.png" class="img-circle"  alt="" /></div></div>#}
+{#    <h5>Elena  Slesarchuk<br>#}
+{##}
+{#    <i>PEARL Photography by Elen</i> <br>#}
+{#    United States</h5>#}
+{#    <div class="spacer-10"></div>#}
+{#    <p class="pb-30">Tim and Cornelia is one of the most loving and genuine couples I've even got to work with! After meeting them, I knew I wanted to go an extra mile and create an epic engagement session! I was absolutely stun when I saw this thick layer of fog when we arrived at the location! It was breathtaking!</p>#}
+{#    </div>#}
+{#    </div>#}
+{#    </div>#}
+{#    </div>#}
+{##}
 
-    <div class="item">
-    <div class="container">
-    <div class="row">
-    <div class="col-md-10 mb-sm-30">
-    <img src="{{ STATIC_URL }}photos/awards/12/93.jpg" alt="" />
-    </div>
-    <div class="col-md-2">
-    <div class="row">
-    <div class="ptb-15 col-xs-10 userthumb-main">
 
-    <img src="{{ STATIC_URL }}images/userthumb/7cb241fcb222b8d05ba6fc74ea0be704.jpg" class="img-circle"  alt="" /></div></div>
-    <h5>Simone Janssen<br>
 
 
-    Netherlands</h5>
-    <div class="spacer-10"></div>
-    <p class="pb-30">When the bride already started putting on her tight sleeved lace top, she realized she forgot her deodorant, but couldn’t reach her armpits herself anymore. Hilarious moment!</p>
-    </div>
-    </div>
-    </div>
-    </div>
 
-
-
-
-    <div class="item">
-    <div class="container">
-    <div class="row">
-    <div class="col-md-10 mb-sm-30">
-    <img src="{{ STATIC_URL }}photos/awards/12/27.jpg" alt="" />
-    </div>
-    <div class="col-md-2">
-    <div class="row">
-    <div class="ptb-15 col-xs-10 userthumb-main">
-
-    <img src="{{ STATIC_URL }}images/userthumb/bd98938b6248749539aa78555ca9eb11.jpg" class="img-circle"  alt="" /></div></div>
-    <h5>Els Korsten<br>
-
-    <i>Els Korsten Fotografie</i> <br>
-    Netherlands</h5>
-    <div class="spacer-10"></div>
-    <p class="pb-30">What a great day we had in February in ‘s-Hertogenbosch, The Netherlands. It was a cold and windy day, but the skies were great. On the moment we took this picture the sun was there for only a couple of minutes.The love story of this wedding couple is very special. They have so many stories and memories about the relationship. One of their lovely stories is the proposal. The groom asked his bride on this spot on a very special way. Because this marriage was intimate and small with only their family, you feel the love every minute. Their love story will be continuing with so many new memories. I feel very special that I could capture this moment.</p>
-    </div>
-    </div>
-    </div>
-    </div>
-
-
-
-
-    <div class="item">
-    <div class="container">
-    <div class="row">
-    <div class="col-md-10 mb-sm-30">
-    <img src="{{ STATIC_URL }}photos/awards/12/82.jpg" alt="" />
-    </div>
-    <div class="col-md-2">
-    <div class="row">
-    <div class="ptb-15 col-xs-10 userthumb-main">
-
-    <img src="{{ STATIC_URL }}images/userthumb/31038d6d9976c2693ab8c9c18ff80855.jpg" class="img-circle"  alt="" /></div></div>
-    <h5>Rahul DSouza<br>
-
-    <i>Flashbakc Studios</i> <br>
-    India</h5>
-    <div class="spacer-10"></div>
-    <p class="pb-30">We were almost to the end of our photoshoot with Sheldon and Justina, when, they pulled out their wish lantern and wanted to get a few shots of them releasing it into the evening sky. I had never shot anyone with a wish lantern before, so me it was completely new.<br />
-    As soon as their lantern was almost ready to release I asked the couple to gently lean in for a kiss under the lantern, and whoa, that's the result I got was amazing, the background sky looked just like a painting to me and created such a romantic moment for the two of them, with the play of the light and shadow</p>
-    </div>
-    </div>
-    </div>
-    </div>
-
-
-
-
-    <div class="item">
-    <div class="container">
-    <div class="row">
-    <div class="col-md-10 mb-sm-30">
-    <img src="{{ STATIC_URL }}photos/awards/12/67.jpg" alt="" />
-    </div>
-    <div class="col-md-2">
-    <div class="row">
-    <div class="ptb-15 col-xs-10 userthumb-main">
-
-    <img src="{{ STATIC_URL }}images/userthumb/9b6ef126eab7a7caa474da4586cb7431.jpg" class="img-circle"  alt="" /></div></div>
-    <h5>MJ&Co. Weddings<br>
-
-
-    Canada</h5>
-    <div class="spacer-10"></div>
-    <p class="pb-30">We love these special moments. Zane & Jennifer are so in love and watching their first dance as husband and wife was beautiful. The room faded away and the music played, and between wiping the tears from our eyes we grabbed this picture of the room and the couple</p>
-    </div>
-    </div>
-    </div>
-    </div>
-
-
-
-
-    <div class="item">
-    <div class="container">
-    <div class="row">
-    <div class="col-md-10 mb-sm-30">
-    <img src="{{ STATIC_URL }}photos/awards/12/24.jpg" alt="" />
-    </div>
-    <div class="col-md-2">
-    <div class="row">
-    <div class="ptb-15 col-xs-10 userthumb-main">
-
-    <img src="{{ STATIC_URL }}images/userthumb/da91c98ae4310d4b227fce7268002bf5.jpg" class="img-circle"  alt="" /></div></div>
-    <h5>deevo tindall<br>
-
-
-    United States</h5>
-    <div class="spacer-10"></div>
-    <p class="pb-30">We had just finished our First Look photos with the bride and groom and were waiting for the ceremony. The bride was sitting in the shadows of the window and the groom was off in the distance and was holding the bride's bouquet.  I loved how the shadows of the giant window was playing off both of them creating this silhouette.  So I asked the groom to walk towards the bride and just do whatever came naturally – of course he kissed her.  I did not expect him to place the flowers behind his back, but it made the image perfect!</p>
-    </div>
-    </div>
-    </div>
-    </div>
-
-
-
-
-    <div class="item">
-    <div class="container">
-    <div class="row">
-    <div class="col-md-10 mb-sm-30">
-    <img src="{{ STATIC_URL }}photos/awards/12/111.jpg" alt="" />
-    </div>
-    <div class="col-md-2">
-    <div class="row">
-    <div class="ptb-15 col-xs-10 userthumb-main">
-    <a href='photographers/Yenweipeng'>
-    <img src="{{ STATIC_URL }}images/userthumb/5f802d0fb23bf95b406e62379433deb2.jpg" class="img-circle"  alt="" /></a></div></div>
-    <h5><a href='photographers/Yenweipeng'>YenWei Peng</a><br>
-
-    <i>Lovely Wedding Studio</i> <br>
-    Canada</h5>
-    <div class="spacer-10"></div>
-    <p class="pb-30">Venues and our local historic building, The Hycroft Manor is just lovely. Not just the building itself but also the plantation around it! We were luck to have found this set of stairs under the two over shadowing trees. Under these trees the couple kissed and it is beautiful!</p>
-    </div>
-    </div>
-    </div>
-    </div>
-
-
-
-
-    <div class="item">
-    <div class="container">
-    <div class="row">
-    <div class="col-md-10 mb-sm-30">
-    <img src="{{ STATIC_URL }}photos/awards/12/37.jpg" alt="" />
-    </div>
-    <div class="col-md-2">
-    <div class="row">
-    <div class="ptb-15 col-xs-10 userthumb-main">
-
-    <img src="{{ STATIC_URL }}images/userthumb/b26bfc84c06318efec4ea744564a1d14.jpg" class="img-circle"  alt="" /></div></div>
-    <h5>John Lyons<br>
-
-    <i>John Lyons Weddings</i> <br>
-    Canada</h5>
-    <div class="spacer-10"></div>
-    <p class="pb-30">Usually, when it rains on a wedding day, we can usually find a few minutes of clear skies sometime throughout the day for some photos outside. Not this day.<br />
-    After sunset, we went out into an adjacent field and used an umbrella to keep relatively dry while my assistant placed the flash and we did a few test shots. We counted down from 5 and my assistant grabbed the umbrella from them as close to zero as possible.<br />
-    We were soaked. Even the bride and groom.<br />
-    But... totally worth it!</p>
-    </div>
-    </div>
-    </div>
-    </div>
-
-
-
-
-    <div class="item">
-    <div class="container">
-    <div class="row">
-    <div class="col-md-10 mb-sm-30">
-    <img src="{{ STATIC_URL }}photos/awards/12/113.jpg" alt="" />
-    </div>
-    <div class="col-md-2">
-    <div class="row">
-    <div class="ptb-15 col-xs-10 userthumb-main">
-
-    <img src="{{ STATIC_URL }}images/userthumb/88b4ebefdd1ad6c4f50d61bffff24186.jpg" class="img-circle"  alt="" /></div></div>
-    <h5>YU-JING CHIU<br>
-
-    <i>KE STUDIO</i> <br>
-    Taiwan</h5>
-    <div class="spacer-10"></div>
-    <p class="pb-30">To set off a new journey of life, they bought a new ride and took this photo as reminder. When grow older, this photo will bring back memories of their trip as well as time they spend together.</p>
-    </div>
-    </div>
-    </div>
-    </div>
-
-
-
-
-    <div class="item">
-    <div class="container">
-    <div class="row">
-    <div class="col-md-10 mb-sm-30">
-    <img src="{{ STATIC_URL }}photos/awards/12/25.jpg" alt="" />
-    </div>
-    <div class="col-md-2">
-    <div class="row">
-    <div class="ptb-15 col-xs-10 userthumb-main">
-
-    <img src="{{ STATIC_URL }}images/userthumb/blank_user.png" class="img-circle"  alt="" /></div></div>
-    <h5>Elena  Slesarchuk<br>
-
-    <i>PEARL Photography by Elen</i> <br>
-    United States</h5>
-    <div class="spacer-10"></div>
-    <p class="pb-30">Tim and Cornelia is one of the most loving and genuine couples I've even got to work with! After meeting them, I knew I wanted to go an extra mile and create an epic engagement session! I was absolutely stun when I saw this thick layer of fog when we arrived at the location! It was breathtaking!</p>
-    </div>
-    </div>
-    </div>
-    </div>
-
-
-
-
-    <div class="item">
-    <div class="container">
-    <div class="row">
-    <div class="col-md-10 mb-sm-30">
-    <img src="{{ STATIC_URL }}photos/awards/12/65.jpg" alt="" />
-    </div>
-    <div class="col-md-2">
-    <div class="row">
-    <div class="ptb-15 col-xs-10 userthumb-main">
-
-    <img src="{{ STATIC_URL }}images/userthumb/1d610ad9ebd3cbf04f5aa654735b92c4.jpg" class="img-circle"  alt="" /></div></div>
-    <h5>Michael David Reichmann<br>
-
-    <i>Andre Reichmann Photography</i> <br>
-    United States</h5>
-    <div class="spacer-10"></div>
-    <p class="pb-30">This wedding was filled with touching moments from start to finish, but this image holds a lot of sentiment for me. Just before the ceremony, the family waited in the changing room with the bride. Everything was hushed. Daniella stood right in front of this full-length mirror and didn't even think twice about fussing with her hair or makeup. Of course she looked radiant, but she spent those last few minutes before marriage focused on her family. Dad had just wished her good luck, and it was mom's turn. She and mom couldn't let each other go. They held hands. And following ancient Jewish tradition, mom blessed Daniella with a peaceful and everlasting happiness in marriage. Every wedding I shoot is memorable, but this moment is unforgettable.</p>
-    </div>
-    </div>
-    </div>
-    </div>
-
-
-
-
-    <div class="item">
-    <div class="container">
-    <div class="row">
-    <div class="col-md-10 mb-sm-30">
-    <img src="{{ STATIC_URL }}photos/awards/12/96.jpg" alt="" />
-    </div>
-    <div class="col-md-2">
-    <div class="row">
-    <div class="ptb-15 col-xs-10 userthumb-main">
-
-    <img src="{{ STATIC_URL }}images/userthumb/ebfe05f1e2c3eb6f72728608532ff53c.jpg" class="img-circle"  alt="" /></div></div>
-    <h5>Susanne de Bruijn<br>
-
-
-    Netherlands</h5>
-    <div class="spacer-10"></div>
-    <p class="pb-30">This wedding was at the wonderful castle Groeneveld near Baarn, a village in the centre of the Netherlands. The wedding day was amazing and before the ceremony we took the wedding couple Eva and Frank for a romantic weddingshoot in the castle gardens. It was a sunny day and the light was beautiful with a nice reflection in the water.</p>
-    </div>
-    </div>
-    </div>
-    </div>
-
-
-
-
-    <div class="item">
-    <div class="container">
-    <div class="row">
-    <div class="col-md-10 mb-sm-30">
-    <img src="{{ STATIC_URL }}photos/awards/12/52.jpg" alt="" />
-    </div>
-    <div class="col-md-2">
-    <div class="row">
-    <div class="ptb-15 col-xs-10 userthumb-main">
-
-    <img src="{{ STATIC_URL }}images/userthumb/89cdcd460e92aeed758919309b60e472.jpg" class="img-circle"  alt="" /></div></div>
-    <h5>Lotte  Vlot<br>
-
-
-    Netherlands</h5>
-    <div class="spacer-10"></div>
-    <p class="pb-30">This was a lovely wedding on the end of the summer, on one of the islands in the north of the Netherlands, Texel. The weather was lovely, really sunny and still a nice temperature. <br />
-    They preferred just a short shoot in the dunes after the ceremony in a little church, first with their little toddler (how cute he was!) and then together. We had like 10 minutes to shoot and the light was magical. <br />
-    The couple decided to go to the location of the shoot by Solex, with a double seat. Very special! On a little hill they stopped, and I was able to make this picture.</p>
-    </div>
-    </div>
-    </div>
-    </div>
-
-
-
-
-    <div class="item">
-    <div class="container">
-    <div class="row">
-    <div class="col-md-10 mb-sm-30">
-    <img src="{{ STATIC_URL }}photos/awards/12/10.jpg" alt="" />
-    </div>
-    <div class="col-md-2">
-    <div class="row">
-    <div class="ptb-15 col-xs-10 userthumb-main">
-
-    <img src="{{ STATIC_URL }}images/userthumb/60c7e75f11320469cb7f2f29f74d990b.jpg" class="img-circle"  alt="" /></div></div>
-    <h5>Ambur Cole<br>
-
-    <i>ambur cole photography</i> <br>
-    United States</h5>
-    <div class="spacer-10"></div>
-    <p class="pb-30">This was a cold, outdoor winter wedding in the middle of December at Arrowhead Golf Club in Roxborough, Colorado. During the ceremony snow clouds moved in and a light dusting started to fall- it was beautiful! But certainly cold. The clouds blanketed the area, and at sunset after the ceremony we headed to this spot for a few portrait photos. The result was a moody winter scene and I was absolutely floored with this image!</p>
-    </div>
-    </div>
-    </div>
-    </div>
-
-
-
-
-    <div class="item">
-    <div class="container">
-    <div class="row">
-    <div class="col-md-10 mb-sm-30">
-    <img src="{{ STATIC_URL }}photos/awards/12/90.jpg" alt="" />
-    </div>
-    <div class="col-md-2">
-    <div class="row">
-    <div class="ptb-15 col-xs-10 userthumb-main">
-
-    <img src="{{ STATIC_URL }}images/userthumb/da601787ea8474cbc462a836d7fe1fa9.jpg" class="img-circle"  alt="" /></div></div>
-    <h5>Samuel Monot<br>
-
-    <i>Samonot photography</i> <br>
-    Switzerland</h5>
-    <div class="spacer-10"></div>
-    <p class="pb-30">This shot was taken at the very end of this beautiful couple Engagement Session. We were leading back when I spotted a nice small wall and decided to quickly pose the couple on it and take advantage of the glowing sunset sinking slowly into the mountains. It seems that it is always at the end of a couple session that the best photos are taken.</p>
-    </div>
-    </div>
-    </div>
-    </div>
 
 <div class="spacer-10"></div>
 </div>

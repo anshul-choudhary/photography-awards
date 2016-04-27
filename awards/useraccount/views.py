@@ -390,13 +390,15 @@ class MyUploads(APIView):
                     formargs.update({'image_' + str(count) + '_name': k.image.filename,
                                      'image_' + str(count): version
                                  })
+
+                    formargs.update({'image_' + str(count) + '_desc': k.image_desc})
                     count += 1
 
-                formargs.update({'image_1_desc': PhotographerObj.image_1_desc,
-                                 'image_2_desc': PhotographerObj.image_2_desc,
-                                 'image_3_desc': PhotographerObj.image_3_desc,
-                                 'image_4_desc': PhotographerObj.image_4_desc,
-                                 })
+                # formargs.update({'image_1_desc': PhotographerObj.image_1_desc,
+                #                  'image_2_desc': PhotographerObj.image_2_desc,
+                #                  'image_3_desc': PhotographerObj.image_3_desc,
+                #                  'image_4_desc': PhotographerObj.image_4_desc,
+                #                  })
 
                 formsubmit = self.form_class(formargs)
                 ctx.update({'upload_form': formsubmit})
@@ -451,11 +453,10 @@ class CompleteUpload(APIView):
                         k.delete_image(os.path.join(MEDIA_ROOT, k.image.name))
                         k.delete()
 
-
                 PhotoObj.home_page_desc = upload_form.cleaned_data['home_page_desc']
-                PhotoObj.image_1_desc = upload_form.cleaned_data['image_1_desc']
-                PhotoObj.image_2_desc = upload_form.cleaned_data['image_2_desc']
-                PhotoObj.image_3_desc = upload_form.cleaned_data['image_3_desc']
+                # PhotoObj.image_1_desc = upload_form.cleaned_data['image_1_desc']
+                # PhotoObj.image_2_desc = upload_form.cleaned_data['image_2_desc']
+                # PhotoObj.image_3_desc = upload_form.cleaned_data['image_3_desc']
                 PhotoObj.save()
 
                 # image = Image(content_object=PhotoObj, image_name=upload_form.cleaned_data['image_1_name'])
@@ -463,6 +464,7 @@ class CompleteUpload(APIView):
                 (image.image,image_name) = Image().copy_upload_image(PhotoObj, upload_form.cleaned_data['image_1_name'], request.user.username)
                 image.image_name = IMAGE_NAME_CHOICES['TYPE'].Award1
                 image.image_a_name = image_name
+                image.image_desc = upload_form.cleaned_data['image_1_desc']
                 image.save()
                 generate_version_add_watermark(image.image.name, 'thumbnail')
 
@@ -470,6 +472,7 @@ class CompleteUpload(APIView):
                 (image.image,image_name) = Image().copy_upload_image(PhotoObj, upload_form.cleaned_data['image_2_name'], request.user.username)
                 image.image_name = IMAGE_NAME_CHOICES['TYPE'].Award2
                 image.image_a_name = image_name
+                image.image_desc = upload_form.cleaned_data['image_2_desc']
                 image.save()
                 generate_version_add_watermark(image.image.name, 'thumbnail')
 
@@ -477,6 +480,7 @@ class CompleteUpload(APIView):
                 (image.image,image_name) = Image().copy_upload_image(PhotoObj, upload_form.cleaned_data['image_3_name'], request.user.username)
                 image.image_name = IMAGE_NAME_CHOICES['TYPE'].Award3
                 image.image_a_name = image_name
+                image.image_desc = upload_form.cleaned_data['image_3_desc']
                 image.save()
                 generate_version_add_watermark(image.image.name, 'thumbnail')
 

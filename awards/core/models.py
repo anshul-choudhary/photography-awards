@@ -146,6 +146,7 @@ class Image(models.Model):
     image_a_name = models.CharField(
         blank=True, null=True, max_length=50, help_text=('Fill actual image name.')
     )
+    image_desc = models.TextField(blank=True, null=True)
 
     created_date = models.DateTimeField(auto_now_add=True)
     cover_image = models.BooleanField(

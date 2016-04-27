@@ -30,8 +30,8 @@ class HomeView(APIView):
         ctx['footer'] = footer
         ctx['best_photographer'] = []
 
+        # Best Photographer section
         BestPhotographers = Photographer.objects.filter(is_best_photographer=True)[:12]
-
         for obj in BestPhotographers:
             ar = {}
             CountryQuerySet = Country.objects.filter(id=obj.user_ref.country.id)
@@ -43,6 +43,29 @@ class HomeView(APIView):
                 if k.profile_image:
                     ar.update({'profile_image': k.image.name})
             ctx['best_photographer'].append(ar)
+
+
+
+        ctx['home_photographer'] = []
+        # Home Page Profile Section
+        BestPhotographers = Photographer.objects.filter(activate_home_page=True).order_by("priority")
+        for obj in BestPhotographers:
+            ar = {}
+            CountryQuerySet = Country.objects.filter(id=obj.user_ref.country.id)
+            ar.update({'name': obj.firstname + ' ' + obj.lastname, 'awards': obj.no_of_awards})
+            ar.update({'country': CountryQuerySet[0].name})
+            ar.update({'username': obj.user_id})
+            ar.update({'home_page_desc': obj.home_page_desc})
+            ar.update({'images': {"imagename": "", "imagedesc": "", "profileimage": ""}})
+
+            for k in obj.image.all().order_by('created_date'):
+                if k.cover_image:
+                    ar['images']['imagename'] = k.image.name
+                    ar['images']['imagedesc'] = k.image_desc
+                if k.profile_image:
+                    ar['images']['profileimage'] = k.image.name
+
+            ctx['home_photographer'].append(ar)
 
         return Response(ctx, template_name=self.template_name)
 

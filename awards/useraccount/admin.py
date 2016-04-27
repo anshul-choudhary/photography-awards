@@ -127,7 +127,7 @@ class PhotographerAdmin(admin.ModelAdmin):
 
     list_display = (
         'id', 'user_ref', 'user_id', 'firstname', 'lastname', 'username', \
-        'is_winner', 'activate_home_page', 'is_best_photographer', 'no_of_awards', 'created_date', \
+        'is_winner', 'activate_home_page', 'is_best_photographer', 'no_of_awards', 'priority', 'created_date', \
         'modified_date',
     )
 
