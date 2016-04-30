@@ -233,10 +233,13 @@ class PhotographerProfile(APIView):
         ctx.update({'images': []})
 
         for k in PhotoObj.image.all().order_by('created_date'):
+            a = {'imagename': "", "imagedesc": ""}
             if k.profile_image:
                 ctx.update({'profile_image': k.image.name})
             else:
-                ctx['images'].append(k.image.name)
+                a["imagename"] = k.image.name
+                a["imagedesc"] = k.image_desc
+                ctx['images'].append(a)
         return Response(ctx, template_name=self.template_name)
 
 

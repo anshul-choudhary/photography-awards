@@ -61,7 +61,7 @@
     <div class="owl-carousel content-carousel content-slider award-slider">
 
 
-    {% for k in best_photographer %}
+    {% for k in home_photographer %}
     <div class="item">
     <div class="container">
     <div class="row">
@@ -72,7 +72,7 @@
     <div class="row">
     <div class="ptb-15 col-xs-10 userthumb-main">
 
-    <img src="{{ MEDIA_URL }}{{ k.images.profileimage }}" class="img-circle"  alt="Profile Image" /></div></div>
+    <img style="width:110px;height:110px;" src="{{ MEDIA_URL }}{{ k.images.profileimage }}" class="img-circle"  alt="Profile Image" /></div></div>
     <h5>{{ k.name }}<br>
 
 {#    <i>Jonathan Udot</i> <br>#}
@@ -117,7 +117,6 @@
 
 
 
-<div class="spacer-10"></div>
 </div>
 </section>
 <!-- End Award Section -->
@@ -187,7 +186,7 @@
 
         {% for obj in footer %}
             <div class="col-md-3 col-sm-4 col-xs-6" style="padding:0;">
-                <img alt="1" src="{{ MEDIA_URL }}/{{ obj.img }}" class="img-responsive">
+                <img style="width:280px; height: 280px;" alt="1" src="{{ MEDIA_URL }}{{ obj.img }}" class="img-responsive">
             </div>
         {% endfor %}
 

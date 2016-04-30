@@ -57,6 +57,10 @@ $(function () {
                     var single_existing = false;
 
                     if (d.status == 'OK') {
+                        //Remove the File too small error
+                        $(this).closest(".db_uploadbox").find(".error").remove();
+
+
                         PRG.hide();
                         BTN.show();
                         if (!F[0].multiple) {

@@ -75,7 +75,7 @@ SECRET_KEY = 'g&m75fcwu@dk4ed2opcp6-j($yg0mrf=ma(*8q&e7%8r^21*rj'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = ['localhost']
 
 # Application definition
 
@@ -227,6 +227,8 @@ FILEBROWSER_MEDIA_URL = MEDIA_URL + "uploads/"
 
 # FILEBROWSER_URL_FILEBROWSER_MEDIA= MEDIA_URL + 'filebrowser/'
 # FILEBROWSER_PATH_FILEBROWSER_MEDIA= os.path.join(MEDIA_ROOT, 'filebrowser/')
+
+# TEMPLATE_DEBUG=True
 
 try:
     from awards.local_settings import *

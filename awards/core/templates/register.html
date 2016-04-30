@@ -130,7 +130,7 @@
                    id="awd_country" name="countryval" required >
                     <option value="-1">Select Country</option>
                 {% for k in country %}
-                    <option value="{{ k.id }}">{{ k.name }}</option>
+                    <option {% if signupform.data.countryval|slugify == k.id|slugify %}selected="selected"{% endif %} value="{{ k.id }}">{{ k.name }}</option>
                 {% endfor %}
 
             </select>

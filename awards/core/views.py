@@ -48,7 +48,7 @@ class HomeView(APIView):
 
         ctx['home_photographer'] = []
         # Home Page Profile Section
-        BestPhotographers = Photographer.objects.filter(activate_home_page=True).order_by("priority")
+        BestPhotographers = Photographer.objects.filter(activate_home_page=True, is_winner=True).order_by("priority")
         for obj in BestPhotographers:
             ar = {}
             CountryQuerySet = Country.objects.filter(id=obj.user_ref.country.id)
@@ -105,10 +105,13 @@ class BestPhotographerProfile(APIView):
         ctx.update({'images': []})
 
         for k in PhotoObj.image.all().order_by('created_date'):
+            a = {"imagename": "", "imagedesc": ""}
             if k.profile_image:
                 ctx.update({'profile_image': k.image.name})
             else:
-                ctx['images'].append(k.image.name)
+                a["imagename"] = k.image.name
+                a["imagedesc"] = k.image_desc
+                ctx['images'].append(a)
         return Response(ctx, template_name=self.template_name)
 
 
