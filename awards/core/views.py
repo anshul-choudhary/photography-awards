@@ -6,12 +6,13 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.renderers import JSONRenderer
 from rest_framework.response import Response
 from rest_framework.views import APIView
+from awards.choices import USER
 from awards.settings import TEMP_UPLOAD_DIR, MEDIA_URL, FILEBROWSER_VERSION_BASEDIR
 from awards.settings import MEDIA_ROOT
 from awards.utils import generate_unique_file_name
 from core.forms import ImageUploadForm
 from core.models import Footer, Country, Setting, Faqs
-from useraccount.models import Photographer
+from useraccount.models import Photographer, WinnerMonth
 
 
 class HomeView(APIView):
@@ -68,7 +69,100 @@ class HomeView(APIView):
 
             ctx['home_photographer'].append(ar)
 
+
+        res = []
+        to_show = Setting.objects.get(key="HOME_PAGE_MONTHS").value.split(",")
+        Objs = WinnerMonth.objects.all().values("id","month_name")
+        for k in Objs:
+            a = {"key": "", "val": ""}
+            if dict(USER["WINNER_MONTH"]).get(k["month_name"]) in to_show:
+                a["key"] = k["month_name"]
+                a["val"] = dict(USER["WINNER_MONTH"]).get(k["month_name"])
+                res.append(a)
+        ctx.update({"winner_month": res})
+
+        ctx.update({"home_page_heading": Setting.objects.get(key="HOME_PAGE_HEADING").value})
+
         return Response(ctx, template_name=self.template_name)
+
+
+
+
+class MonthHomeView(APIView):
+    ''' Home Page view '''
+
+    template_name = 'home.html'
+
+    def get(self, request, *args, **kwargs):
+        ''' Receives the request '''
+
+        ctx = {}
+        #Fetch Footer
+        FooterQuerySet = Footer.objects.filter(active=True).order_by('priority')[:4]
+        footer = []
+        for obj in FooterQuerySet:
+            footer.append({'link': obj.link1, 'img': obj.image.all()[0].image.path})
+        ctx['footer'] = footer
+        ctx['best_photographer'] = []
+
+        # Best Photographer section
+        BestPhotographers = Photographer.objects.filter(is_best_photographer=True)[:12]
+        for obj in BestPhotographers:
+            ar = {}
+            CountryQuerySet = Country.objects.filter(id=obj.user_ref.country.id)
+            ar.update({'name': obj.firstname + ' ' + obj.lastname, 'awards': obj.no_of_awards})
+            ar.update({'country': CountryQuerySet[0].name})
+            ar.update({'username': obj.user_id})
+
+            for k in obj.image.all().order_by('created_date'):
+                if k.profile_image:
+                    ar.update({'profile_image': k.image.name})
+            ctx['best_photographer'].append(ar)
+
+
+
+        ctx['home_photographer'] = []
+        # Home Page Profile Section
+
+        WMObj = WinnerMonth.objects.filter(month_name=int(kwargs.get("key")))
+        BestPhotographers = Photographer.objects.filter(winner_month__in=WMObj,
+                                    activate_home_page=True, is_winner=True).order_by("priority")
+        # BestPhotographers = Photographer.objects.filter(activate_home_page=True, is_winner=True).order_by("priority")
+        for obj in BestPhotographers:
+            ar = {}
+            CountryQuerySet = Country.objects.filter(id=obj.user_ref.country.id)
+            ar.update({'name': obj.firstname + ' ' + obj.lastname, 'awards': obj.no_of_awards})
+            ar.update({'country': CountryQuerySet[0].name})
+            ar.update({'username': obj.user_id})
+            ar.update({'home_page_desc': obj.home_page_desc})
+            ar.update({'images': {"imagename": "", "imagedesc": "", "profileimage": ""}})
+
+            for k in obj.image.all().order_by('created_date'):
+                if k.cover_image:
+                    ar['images']['imagename'] = k.image.name
+                    ar['images']['imagedesc'] = k.image_desc
+                if k.profile_image:
+                    ar['images']['profileimage'] = k.image.name
+
+            ctx['home_photographer'].append(ar)
+
+
+        res = []
+        to_show = Setting.objects.get(key="HOME_PAGE_MONTHS").value.split(",")
+        Objs = WinnerMonth.objects.all().values("id","month_name")
+        for k in Objs:
+            a = {"key": "", "val": ""}
+            if dict(USER["WINNER_MONTH"]).get(k["month_name"]) in to_show:
+                a["key"] = k["month_name"]
+                a["val"] = dict(USER["WINNER_MONTH"]).get(k["month_name"])
+                res.append(a)
+        ctx.update({"winner_month": res})
+
+        ctx.update({"home_page_heading": Setting.objects.get(key="HOME_PAGE_HEADING").value})
+
+        return Response(ctx, template_name=self.template_name)
+
+
 
 
 

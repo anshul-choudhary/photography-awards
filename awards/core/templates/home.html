@@ -48,13 +48,15 @@
 
 <!-- Award Section -->
 <section class="">
-    <h2 class="text-center">Winners 2016</h2>
-    <div class="container text-center previous-awards"><h5>
-    <a href="#">April</a> &nbsp; &nbsp;
-    <a href="#">March</a> &nbsp; &nbsp;
-    <a href="#">February</a> &nbsp; &nbsp;
-    <a href="#">January</a>
-    </h5>
+    <h2 class="text-center">{{ home_page_heading }}</h2>
+    <div class="container text-center previous-awards">
+
+        <h5>
+        {% for k in winner_month %}
+        <a href="/month/{{ k.key }}">{{ k.val }}</a> &nbsp; &nbsp;
+        {% endfor %}
+        </h5>
+
     </div>
 
 
