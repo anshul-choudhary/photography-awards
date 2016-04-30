@@ -42,7 +42,7 @@
         <h3 style="margin-top:0;">How to register for award</h3>
     <p>To participate you should: </p>
     <ol>
-    <li><b>Register <a target="_blank" href="">here</a></b></li>
+    <li><b>Register <a target="_blank" href="{% url 'user_register' %}">here</a></b></li>
     <li>Pay Award Entry Fee</li>
     <li>Upload five photos</li>
 
@@ -52,13 +52,13 @@
     We accept entries for Award every month and choose only 30 - 60 photographs.</p>
     <p>Deadline for submissions:</p>
     <ul>
-    <li>13 Awards Submission - <b>March 3 to March 31</b></li>
+    <li>13 Awards Submission - <b>{{ award_submission_date }}</b></li>
     </ul>
 
     <div class="row">
     <div class="mt-30 mb-60 col-md-8 col-md-offset-2 text-center">
     <a class="buttonclass" href="">
-    <button name="submit" id="form-submit" type="submit" class="btn btn-md btn-black-line">Register for award<i class="fa fa-chevron-right ml-10"></i></button></a>
+    <a name="submit" id="form-submit" href="{% url 'user_register' %}" class="btn btn-md btn-black-line">Register for award<i class="fa fa-chevron-right ml-10"></i></a></a>
     </div></div>
     </div>
     {% endif %}
@@ -67,53 +67,17 @@
     <!-- Accordion -->
     <div {% if request.user.is_authenticated %}style="width: 100%;"{% endif %}class="col-md-6 mb-30"><h3 style="margin-top:0;">FAQ</h3>
     <div class="accordion">
+
+    {% for k in faqs %}
     <div class="accordion-section">
-    <h6 class="accordion-title">How can I advertise as a photographer?</h6>
+    <h6 class="accordion-title">{{ k.title }}</h6>
     <div class="accordion-content">
-    <p>If 3 of your images win the award (calculated among all awards) you will be granted a personal page for 1 year.</p>
+    <p>{{ k.description }}</p>
     </div>
     </div>
-    <div class="accordion-section">
-    <h6 class="accordion-title">I can't find my city in the list of cities during registration.</h6>
-    <div class="accordion-content">
-    <p>You can choose any other city in your country and register. After that you can e-mail us at info@wedisson.com and we will add your city to our database, you can change it in your profile anytime.</p>
-    </div>
-    </div>
-    <div class="accordion-section">
-    <h6 class="accordion-title">How do I know that my photos are submitted?</h6>
-    <div class="accordion-content">
-    <p>After you pay fee and upload minimum 3 images then the 'submit' button appears. You can also delete or change any image you submitted before the deadline.
-    </p>
-    </div>
-    </div>
-    <div class="accordion-section">
-    <h6 class="accordion-title">Do I need to resize the images so they fit within the Instagram 1:1 sizes?</h6>
-    <div class="accordion-content">
-    <p>No, photo should be 1200px wide, preferably horizontal as we publish them on our website with original size. For instagram account we resize them later.</p>
-    </div>
-    </div>
+    {% endfor %}
 
 
-    <div class="accordion-section">
-    <h6 class="accordion-title">How do I know that my photo is selected or not?</h6>
-    <div class="accordion-content">
-    <p>If photo is chosen during competition it appears here on the main page</p>
-    </div>
-    </div>
-
-    <div class="accordion-section">
-    <h6 class="accordion-title">How many times can I participate in the award?</h6>
-    <div class="accordion-content">
-    <p>You are recommended participating in Award every month because at the end of the year we count all the awards and make a rating of best photographers worldwide. </p>
-    </div>
-    </div>
-
-    <div class="accordion-section">
-    <h6 class="accordion-title">What about copyrights?</h6>
-    <div class="accordion-content">
-    <p>All uploaded photographs belong to their owners. We don't have the right and don't use it anywhere else,  only on our website <a href="http://wedisson.com">wedisson.com</a> and on our instagram profile <a href="http://instagram.com/wedisson_com" target="_blank">instagram.com/wedisson_com</a> </p>
-    </div>
-    </div>
     </div>
     </div>
     <!-- End Accordion -->

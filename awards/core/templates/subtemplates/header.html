@@ -12,7 +12,7 @@
 <li><a href='photographers'>PHOTOGRAPHERS</a></li>
 
     {% if not request.user.is_authenticated %}
-        <li><a href="{% url 'user_register' %}">JOIN</a></li>
+        <li><a href="{% url 'faqs' %}">JOIN</a></li>
     {% endif %}
 
     {% if request.user.is_authenticated %}

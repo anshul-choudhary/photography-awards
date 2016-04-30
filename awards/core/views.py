@@ -1,4 +1,5 @@
 import os
+from django.conf import Settings
 from django.shortcuts import redirect
 from filebrowser.base import FileObject
 from rest_framework.permissions import IsAuthenticated
@@ -9,7 +10,7 @@ from awards.settings import TEMP_UPLOAD_DIR, MEDIA_URL, FILEBROWSER_VERSION_BASE
 from awards.settings import MEDIA_ROOT
 from awards.utils import generate_unique_file_name
 from core.forms import ImageUploadForm
-from core.models import Footer, Country
+from core.models import Footer, Country, Setting, Faqs
 from useraccount.models import Photographer
 
 
@@ -116,7 +117,6 @@ class BestPhotographerProfile(APIView):
 
 
 
-
 class FaqsView(APIView):
     ''' Home Page view '''
 
@@ -125,7 +125,14 @@ class FaqsView(APIView):
     def get(self, request, *args, **kwargs):
         ''' Receives the request '''
 
-        return Response({}, template_name=self.template_name)
+        try:
+            ctx = {"award_submission_date": Setting.objects.get(key="AWARD_SUBMISSION_DATE").value }
+        except:
+            ctx = {}
+
+        FaqsObjs = Faqs.objects.all().order_by("priority")
+        ctx.update({"faqs": FaqsObjs})
+        return Response(ctx, template_name=self.template_name)
 
 
 

@@ -253,7 +253,6 @@ class Faqs(models.Model):
 
     title = models.CharField(max_length=200, blank=True, null=True)
     description = models.CharField(max_length=200, blank=True, null=True)
-    description = models.CharField(max_length=200, blank=True, null=True)
     priority = models.SmallIntegerField(blank=True, null=True, verbose_name="Order in which it will appear")
 
     created_date = models.DateTimeField(auto_now_add=True, verbose_name="Created Date")

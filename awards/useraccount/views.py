@@ -10,7 +10,7 @@ from rest_framework.views import APIView
 from awards.choices import IMAGE_NAME_CHOICES
 from awards.settings import MEDIA_URL, TEMP_UPLOAD_DIR, FILEBROWSER_DIRECTORY, MEDIA_ROOT
 from awards.utils import generate_version_add_watermark
-from core.models import Country, Image
+from core.models import Country, Image, Setting
 from useraccount.forms import SignupForm, UserLoginnForm, EditMyprofile, CompleteUploadForm
 from useraccount.models import Photographer, UserProfile
 
@@ -25,6 +25,12 @@ class SignupView(APIView):
 
         if request.user.is_authenticated():
             return redirect('my_profile')
+
+        try:
+            if Setting.objects.get(key="REGISTRATION_ALLOWED").value == "0":
+                return redirect("home")
+        except:
+            pass
 
         CountryQuerySet = Country.objects.all().order_by('name')
         return Response({'country': CountryQuerySet}, template_name=self.template_name)
