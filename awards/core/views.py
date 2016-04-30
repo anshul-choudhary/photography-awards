@@ -197,6 +197,7 @@ class BestPhotographerProfile(APIView):
         ctx.update({'instagram_link1': PhotoObj.instagram_link1})
         ctx.update({'instagram_link2': PhotoObj.instagram_link2})
         ctx.update({'home_page_desc': PhotoObj.home_page_desc})
+        ctx.update({'website_link': PhotoObj.website_link})
         ctx.update({'images': []})
 
         for k in PhotoObj.image.all().order_by('created_date'):

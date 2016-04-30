@@ -203,7 +203,7 @@ class EditMyprofile(forms.ModelForm):
     countryval = forms.IntegerField(label="Country", required=True)
     city = forms.CharField(label="City", max_length=50, required=True)
     email = forms.EmailField(label="Email", max_length=50, required=True)
-
+    website_link = forms.CharField(label="Website Link", max_length=100, required=False)
 
     def __init__(self, *args, **kwargs):
         super(EditMyprofile, self).__init__(*args, **kwargs)

@@ -128,7 +128,7 @@ class PhotographerAdmin(admin.ModelAdmin):
     list_display = (
         'id', 'user_ref', 'user_id', 'firstname', 'lastname', 'username', \
         'is_winner', 'activate_home_page', 'is_best_photographer', 'no_of_awards', 'priority', 'created_date', \
-        'modified_date',
+        'modified_date', 'website_link'
     )
 
     fieldsets = [
@@ -146,7 +146,7 @@ class PhotographerAdmin(admin.ModelAdmin):
                 'fields': (
                     'instagram_link1', 'instagram_link2', 'is_winner', 'winner_month', 'winning_date', \
                     'activate_home_page', 'home_page_desc', 'is_best_photographer', \
-                    'best_photographer_desc', 'no_of_awards',
+                    'best_photographer_desc', 'no_of_awards', 'website_link'
                 )
             }
         ),

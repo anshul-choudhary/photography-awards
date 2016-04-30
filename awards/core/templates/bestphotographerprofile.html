@@ -72,9 +72,16 @@
     <span class="ph-awardnumber"><i class="fa fa-asterisk"></i> {{ awards }} awards</span>
     </div>
     <div class="">
-    <p class='ph-tel mt-15'>{{ contact }} </p>						<p class='ph-desc'>
-    <a href='http://lubachulyaeva.com' target='blank_' rel='nofollow'>{{ email }}</a>
-    <br />{{ instagram_link1 }}                     </p>
+    <p class='ph-tel mt-15'>{{ contact }} </p>
+
+    <p class='ph-desc'>
+    {{ email }}
+    <br /><a href="{{ instagram_link1 }}" target='blank_' rel='nofollow'>{{ instagram_link1 }}</a>
+    {% if website_link != 'None' and website_link != '' and website_link|length %}
+    <br /><a href="{{ website_link }}" target='blank_' rel='nofollow'>{{ website_link }}</a>
+    {% endif %}
+    </p>
+
     </div>
     </div>
 

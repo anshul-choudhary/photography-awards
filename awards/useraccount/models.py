@@ -208,6 +208,7 @@ class Photographer(models.Model):
 
     instagram_link1 = models.CharField(max_length=200, blank=True, null=True)
     instagram_link2 = models.CharField(max_length=200, blank=True, null=True)
+    website_link = models.CharField(max_length=100, blank=True, null=True)
 
     is_winner = models.BooleanField(
         verbose_name='Has been announced as a winner', default=False,

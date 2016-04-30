@@ -179,9 +179,25 @@ class MyProfile(APIView):
         ''' Receives the request '''
 
         ctx = {}
-        if 'loggedin_user_credentials' in request.session:
-            ctx = request.session['loggedin_user_credentials']
+        # if 'loggedin_user_credentials' in request.session:
+        #     ctx = request.session['loggedin_user_credentials']
 
+        if not len(ctx):
+            Obj = Photographer.objects.get(user_ref=request.user)
+            ctx.update({"username": request.user.username,
+                        "firstname": Obj.firstname,
+                        "lastname": Obj.lastname,
+                        "businessname": request.user.businessname,
+                        "instagram_link1": Obj.instagram_link1,
+                        "primary_contact_number": request.user.primary_contact_number,
+                        "countryval": request.user.country.id,
+                        "city": request.user.city,
+                        "email": request.user.email,
+                        "website_link": Obj.website_link
+            })
+            # self.request.session['loggedin_user_credentials'] = ctx
+
+        # ctx.update({"website_link": ""})
         CountryQuerySet = Country.objects.all().order_by('name')
         editform = self.editform(ctx)
 
@@ -192,6 +208,8 @@ class MyProfile(APIView):
         editform.errors['email'] = ErrorList()
         editform.errors['username'] = ""
         editform.errors['countryval'] = ""
+        editform.errors['website_link'] = ""
+
         ctx.update({'country': CountryQuerySet})
         ctx.update({'editform': editform})
         ctx.update({"show_profile": "0"})
@@ -236,6 +254,7 @@ class PhotographerProfile(APIView):
         ctx.update({'instagram_link1': PhotoObj.instagram_link1})
         ctx.update({'instagram_link2': PhotoObj.instagram_link2})
         ctx.update({'home_page_desc': PhotoObj.home_page_desc})
+        ctx.update({'website_link': PhotoObj.website_link})
         ctx.update({'images': []})
 
         for k in PhotoObj.image.all().order_by('created_date'):
@@ -259,8 +278,23 @@ class EditMyProfile(APIView):
         ''' Receives the request '''
 
         ctx = {}
-        if 'loggedin_user_credentials' in request.session:
-            ctx = request.session['loggedin_user_credentials']
+        # if 'loggedin_user_credentials' in request.session:
+        #     ctx = request.session['loggedin_user_credentials']
+
+        if not len(ctx):
+            Obj = Photographer.objects.get(user_ref=request.user)
+            ctx.update({"username": request.user.username,
+                        "firstname": Obj.firstname,
+                        "lastname": Obj.lastname,
+                        "businessname": request.user.businessname,
+                        "instagram_link1": Obj.instagram_link1,
+                        "primary_contact_number": request.user.primary_contact_number,
+                        "countryval": request.user.country.id,
+                        "city": request.user.city,
+                        "email": request.user.email,
+                        "website_link": Obj.website_link
+            })
+            # self.request.session['loggedin_user_credentials'] = ctx
 
         CountryQuerySet = Country.objects.all().order_by('name')
         editform = self.editform(ctx)
@@ -308,6 +342,7 @@ class EditMyProfile(APIView):
             PhotoObj.firstname = editform.data['firstname']
             PhotoObj.lastname = editform.data['lastname']
             PhotoObj.instagram_link1 = editform.data['instagram_link1']
+            PhotoObj.website_link = editform.data['website_link']
             PhotoObj.save()
         except:
             pass
@@ -323,6 +358,7 @@ class EditMyProfile(APIView):
         ctx['businessname'] = editform.data['businessname']
         ctx['city'] = editform.data['city']
         ctx['countryval'] = editform.data['countryval']
+        ctx['website_link'] = editform.data['website_link']
 
         self.request.session['loggedin_user_credentials'] = ctx
         return redirect("my_uploads")
