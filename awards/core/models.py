@@ -163,11 +163,11 @@ class Image(models.Model):
         verbose_name = 'Image'
         db_table = 'image'
 
-    def __unicode__(self):
-        return "%s" % unicode(self.id)
+    # def __unicode__(self):
+    #     return "%s" % unicode(self.id)
 
-    def __init__(self, *args, **kwargs):
-        super(Image, self).__init__(*args, **kwargs)
+    # def __init__(self, *args, **kwargs):
+    #     super(Image, self).__init__(*args, **kwargs)
 
     def copy_upload_image(self, PhotoPbj, img_name, username):
         """ """
@@ -191,7 +191,6 @@ class Image(models.Model):
 
         shutil.copy(src, os.path.join(destination_dir, img_name))
         # os.remove(src)
-        print "copy done"
         return (os.path.join(destination_rel, img_name),img_name)
 
 
