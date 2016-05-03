@@ -505,19 +505,12 @@ class CompleteUpload(APIView):
 
                 # image = Image(content_object=PhotoObj, image_name=upload_form.cleaned_data['image_1_name'])
                 image = Image(content_object=PhotoObj)
-                print "hell01"
                 (image.image,image_name) = Image().copy_upload_image(PhotoObj, upload_form.cleaned_data['image_1_name'], request.user.username)
-                print "hell02"
                 image.image_name = IMAGE_NAME_CHOICES['TYPE'].Award1
-                print "hell03"
                 image.image_a_name = image_name
-                print "hell04"
                 image.image_desc = upload_form.cleaned_data['image_1_desc']
-                print "hell05"
                 image.save()
-                print "hell010"
                 generate_version_add_watermark(image.image.name, 'thumbnail')
-                print "hell06"
 
                 image = Image(content_object=PhotoObj)
                 (image.image,image_name) = Image().copy_upload_image(PhotoObj, upload_form.cleaned_data['image_2_name'], request.user.username)
@@ -547,7 +540,7 @@ class CompleteUpload(APIView):
                 return redirect("photographerprofile")
 
             except Exception as ex:
-                print str(ex)
+                raise Exception(str(ex))
         else:
             try:
                 pass

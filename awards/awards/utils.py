@@ -85,11 +85,8 @@ def generate_version_add_watermark(original_path, version_suffix):
     from filebrowser.sites import site
     from core.models import Image
 
-    print "hello9"
     fob = FileObject(original_path, site=site)
-    print "hello11"
     version_path = fob.version_path(version_suffix)
-    print "hello7"
     if not site.storage.isfile(version_path):
         version_path = fob._generate_version(version_suffix)
         # abs_path = os.path.join(settings.MEDIA_ROOT, version_path)
@@ -98,5 +95,4 @@ def generate_version_add_watermark(original_path, version_suffix):
         version_path = fob._generate_version(version_suffix)
         # abs_path = os.path.join(settings.MEDIA_ROOT, version_path)
         # Image.create_image_watermark(abs_path, abs_path, settings.WATERMARK_IMAGE_LOCATION)
-    print "hello8"
     return FileObject(version_path, site=site)
