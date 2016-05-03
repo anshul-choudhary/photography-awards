@@ -202,11 +202,11 @@ class Image(models.Model):
         except OSError:
             return None
 
-    def save(self, *args, **kwargs):
-
-        if self.content_type.name == 'Vendor' or self.content_type.name == 'Devices':
-            self.handle_images()
-        super(Image, self).save(*args, **kwargs)
+    # def save(self, *args, **kwargs):
+    #
+    #     # if self.content_type.name == 'Vendor' or self.content_type.name == 'Devices':
+    #     #     self.handle_images()
+    #     super(Image, self).save(*args, **kwargs)
 
     def handle_images(self):
         """
