@@ -191,6 +191,7 @@ class Image(models.Model):
 
         shutil.copy(src, os.path.join(destination_dir, img_name))
         # os.remove(src)
+        print "copy done"
         return (os.path.join(destination_rel, img_name),img_name)
 
 
