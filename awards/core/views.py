@@ -15,6 +15,18 @@ from core.models import Footer, Country, Setting, Faqs
 from useraccount.models import Photographer, WinnerMonth
 
 
+
+class DummyHomeView(APIView):
+    ''' Home Page view '''
+
+    template_name = 'index.html'
+
+    def get(self, request, *args, **kwargs):
+        ''' Receives the request '''
+
+        return Response({}, template_name=self.template_name)
+
+
 class HomeView(APIView):
     ''' Home Page view '''
 

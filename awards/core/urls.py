@@ -1,11 +1,13 @@
 from django.conf.urls import patterns, url
 
 from . import views
-from core.views import HomeView, FileUploadHandler, BestPhotographerProfile, MonthHomeView
+from core.views import HomeView, FileUploadHandler, BestPhotographerProfile, MonthHomeView, DummyHomeView
 
 urlpatterns = patterns(
     '',
-    url(r'^$', views.HomeView.as_view(), name='home'),
+    url(r'^$', views.DummyHomeView.as_view(), name='home'),
+
+    url(r'^test$', views.HomeView.as_view(), name='home'),
 
     url(r'^faqs$', views.FaqsView.as_view(), name='faqs'),
 
