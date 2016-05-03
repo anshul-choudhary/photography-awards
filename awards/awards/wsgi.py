@@ -19,9 +19,13 @@ sys.path.append('/root/.virtualenvs/awards/lib/python2.7/site-packages/django')
 
 os.environ['DJANGO_SETTINGS_MODULE'] = 'awards.settings'
 
-activate_env=os.path.expanduser(
-    "/root/.virtualenvs/awards/bin/activate_this.py")
-execfile(activate_env, dict(__file__=activate_env))
+try:
+    activate_env=os.path.expanduser(
+        "/root/.virtualenvs/awards/bin/activate_this.py")
+    execfile(activate_env, dict(__file__=activate_env))
+except:
+    pass
+
 
 from django.core.wsgi import get_wsgi_application
 application = get_wsgi_application()

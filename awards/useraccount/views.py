@@ -497,7 +497,7 @@ class CompleteUpload(APIView):
                     for k in PhotoObj.image.all():
                         k.delete_image(os.path.join(MEDIA_ROOT, k.image.name))
                         k.delete()
-
+                print "hell01"
                 PhotoObj.home_page_desc = upload_form.cleaned_data['home_page_desc']
                 # PhotoObj.image_1_desc = upload_form.cleaned_data['image_1_desc']
                 # PhotoObj.image_2_desc = upload_form.cleaned_data['image_2_desc']
@@ -512,6 +512,7 @@ class CompleteUpload(APIView):
                 image.image_desc = upload_form.cleaned_data['image_1_desc']
                 image.save()
                 generate_version_add_watermark(image.image.name, 'thumbnail')
+                print "hell02"
 
                 image = Image(content_object=PhotoObj)
                 (image.image,image_name) = Image().copy_upload_image(PhotoObj, upload_form.cleaned_data['image_2_name'], request.user.username)
@@ -520,6 +521,7 @@ class CompleteUpload(APIView):
                 image.image_desc = upload_form.cleaned_data['image_2_desc']
                 image.save()
                 generate_version_add_watermark(image.image.name, 'thumbnail')
+                print "hell03"
 
                 image = Image(content_object=PhotoObj)
                 (image.image,image_name) = Image().copy_upload_image(PhotoObj, upload_form.cleaned_data['image_3_name'], request.user.username)
@@ -541,7 +543,7 @@ class CompleteUpload(APIView):
                 return redirect("photographerprofile")
 
             except Exception as ex:
-                raise Exception(str(ex))
+                print str(ex)
         else:
             try:
                 pass
