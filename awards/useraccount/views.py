@@ -497,23 +497,26 @@ class CompleteUpload(APIView):
                     for k in PhotoObj.image.all():
                         k.delete_image(os.path.join(MEDIA_ROOT, k.image.name))
                         k.delete()
-                print "hell01"
                 PhotoObj.home_page_desc = upload_form.cleaned_data['home_page_desc']
                 # PhotoObj.image_1_desc = upload_form.cleaned_data['image_1_desc']
                 # PhotoObj.image_2_desc = upload_form.cleaned_data['image_2_desc']
                 # PhotoObj.image_3_desc = upload_form.cleaned_data['image_3_desc']
                 PhotoObj.save()
-                print "hell05"
 
                 # image = Image(content_object=PhotoObj, image_name=upload_form.cleaned_data['image_1_name'])
                 image = Image(content_object=PhotoObj)
+                print "hell01"
                 (image.image,image_name) = Image().copy_upload_image(PhotoObj, upload_form.cleaned_data['image_1_name'], request.user.username)
+                print "hell02"
                 image.image_name = IMAGE_NAME_CHOICES['TYPE'].Award1
+                print "hell03"
                 image.image_a_name = image_name
+                print "hell04"
                 image.image_desc = upload_form.cleaned_data['image_1_desc']
+                print "hell05"
                 image.save()
                 generate_version_add_watermark(image.image.name, 'thumbnail')
-                print "hell02"
+                print "hell06"
 
                 image = Image(content_object=PhotoObj)
                 (image.image,image_name) = Image().copy_upload_image(PhotoObj, upload_form.cleaned_data['image_2_name'], request.user.username)
@@ -522,7 +525,6 @@ class CompleteUpload(APIView):
                 image.image_desc = upload_form.cleaned_data['image_2_desc']
                 image.save()
                 generate_version_add_watermark(image.image.name, 'thumbnail')
-                print "hell03"
 
                 image = Image(content_object=PhotoObj)
                 (image.image,image_name) = Image().copy_upload_image(PhotoObj, upload_form.cleaned_data['image_3_name'], request.user.username)
