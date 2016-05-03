@@ -503,6 +503,7 @@ class CompleteUpload(APIView):
                 # PhotoObj.image_2_desc = upload_form.cleaned_data['image_2_desc']
                 # PhotoObj.image_3_desc = upload_form.cleaned_data['image_3_desc']
                 PhotoObj.save()
+                print "hell05"
 
                 # image = Image(content_object=PhotoObj, image_name=upload_form.cleaned_data['image_1_name'])
                 image = Image(content_object=PhotoObj)
