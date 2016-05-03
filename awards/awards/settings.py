@@ -73,7 +73,7 @@ AUTH_USER_MODEL = 'useraccount.UserProfile'
 SECRET_KEY = 'g&m75fcwu@dk4ed2opcp6-j($yg0mrf=ma(*8q&e7%8r^21*rj'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ['localhost']
 
