@@ -85,8 +85,9 @@ def generate_version_add_watermark(original_path, version_suffix):
     from filebrowser.sites import site
     from core.models import Image
 
+    print "hello9"
     fob = FileObject(original_path, site=site)
-
+    print "hello11"
     version_path = fob.version_path(version_suffix)
     print "hello7"
     if not site.storage.isfile(version_path):

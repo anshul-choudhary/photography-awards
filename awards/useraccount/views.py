@@ -515,6 +515,7 @@ class CompleteUpload(APIView):
                 image.image_desc = upload_form.cleaned_data['image_1_desc']
                 print "hell05"
                 image.save()
+                print "hell010"
                 generate_version_add_watermark(image.image.name, 'thumbnail')
                 print "hell06"
 
