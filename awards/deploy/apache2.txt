@@ -1,0 +1,67 @@
+WSGIPythonPath /var/www/photography-awards/awards/awards:/root/.virtualenvs/awards/lib/python2.7/site-packages
+
+<VirtualHost *:80>
+        ServerName globalawards.photography
+        ServerAlias globalawards.photography
+        ServerAdmin webmaster@localhost
+        DocumentRoot /var/www/photography-awards/awards
+
+        <Directory /var/www/photography-awards/awards>
+        Order allow,deny
+        Allow from all
+        </Directory>
+
+        <Location "/var/www/photography-awards/awards/">
+         SetHandler python-program
+         PythonHandler django.core.handlers.modpython
+         SetEnv DJANGO_SETTINGS_MODULE awards.settings
+         PythonOption django.root /var/www/awards/photography-awards/awards
+         PythonPath "['/var/www/photography-awards/awards,/root/.virtualenvs/awards/lib/python2.7/site-packages'] + sys.path"
+        PythonDebug On
+        </Location>
+
+        #Alias /robots.txt /path/to/mysite.com/static/robots.txt
+        #Alias /favicon.ico /path/to/mysite.com/static/favicon.ico
+
+        Alias /static/ /var/www/photography-awards/awards/static/
+        Alias /media/ /var/www/photography-awards/awards/media/
+
+        <Directory /var/www/photography-awards/awards/static>
+        Require all granted
+        </Directory>
+
+        <Directory /var/www/photography-awards/awards/media>
+        Require all granted
+        </Directory>
+
+        WSGIDaemonProcess globalawards.photography user=www-data group=www-data python-path=/var/www/photography-awards/awards:/root/.virtualenvs/awards/lib/python2.7/site-packages
+        WSGIProcessGroup globalawards.photography
+        WSGIScriptAlias / /var/www/photography-awards/awards/awards/wsgi.py
+        <Directory /var/www/photography-awards/awards/awards>
+        <Files wsgi.py>
+         Require all granted
+        </Files>
+        </Directory>
+        WSGIPassAuthorization Off
+
+        # For enabling maintenance page
+        #RewriteEngine on
+        #RewriteCond /var/www/maintenance.enable -f
+        #RewriteCond %{REQUEST_URI} !^/static/.*
+        #RewriteCond %{SCRIPT_FILENAME} !maintenance.html
+        #RewriteRule ^.*$ - [R=503]
+        #ErrorDocument 503 /maintenance.html
+        #Alias /maintenance.html /var/www/photography-awards/awards/core/templates/maintenance.html
+        #RewriteCond %{HTTP_HOST} ^globalawards\.photography [NC]
+        #RewriteRule (.*) http://globalawards.photography$1 [R=301,L]
+        #RewriteRule ^128.199.106.145$ globalawards.photography
+
+        ErrorLog ${APACHE_LOG_DIR}/error.log
+        CustomLog ${APACHE_LOG_DIR}/access.log combined
+
+</VirtualHost>
+
+
+
+
+

@@ -83,19 +83,19 @@ INSTALLED_APPS = [
     'grappelli',
     # for file uploads
     'filebrowser',
-    'django.contrib.admin',
     'django.contrib.auth',
+    'django.contrib.admin',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'core',
-    'useraccount',
-
-    'compressor',
     # rest framework
     'rest_framework',
     'rest_framework.authtoken',
+    'compressor',
+
+    'core',
+    'useraccount',
 ]
 
 MIDDLEWARE_CLASSES = [
