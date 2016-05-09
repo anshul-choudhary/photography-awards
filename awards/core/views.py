@@ -217,7 +217,10 @@ class BestPhotographerProfile(APIView):
             if k.profile_image:
                 ctx.update({'profile_image': k.image.name})
             else:
-                a["imagename"] = k.image.name
+                try:
+                    a["imagename"] = k.image.name
+                except:
+                    a["imagename"] = ""
                 a["imagedesc"] = k.image_desc
                 ctx['images'].append(a)
         return Response(ctx, template_name=self.template_name)
@@ -251,7 +254,25 @@ class PhotographersView(APIView):
     def get(self, request, *args, **kwargs):
         ''' Receives the request '''
 
-        return Response({}, template_name=self.template_name)
+
+
+        PhotoObjs = Photographer.objects.all()
+        p_list = []
+
+        for k in PhotoObjs:
+            a = {}
+            a["name"] = k.firstname + " " + k.lastname
+            a["awards"] = k.no_of_awards
+            a["country"] = k.user_ref.country.name if k.user_ref.country is not None else ""
+            a["contact"] = k.user_ref.primary_contact_number
+            a["website_link"] = k.website_link
+            a["desc"] = k.home_page_desc
+            a["user_id"] = k.user_id
+            a["c_image"] = k.image.filter(cover_image=True)[0].image.name if k.image.filter(cover_image=True).count() else ""
+            a["p_image"] = k.image.filter(profile_image=True)[0].image.name if k.image.filter(profile_image=True).count() else ""
+            p_list.append(a)
+
+        return Response({'photographers': p_list}, template_name=self.template_name)
 
 
 
