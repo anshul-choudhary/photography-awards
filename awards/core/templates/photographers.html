@@ -11,19 +11,87 @@
 
 {% block css_section %}
     {{ block.super }}
-    <style>
-        input:-webkit-autofill,
-        input:-webkit-autofill:hover,
-        input:-webkit-autofill:focus,
-        input:-webkit-autofill:active {
-            transition: all 5000s ease-in-out 0s;
-            transition-property: background-color, color;
-        }
 
-    .errorMessage{
-        color: red;
+<style>
+    input:-webkit-autofill,
+    input:-webkit-autofill:hover,
+    input:-webkit-autofill:focus,
+    input:-webkit-autofill:active {
+        transition: all 5000s ease-in-out 0s;
+        transition-property: background-color, color;
     }
-    </style>
+
+.errorMessage{
+    color: red;
+}
+
+
+.linkbox {
+    display: inline-block;
+    margin: 4px;
+    padding: 5px 7px;
+    border-radius: 3px;
+    border: 1px solid #FECA15;
+    font-size: 13px;
+    color: #999;
+    text-transform: uppercase;
+    line-height: normal;
+    transition: all 0.25s;
+    }
+
+#nav {
+width: 200px;
+    margin: 0px;
+    display: inline-block;
+
+}
+
+.navlink{
+    height: 152px;
+    padding-top: 0px;
+    margin-top: 0px;
+    padding-bottom: 0px;
+    margin-bottom: 0px;
+}
+
+#nav ul, #nav ul li {
+    width: 155px;
+}
+
+#nav ul {
+    position: absolute;
+    margin: 0 4px;
+    border-radius: 3px;
+    border: 1px solid #FECA15;
+    background-color: #fff;
+    overflow: hidden;
+    width: 155px;
+    padding: 0;
+    list-style:none;
+    text-align: left;
+}
+
+#nav li {
+    margin: 0;
+    padding: 5px 7px;
+    text-align: left;
+    cursor: pointer;
+}
+
+#nav ul:hover {
+    box-shadow: 0 0 5px rgba(76, 153, 128, 0.5);
+}
+
+
+#nav ul li:hover {
+    background-color: #FECA15;
+}
+
+
+#navmenu ul {
+    text-decoration: none;
+}
+</style>
 
 {% endblock css_section %}
 
@@ -45,8 +113,22 @@
 </a>
 </div>
 
+
+<div  id="nav">
+    <a href="#" class="linkbox">FIND A PHOTOGRAPHER</a>
+    <ul id="navmenu" class="navlink" style="display:none;">
+        <li><span href="#">All Locations</span></li>
+        <li><span href="#">Top Ranked</span></li>
+        <li><span href="#">Best of 2016</span></li>
+    </ul>
+
+</div>
+
+
 <ul class="navlinks text-center">
-<li><a href="{% url 'home' %}">AWARD</a></li>
+
+
+    <li><a href="{% url 'home' %}">AWARD</a></li>
 <li class='active'><a href="/photographers">PHOTOGRAPHERS</a></li>
 {% if not request.user.is_authenticated %}
     <li><a href="{% url 'faqs' %}">JOIN</a></li>
@@ -76,11 +158,13 @@
 <div class="container">
 
 <div class="row text-center">
-<div class="col-md-8 col-md-offset-2">
-<h1>Current Rating</h1>
+    <div class="col-md-8 col-md-offset-2" >
+    <h1>Current Rating</h1>
 
 </div>
 </div>
+
+
 <div class="row ptb-15 plr-25">
 <style>
 .productlist {position: relative;
@@ -147,9 +231,6 @@ line-height: 1.3em;
 {% endfor %}
 
 
-
-
-
 </div>
 
 
@@ -170,7 +251,26 @@ line-height: 1.3em;
 
 
 {% block js_section_bottom %}
-    {{ block.super }}
+    <!--<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>-->
+    <script src="{{ STATIC_URL }}styles/js/jquery-1.11.2.min.js" type="text/javascript"></script>
+    <script src="{{ STATIC_URL }}styles/js/jquery-ui.min.js" type="text/javascript"></script>
+    <script src="{{ STATIC_URL }}styles/js/plugin/jquery.fitvids.js" type="text/javascript"></script>
+    <script src="{{ STATIC_URL }}styles/js/plugin/owl.carousel.min.js" type="text/javascript"></script>
+    <script src="{{ STATIC_URL }}styles/js/plugin/jPushMenu.js" type="text/javascript"></script>
+    <script src="{{ STATIC_URL }}styles/js/plugin/mediaelement-and-player.min.js"></script>
+{#    <script src="{{ STATIC_URL }}styles/js/theme.js" type="text/javascript"></script>#}
+
+<script>
+$(document).ready(function() {
+    $( "#nav" ).mouseover(function() {
+      $( "#navmenu" ).css("display", "block");
+    });
+
+    $( "#nav" ).mouseout(function() {
+      $( "#navmenu" ).css("display", "none");
+    });
+});
+</script>
 {% endblock js_section_bottom %}
 
 
