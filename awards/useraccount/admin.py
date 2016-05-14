@@ -145,7 +145,8 @@ class PhotographerAdmin(admin.ModelAdmin):
             {
                 'fields': (
                     'instagram_link1', 'instagram_link2', 'is_winner', 'winner_month', 'winning_date', \
-                    'activate_home_page', 'home_page_desc', 'is_best_photographer', \
+                    'activate_home_page', 'activate_photographer_page', \
+                    'home_page_desc', 'is_best_photographer', \
                     'best_photographer_desc', 'no_of_awards', 'website_link'
                 )
             }

@@ -224,6 +224,10 @@ class Photographer(models.Model):
         verbose_name='If True, Profile will be seen on the home page', default=False,
         help_text="Designates whether to show the photographer's profile on home page or not"
     )
+    activate_photographer_page = models.BooleanField(
+        verbose_name='If True, Profile will be seen on the photographer page', default=False,
+        help_text="Designates whether to show the photographer's profile on photographer page or not"
+    )
     priority = models.IntegerField(verbose_name="Home page profile visibility priority", default=1)
 
     home_page_desc = models.TextField(blank=True, null=True)
@@ -241,6 +245,7 @@ class Photographer(models.Model):
 
     best_photographer_desc = models.TextField(blank=True, null=True)
     no_of_awards = models.SmallIntegerField(verbose_name="No of awards being won", default=0)
+
 
     created_date = models.DateTimeField(auto_now_add=True, verbose_name="Created Date")
     modified_date = models.DateTimeField(auto_now=True, verbose_name="Last Modified")

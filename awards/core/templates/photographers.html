@@ -117,9 +117,9 @@ width: 200px;
 <div  id="nav">
     <a href="#" class="linkbox">FIND A PHOTOGRAPHER</a>
     <ul id="navmenu" class="navlink" style="display:none;">
-        <li><span href="#">All Locations</span></li>
-        <li><span href="#">Top Ranked</span></li>
-        <li><span href="#">Best of 2016</span></li>
+        <li data-url="/best-2016"><span>Best of 2016</span></li>
+        <li data-url="/best-2015"><span>Best of 2015</span></li>
+        <li data-url="/best-alltime"><span>Best of All Time</span></li>
     </ul>
 
 </div>
@@ -127,8 +127,7 @@ width: 200px;
 
 <ul class="navlinks text-center">
 
-
-    <li><a href="{% url 'home' %}">AWARD</a></li>
+<li><a href="{% url 'home' %}">AWARD</a></li>
 <li class='active'><a href="/photographers">PHOTOGRAPHERS</a></li>
 {% if not request.user.is_authenticated %}
     <li><a href="{% url 'faqs' %}">JOIN</a></li>
@@ -269,6 +268,13 @@ $(document).ready(function() {
     $( "#nav" ).mouseout(function() {
       $( "#navmenu" ).css("display", "none");
     });
+
+
+    $("#navmenu li").on("click", function(){
+        var urld = $(this).data("url");
+        window.location.href = urld;
+    });
+
 });
 </script>
 {% endblock js_section_bottom %}

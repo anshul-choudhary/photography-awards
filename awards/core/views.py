@@ -397,4 +397,52 @@ class FileUploadHandler(APIView):
 
 
 
+class PhotographerSectionFilter(APIView):
+    ''' Home Page view '''
+
+    template_name = 'photographers.html'
+
+    def get(self, request, *args, **kwargs):
+        ''' Receives the request '''
+
+
+        import datetime
+        if kwargs.get("key2", None) != None and kwargs.get("key2") == "2016":
+            PhotoObjs = Photographer.objects.filter(
+                created_date__gte=datetime.datetime.strptime('01012016', "%d%m%Y"),
+                created_date__lt=datetime.datetime.strptime('01012017', "%d%m%Y"),
+                no_of_awards__gt=0, activate_photographer_page=True
+            ).order_by("-priority")
+
+        elif kwargs.get("key2", None) != None and kwargs.get("key2") == "2015":
+            PhotoObjs = Photographer.objects.filter(
+                created_date__gte=datetime.datetime.strptime('01012015', "%d%m%Y"), no_of_awards__gt=0,
+                created_date__lt=datetime.datetime.strptime('01012016', "%d%m%Y"),
+                activate_photographer_page=True
+            ).order_by("-priority")
+
+        elif kwargs.get("key2", None) != None and kwargs.get("key2") == "alltime":
+            PhotoObjs = Photographer.objects.filter(
+                no_of_awards__gt=0, activate_photographer_page=True
+            ).order_by("-priority")
+
+        else:
+            PhotoObjs = Photographer.objects.all(activate_photographer_page=True).order_by("-priority")
+
+        p_list = []
+        for k in PhotoObjs:
+            a = {}
+            a["name"] = k.firstname + " " + k.lastname
+            a["awards"] = k.no_of_awards
+            a["country"] = k.user_ref.country.name if k.user_ref.country is not None else ""
+            a["contact"] = k.user_ref.primary_contact_number
+            a["website_link"] = k.website_link
+            a["desc"] = k.home_page_desc
+            a["user_id"] = k.user_id
+            a["c_image"] = k.image.filter(cover_image=True)[0].image.name if k.image.filter(cover_image=True).count() else ""
+            a["p_image"] = k.image.filter(profile_image=True)[0].image.name if k.image.filter(profile_image=True).count() else ""
+            p_list.append(a)
+
+        return Response({'photographers': p_list}, template_name=self.template_name)
+
 

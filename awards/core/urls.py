@@ -1,7 +1,8 @@
 from django.conf.urls import patterns, url
 
 from . import views
-from core.views import HomeView, FileUploadHandler, BestPhotographerProfile, MonthHomeView, DummyHomeView
+from core.views import HomeView, FileUploadHandler, BestPhotographerProfile, MonthHomeView, DummyHomeView, \
+    PhotographerSectionFilter
 
 urlpatterns = patterns(
     '',
@@ -25,6 +26,10 @@ urlpatterns = patterns(
     url(r'^profile/(?P<key>\w+)/$', BestPhotographerProfile.as_view(), name='bestphotographersprofile'),
 
     url(r'^month/(?P<key>\w+)/$', MonthHomeView.as_view(), name='month_home'),
+
+
+
+    url(r'^(?P<key1>\w+)-(?P<key2>\w+)/$', PhotographerSectionFilter.as_view(), name='photographer_filter'),
 )
 
 #
