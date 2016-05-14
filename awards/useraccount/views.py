@@ -508,10 +508,13 @@ class CompleteUpload(APIView):
                 (image.image,image_name) = Image().copy_upload_image(PhotoObj, upload_form.cleaned_data['image_1_name'], request.user.username)
                 print image.image, image_name
                 image.image_name = IMAGE_NAME_CHOICES['TYPE'].Award1
+                print "before save 1"
                 image.image_a_name = image_name
+                print "before save 2"
                 image.image_desc = upload_form.cleaned_data['image_1_desc']
+                print "before save 3"
                 image.save()
-                print "after save"
+                print "after save 1"
                 generate_version_add_watermark(image.image.name, 'thumbnail')
 
                 image = Image(content_object=PhotoObj)
