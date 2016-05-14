@@ -163,8 +163,8 @@ class Image(models.Model):
         verbose_name = 'Image'
         db_table = 'image'
 
-    def __unicode__(self):
-        return "%s" % str(self.id)
+    # def __unicode__(self):
+    #     return "%s" % str(self.id)
 
     # def __init__(self, *args, **kwargs):
     #     super(Image, self).__init__(*args, **kwargs)
