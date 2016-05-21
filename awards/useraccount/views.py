@@ -508,17 +508,13 @@ class CompleteUpload(APIView):
                 try:
                     image = Image(content_object=PhotoObj)
                     (image.image,image_name) = Image().copy_upload_image(PhotoObj, upload_form.cleaned_data['image_1_name'], request.user.username)
-                    print image.image, image_name
                     image.image_name = IMAGE_NAME_CHOICES['TYPE'].Award1
-                    print "before save 1"
                     image.image_a_name = image_name
-                    print "before save 2"
                     image.image_desc = upload_form.cleaned_data['image_1_desc']
-                    print "before save 3"
                     image.image.name = ""
                     image.name = ""
+                    print "before save 1"
                     image.save()
-                    print "after save 1"
                 except Exception as e:
                     print str(e)
                     print "\n Inside Exception"
@@ -536,6 +532,7 @@ class CompleteUpload(APIView):
                 image.image_desc = upload_form.cleaned_data['image_2_desc']
                 image.image.name = ""
                 image.name = ""
+                print "before save 2"
                 image.save()
                 generate_version_add_watermark(image.image.name, 'thumbnail')
 
@@ -546,6 +543,7 @@ class CompleteUpload(APIView):
                 image.image_desc = upload_form.cleaned_data['image_3_desc']
                 image.image.name = ""
                 image.name = ""
+                print "before save 3"
                 image.save()
                 generate_version_add_watermark(image.image.name, 'thumbnail')
 
@@ -557,6 +555,7 @@ class CompleteUpload(APIView):
                 image.profile_image = True
                 image.image.name = ""
                 image.name = ""
+                print "before save 4"
                 image.save()
                 generate_version_add_watermark(image.image.name, 'thumbnail')
 
