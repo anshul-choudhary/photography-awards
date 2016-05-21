@@ -534,6 +534,8 @@ class CompleteUpload(APIView):
                 image.image_name = IMAGE_NAME_CHOICES['TYPE'].Award2
                 image.image_a_name = image_name
                 image.image_desc = upload_form.cleaned_data['image_2_desc']
+                image.image.name = ""
+                image.name = ""
                 image.save()
                 generate_version_add_watermark(image.image.name, 'thumbnail')
 
@@ -542,6 +544,8 @@ class CompleteUpload(APIView):
                 image.image_name = IMAGE_NAME_CHOICES['TYPE'].Award3
                 image.image_a_name = image_name
                 image.image_desc = upload_form.cleaned_data['image_3_desc']
+                image.image.name = ""
+                image.name = ""
                 image.save()
                 generate_version_add_watermark(image.image.name, 'thumbnail')
 
@@ -551,6 +555,8 @@ class CompleteUpload(APIView):
                 image.image_name = IMAGE_NAME_CHOICES['TYPE'].Profileimage
                 image.image_a_name = image_name
                 image.profile_image = True
+                image.image.name = ""
+                image.name = ""
                 image.save()
                 generate_version_add_watermark(image.image.name, 'thumbnail')
 
