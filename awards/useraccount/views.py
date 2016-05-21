@@ -530,9 +530,9 @@ class CompleteUpload(APIView):
                 image.image_name = IMAGE_NAME_CHOICES['TYPE'].Award2
                 image.image_a_name = image_name
                 image.image_desc = upload_form.cleaned_data['image_2_desc']
+                print "before save 2"
                 image.image.name = ""
                 image.name = ""
-                print "before save 2"
                 image.save()
                 generate_version_add_watermark(image.image.name, 'thumbnail')
 
