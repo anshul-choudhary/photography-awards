@@ -256,7 +256,7 @@ class PhotographersView(APIView):
 
 
 
-        PhotoObjs = Photographer.objects.all()
+        PhotoObjs = Photographer.objects.filter(activate_photographer_page=True)
         p_list = []
 
         for k in PhotoObjs:
