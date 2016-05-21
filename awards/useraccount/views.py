@@ -511,9 +511,10 @@ class CompleteUpload(APIView):
                     image.image_name = IMAGE_NAME_CHOICES['TYPE'].Award1
                     image.image_a_name = image_name
                     image.image_desc = upload_form.cleaned_data['image_1_desc']
+                    print "before save 1"
+                    print dir(image), "\n\n", dir(image.image)
                     image.image.name = ""
                     image.name = ""
-                    print "before save 1"
                     image.save()
                 except Exception as e:
                     print str(e)
