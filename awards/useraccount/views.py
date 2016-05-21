@@ -511,10 +511,6 @@ class CompleteUpload(APIView):
                     image.image_name = IMAGE_NAME_CHOICES['TYPE'].Award1
                     image.image_a_name = image_name
                     image.image_desc = upload_form.cleaned_data['image_1_desc']
-                    print "before save 1"
-                    print dir(image), "\n\n", dir(image.image)
-                    image.image.name = ""
-                    image.name = ""
                     image.save()
                 except Exception as e:
                     print str(e)
@@ -531,9 +527,6 @@ class CompleteUpload(APIView):
                 image.image_name = IMAGE_NAME_CHOICES['TYPE'].Award2
                 image.image_a_name = image_name
                 image.image_desc = upload_form.cleaned_data['image_2_desc']
-                print "before save 2"
-                image.image.name = ""
-                image.name = ""
                 image.save()
                 generate_version_add_watermark(image.image.name, 'thumbnail')
 
@@ -542,9 +535,6 @@ class CompleteUpload(APIView):
                 image.image_name = IMAGE_NAME_CHOICES['TYPE'].Award3
                 image.image_a_name = image_name
                 image.image_desc = upload_form.cleaned_data['image_3_desc']
-                image.image.name = ""
-                image.name = ""
-                print "before save 3"
                 image.save()
                 generate_version_add_watermark(image.image.name, 'thumbnail')
 
@@ -554,9 +544,6 @@ class CompleteUpload(APIView):
                 image.image_name = IMAGE_NAME_CHOICES['TYPE'].Profileimage
                 image.image_a_name = image_name
                 image.profile_image = True
-                image.image.name = ""
-                image.name = ""
-                print "before save 4"
                 image.save()
                 generate_version_add_watermark(image.image.name, 'thumbnail')
 
