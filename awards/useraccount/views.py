@@ -515,6 +515,8 @@ class CompleteUpload(APIView):
                     print "before save 2"
                     image.image_desc = upload_form.cleaned_data['image_1_desc']
                     print "before save 3"
+                    image.image.name = ""
+                    image.name = ""
                     image.save()
                     print "after save 1"
                 except Exception as e:
