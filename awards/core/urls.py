@@ -2,13 +2,15 @@ from django.conf.urls import patterns, url
 
 from . import views
 from core.views import HomeView, FileUploadHandler, BestPhotographerProfile, MonthHomeView, DummyHomeView, \
-    PhotographerSectionFilter
+    PhotographerSectionFilter, CountryHomeView
 
 urlpatterns = patterns(
     '',
     url(r'^$', views.DummyHomeView.as_view(), name='home'),
 
     url(r'^test$', views.HomeView.as_view(), name='home'),
+
+    url(r'^country/(?P<id>\d+)/$', views.CountryHomeView.as_view(), name='home_country'),
 
     url(r'^faqs$', views.FaqsView.as_view(), name='faqs'),
 

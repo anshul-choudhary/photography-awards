@@ -44,6 +44,8 @@ class HomeView(APIView):
         ctx['footer'] = footer
         ctx['best_photographer'] = []
 
+        ctx['country'] = Country.objects.all()
+
         # Best Photographer section
         BestPhotographers = Photographer.objects.filter(is_best_photographer=True)[:12]
         for obj in BestPhotographers:
@@ -63,6 +65,91 @@ class HomeView(APIView):
         ctx['home_photographer'] = []
         # Home Page Profile Section
         BestPhotographers = Photographer.objects.filter(activate_home_page=True, is_winner=True).order_by("priority")
+        for obj in BestPhotographers:
+            ar = {}
+            CountryQuerySet = Country.objects.filter(id=obj.user_ref.country.id)
+            ar.update({'name': obj.firstname + ' ' + obj.lastname, 'awards': obj.no_of_awards})
+            ar.update({'country': CountryQuerySet[0].name})
+            ar.update({'username': obj.user_id})
+            ar.update({'home_page_desc': obj.home_page_desc})
+            ar.update({'images': {"imagename": "", "imagedesc": "", "profileimage": ""}})
+
+            for k in obj.image.all().order_by('created_date'):
+                if k.cover_image:
+                    ar['images']['imagename'] = k.image.name
+                    ar['images']['imagedesc'] = k.image_desc
+                if k.profile_image:
+                    ar['images']['profileimage'] = k.image.name
+
+            ctx['home_photographer'].append(ar)
+
+
+        res = []
+        to_show = Setting.objects.get(key="HOME_PAGE_MONTHS").value.split(",")
+        Objs = WinnerMonth.objects.all().values("id","month_name")
+        for k in Objs:
+            a = {"key": "", "val": ""}
+            if dict(USER["WINNER_MONTH"]).get(k["month_name"]) in to_show:
+                a["key"] = k["month_name"]
+                a["val"] = dict(USER["WINNER_MONTH"]).get(k["month_name"])
+                res.append(a)
+        ctx.update({"winner_month": res})
+
+        ctx.update({"home_page_heading": Setting.objects.get(key="HOME_PAGE_HEADING").value})
+
+        return Response(ctx, template_name=self.template_name)
+
+
+
+class CountryHomeView(APIView):
+    ''' Home Page view '''
+
+    template_name = 'home.html'
+
+    def get(self, request, *args, **kwargs):
+        ''' Receives the request '''
+
+        ctx = {}
+
+        if kwargs.get("id", None) is None:
+            return redirect("home")
+
+        Obj = Country.objects.filter(id=int(kwargs.get("id")))
+        if not Obj.count():
+            return redirect("home")
+        ctx["countryname"] = Obj[0].name
+
+        #Fetch Footer
+        FooterQuerySet = Footer.objects.filter(active=True).order_by('priority')[:4]
+        footer = []
+        for obj in FooterQuerySet:
+            footer.append({'link': obj.link1, 'img': obj.image.all()[0].image.path})
+        ctx['footer'] = footer
+        ctx['best_photographer'] = []
+
+        ctx['country'] = Country.objects.all()
+
+        # Best Photographer section
+        BestPhotographers = Photographer.objects.filter(is_best_photographer=True,
+                                user_ref__country=Obj[0])[:12]
+        for obj in BestPhotographers:
+            ar = {}
+            CountryQuerySet = Country.objects.filter(id=obj.user_ref.country.id)
+            ar.update({'name': obj.firstname + ' ' + obj.lastname, 'awards': obj.no_of_awards})
+            ar.update({'country': CountryQuerySet[0].name})
+            ar.update({'username': obj.user_id})
+
+            for k in obj.image.all().order_by('created_date'):
+                if k.profile_image:
+                    ar.update({'profile_image': k.image.name})
+            ctx['best_photographer'].append(ar)
+
+
+
+        ctx['home_photographer'] = []
+        # Home Page Profile Section
+        BestPhotographers = Photographer.objects.filter(activate_home_page=True,
+                        user_ref__country=Obj[0], is_winner=True).order_by("priority")
         for obj in BestPhotographers:
             ar = {}
             CountryQuerySet = Country.objects.filter(id=obj.user_ref.country.id)
